@@ -5,8 +5,8 @@
 <form class='col s12' method='post' action='<?php echo site_url("site/createproductsubmit");?>' enctype= 'multipart/form-data'>
  <div class="row">
             <div class="input-field col s12 m8">
-                <?php echo form_dropdown('subcatergory', $subcatergory, set_value('subcatergory')); ?>
-                 <label>Sub Catergory</label>
+                <?php echo form_dropdown('subcategory', $subcategory, set_value('subcategory')); ?>
+                 <label>Sub Category</label>
             </div>
         </div>
 <div class="row">
