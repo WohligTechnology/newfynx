@@ -31,6 +31,15 @@ $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_designer", $data );
 return 1;
 }
+    public function getdesignerdropdown()
+    {
+        $query = $this->db->query('SELECT * FROM `fynx_designer`  ORDER BY `id` ASC')->result();
+        foreach ($query as $row) {
+            $return[$row->id] = $row->name;
+        }
+
+        return $return;
+    }
 public function delete($id)
 {
 $query=$this->db->query("DELETE FROM `fynx_designer` WHERE `id`='$id'");
