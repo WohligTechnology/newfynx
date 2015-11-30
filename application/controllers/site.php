@@ -1601,6 +1601,7 @@ public function createdesigns()
 {
 $access=array("1");
 $this->checkaccess($access);
+       $data['status']=$this->user_model->getstatusdropdown();
 $data["page"]="createdesigns";
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Create designs";
@@ -1618,6 +1619,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createdesigns";
+       $data['status']=$this->user_model->getstatusdropdown();
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Create designs";
 $this->load->view("template",$data);

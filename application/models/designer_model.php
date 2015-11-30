@@ -35,10 +35,10 @@ return 1;
     {
         $query = $this->db->query('SELECT * FROM `fynx_designer`  ORDER BY `id` ASC')->result();
         foreach ($query as $row) {
-            $return[$row->id] = $row->name;
+            $designer[$row->id] = $row->name;
         }
 
-        return $return;
+        return $designer;
     }
 public function delete($id)
 {
