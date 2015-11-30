@@ -1118,8 +1118,7 @@ $data["page"]="createproduct";
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 		$data['visibility']=$this->product_model->getvisibility();
-       
-        $data['type']=$this->brand_model->gettypedropdown();
+        $data['type']=$this->type_model->gettypedropdown();
         $data['size']=$this->size_model->getsizedropdown();
         $data['color']=$this->color_model->getcolordropdown();
         $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
@@ -1162,7 +1161,7 @@ $data["page2"]="block/productblock";
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 		$data['visibility']=$this->product_model->getvisibility();
        
-        $data['type']=$this->brand_model->gettypedropdown();
+        $data['type']=$this->type_model->gettypedropdown();
         $data['size']=$this->size_model->getsizedropdown();
         $data['color']=$this->color_model->getcolordropdown();
         $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
@@ -1193,6 +1192,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editproduct";
+    $data['type']=$this->type_model->gettypedropdown();
     $data['relatedproduct']=$this->product_model->getproductdropdown();
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
@@ -2893,6 +2893,7 @@ public function createorder()
 $access=array("1");
 $this->checkaccess($access);
 $data[ 'user' ] =$this->user_model->getuserdropdown();
+    $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data["page"]="createorder";
 $data["title"]="Create order";
 $this->load->view("template",$data);
@@ -2925,7 +2926,8 @@ $this->form_validation->set_rules("orderstatus","Order Status","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
- $data[ 'user' ] =$this->user_model->getuserdropdown();   
+ $data[ 'user' ] =$this->user_model->getuserdropdown();  
+$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data["page"]="createorder";
 $data["title"]="Create order";
 $this->load->view("template",$data);
@@ -2967,6 +2969,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editorder";
 $data["title"]="Edit order";
+$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -3001,6 +3004,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editorder";
+$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["title"]="Edit order";
 $data["before"]=$this->order_model->beforeedit($this->input->get("id"));

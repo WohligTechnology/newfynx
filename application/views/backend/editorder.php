@@ -126,10 +126,10 @@
 <input type="text" id="Shipping Method" name="shippingmethod" value='<?php echo set_value('shippingmethod',$before->shippingmethod);?>'>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Order Status">Order Status</label>
-<input type="text" id="Order Status" name="orderstatus" value='<?php echo set_value('orderstatus',$before->orderstatus);?>'>
+<div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("orderstatus",$orderstatus,set_value('orderstatus',$before->orderstatus));?>
+<label>Order Status</label>
 </div>
 </div>
 <div class="row">

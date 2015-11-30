@@ -36,5 +36,18 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_order` WHERE `id`='$id'");
 return $query;
 }
+    public function getorderstatus()
+	{
+		$query=$this->db->query("SELECT * FROM `orderstatus` ORDER BY `name` ASC" )->result();
+		$return=array(
+		
+		);
+		
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		return $return;
+	}
 }
 ?>
