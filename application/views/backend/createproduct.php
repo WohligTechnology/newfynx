@@ -3,12 +3,12 @@
 <h4 class="pad-left-15">Create product</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createproductsubmit");?>' enctype= 'multipart/form-data'>
-<div class="row">
-<div class="input-field col s6">
-<label for="Subcategory">Subcategory</label>
-<input type="text" id="Subcategory" name="subcategory" value='<?php echo set_value('subcategory');?>'>
-</div>
-</div>
+ <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('subcatergory', $subcatergory, set_value('subcatergory')); ?>
+                 <label>Sub Catergory</label>
+            </div>
+        </div>
 <div class="row">
 <div class="input-field col s6">
 <label for="Quantity">Quantity</label>
@@ -26,12 +26,12 @@
 <input type="text" id="Name" name="name" value='<?php echo set_value('name');?>'>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Type">Type</label>
-<input type="text" id="Type" name="type" value='<?php echo set_value('type');?>'>
-</div>
-</div>
+ <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('type', $status, set_value('type')); ?>
+                 <label>Type</label>
+            </div>
+        </div>
 <div class="row">
 <div class="input-field col s6">
 <label for="Description">Description</label>
@@ -62,24 +62,24 @@
 <input type="text" id="Category" name="category" value='<?php echo set_value('category');?>'>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Color">Color</label>
-<input type="text" id="Color" name="color" value='<?php echo set_value('color');?>'>
-</div>
-</div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Size">Size</label>
-<input type="text" id="Size" name="size" value='<?php echo set_value('size');?>'>
-</div>
-</div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Size Chart">Size Chart</label>
-<input type="text" id="Size Chart" name="sizechart" value='<?php echo set_value('sizechart');?>'>
-</div>
-</div>
+ <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('color', $color, set_value('color')); ?>
+                 <label>Color</label>
+            </div>
+        </div>
+ <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('size', $size, set_value('size')); ?>
+                 <label>Size</label>
+            </div>
+        </div>
+ <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('sizechart', $sizechart, set_value('sizechart')); ?>
+                 <label>Size Chart</label>
+            </div>
+        </div>
  <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('status', $status, set_value('status')); ?>
