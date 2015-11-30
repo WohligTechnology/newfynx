@@ -36,5 +36,17 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_color` WHERE `id`='$id'");
 return $query;
 }
+     public function getcolordropdown()
+    {
+        $query = $this->db->query('SELECT * FROM `fynx_color`  ORDER BY `id` ASC')->result();
+        $return=array(
+		"" => "Choose color"
+		);
+        foreach ($query as $row) {
+            $return[$row->id] = $row->name;
+        }
+
+        return $return;
+    }
 }
 ?>

@@ -36,5 +36,18 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_subcategory` WHERE `id`='$id'");
 return $query;
 }
+     public function getsubcategorydropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `fynx_subcategory`  ORDER BY `id` ASC")->result();
+		$return=array(
+		"" => ""
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
 }
 ?>

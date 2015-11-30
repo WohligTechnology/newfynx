@@ -36,5 +36,17 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_size` WHERE `id`='$id'");
 return $query;
 }
+    public function getsizedropdown()
+    {
+        $query = $this->db->query('SELECT * FROM `fynx_size`  ORDER BY `id` ASC')->result();
+        $return=array(
+		"" => "Choose Size"
+		);
+        foreach ($query as $row) {
+            $return[$row->id] = $row->name;
+        }
+
+        return $return;
+    }
 }
 ?>

@@ -50,7 +50,7 @@
 						$page2=$pieces[1];
 					$submenus = $this->menu_model->getsubmenus($row->id);
 					?>
-                        <li class="<?php if($page==$page2 || $activemenu == strtolower($row->name) || $page == strtolower($row->name)) { echo 'active'; } //echo $page2;
+                        <li class="<?php if($page==$page2 ||  $page == strtolower($row->name)) {  } 
 					if(count($submenus > 0)) 
 					{ 
 						$pages =  $this->menu_model->getpages($row->id);

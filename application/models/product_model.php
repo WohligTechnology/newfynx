@@ -24,7 +24,7 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_product")->row();
 return $query;
 }
-public function edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,"sku" => $sku)
+public function edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status, $sku)
 {
 $data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $name,"type" => $type,"description" => $description,"visibility" => $visibility,"price" => $price,"relatedproduct" => $relatedproduct,"category" => $category,"color" => $color,"size" => $size,"sizechart" => $sizechart,"status" => $status,"sku" => $sku);
 $this->db->where( "id", $id );
@@ -36,5 +36,26 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_product` WHERE `id`='$id'");
 return $query;
 }
+    	public function getproductdropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `fynx_product`  ORDER BY `id` ASC")->result();
+		$return=array(
+		
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
+    public function getvisibility()
+	{
+		$status= array(
+			 "1" => "Yes",
+			 "0" => "No",
+			);
+		return $status;
+	}
 }
 ?>

@@ -36,5 +36,17 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_sizechart` WHERE `id`='$id'");
 return $query;
 }
+    public function getsizechartdropdown()
+    {
+        $query = $this->db->query('SELECT * FROM `fynx_sizechart`  ORDER BY `id` ASC')->result();
+        $return=array(
+		"" => "Choose Sizechart"
+		);
+        foreach ($query as $row) {
+            $return[$row->id] = $row->name;
+        }
+
+        return $return;
+    }
 }
 ?>

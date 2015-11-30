@@ -36,5 +36,17 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_type` WHERE `id`='$id'");
 return $query;
 }
+    public function gettypedropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `fynx_type`  ORDER BY `id` ASC")->result();
+		$return=array(
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
 }
 ?>
