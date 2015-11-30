@@ -40,7 +40,7 @@ return $query;
 	{
 		$query=$this->db->query("SELECT * FROM `orderstatus` ORDER BY `name` ASC" )->result();
 		$return=array(
-		
+		"" => "Choose an option"
 		);
 		
 		foreach($query as $row)

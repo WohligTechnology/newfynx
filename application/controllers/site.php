@@ -1084,7 +1084,6 @@ $data["page"]="createproduct";
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 		$data['visibility']=$this->product_model->getvisibility();
-       
         $data['type']=$this->type_model->gettypedropdown();
         $data['size']=$this->size_model->getsizedropdown();
         $data['color']=$this->color_model->getcolordropdown();
@@ -1599,6 +1598,7 @@ public function createdesigns()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createdesigns";
+$data[ 'designer' ] =$this->designers_model->getdesignerdropdown();
 $data["title"]="Create designs";
 $this->load->view("template",$data);
 }
@@ -1614,6 +1614,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createdesigns";
+$data[ 'designer' ] =$this->designers_model->getdesignerdropdown();
 $data["title"]="Create designs";
 $this->load->view("template",$data);
 }
@@ -1636,6 +1637,7 @@ public function editdesigns()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editdesigns";
+$data[ 'designer' ] =$this->designers_model->getdesignerdropdown();
 $data["title"]="Edit designs";
 $data["before"]=$this->designs_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1653,6 +1655,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editdesigns";
+$data[ 'designer' ] =$this->designers_model->getdesignerdropdown();
 $data["title"]="Edit designs";
 $data["before"]=$this->designs_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);

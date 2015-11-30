@@ -40,6 +40,7 @@ return $query;
 	{
 		$query=$this->db->query("SELECT * FROM `fynx_type`  ORDER BY `id` ASC")->result();
 		$return=array(
+            "" => "Choose an option"
 		);
 		foreach($query as $row)
 		{

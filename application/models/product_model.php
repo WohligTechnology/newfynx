@@ -40,7 +40,7 @@ return $query;
 	{
 		$query=$this->db->query("SELECT * FROM `fynx_product`  ORDER BY `id` ASC")->result();
 		$return=array(
-		
+		"" => "Choose an option"
 		);
 		foreach($query as $row)
 		{
@@ -52,6 +52,7 @@ return $query;
     public function getvisibility()
 	{
 		$status= array(
+            "" => "Choose an option",
 			 "1" => "Yes",
 			 "0" => "No",
 			);

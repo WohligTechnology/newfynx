@@ -28,7 +28,7 @@
 </div>
  <div class="row">
             <div class="input-field col s12 m8">
-                <?php echo form_dropdown('type', $status, set_value('type')); ?>
+                <?php echo form_dropdown('type', $type, set_value('type')); ?>
                  <label>Type</label>
             </div>
         </div>
