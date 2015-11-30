@@ -1080,7 +1080,7 @@ public function createproduct()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createproduct";
-    $data['relatedproduct']=$this->product_model->getproductdropdown();
+    $data['product']=$this->product_model->getproductdropdown();
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 		$data['visibility']=$this->product_model->getvisibility();
@@ -1155,15 +1155,16 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editproduct";
 $data["page2"]="block/productblock";
-    $data['relatedproduct']=$this->product_model->getproductdropdown();
-		$data['category']=$this->category_model->getcategorydropdown();
-		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
-		$data['visibility']=$this->product_model->getvisibility();
-       
-        $data['type']=$this->type_model->gettypedropdown();
-        $data['size']=$this->size_model->getsizedropdown();
-        $data['color']=$this->color_model->getcolordropdown();
-        $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['category']=$this->category_model->getcategorydropdown();
+$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
+$data['visibility']=$this->product_model->getvisibility();
+$data['type']=$this->type_model->gettypedropdown();
+$data['size']=$this->size_model->getsizedropdown();
+$data['color']=$this->color_model->getcolordropdown();
+$data['sizechart']=$this->sizechart_model->getsizechartdropdown();
 $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit product";
 $data["before"]=$this->product_model->beforeedit($this->input->get("id"));
@@ -1242,9 +1243,12 @@ public function viewproductimage()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
 $data["base_url"]=site_url("site/viewproductimagejson");
 $data["title"]="View productimage";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 function viewproductimagejson()
 {
