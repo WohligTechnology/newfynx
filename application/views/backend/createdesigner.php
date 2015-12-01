@@ -9,7 +9,7 @@
 <input type="email" id="Email Id" name="email" value='<?php echo set_value('email');?>'>
 </div>
 </div>
-<div class="row">
+<div class="row" style="display:none">
 <div class="input-field col s6">
 <label for="No of Designs">No of Designs</label>
 <input type="text" id="No of Designs" name="noofdesigns" value='<?php echo set_value('noofdesigns');?>'>

@@ -8,6 +8,17 @@ public function create($designer,$image,$status,$timestamp)
 $data=array("designer" => $designer,"image" => $image,"status" => $status);
 $query=$this->db->insert( "fynx_designs", $data );
 $id=$this->db->insert_id();
+    
+    $fromuser=$designer;
+ $query1=$this->db->query("SELECT COUNT(*) as `count` FROM `fynx_designs` WHERE `designer`=$fromuser")->row();
+        $designcount=$query1->count;
+     
+        $data  = array(
+			'noofdesigns' => $designcount
+		);
+		$this->db->where( 'id', $fromuser );
+		$this->db->update( 'fynx_designer', $data );
+		return  1;    
 if(!$query)
 return  0;
 else

@@ -3,27 +3,41 @@
 <h4 class="pad-left-15">Create Product</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createproductsubmit");?>' enctype= 'multipart/form-data'>
- <div class="row">
-            <div class="input-field col s12 m8">
-                <?php echo form_dropdown('subcategory', $subcategory, set_value('subcategory')); ?>
-                 <label>Sub Category</label>
-            </div>
-        </div>
-<div class="row">
+
+
+    <div class="row">
 <div class="input-field col s6">
-<label for="Quantity">Quantity</label>
-<input type="text" id="Quantity" name="quantity" value='<?php echo set_value('quantity');?>'>
+<label for="Name">Name</label>
+<input type="text" id="Name" name="name" value='<?php echo set_value('name');?>'>
 </div>
-</div><div class="row">
+</div>
+    <div class="row">
 <div class="input-field col s6">
 <label for="sku">Sku</label>
 <input type="text" id="sku" name="sku" value='<?php echo set_value('sku');?>'>
 </div>
 </div>
-<div class="row">
+ <div class="row">
+           <div class="col s12 m6">
+               <textarea id="some-textarea" name="content" placeholder="Description ..."><?php echo set_value('description');?></textarea>
+           </div>
+        </div>
+    <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('visibility', $visibility, set_value('visibility')); ?>
+                 <label> Visibility</label>
+            </div>
+        </div>
+     <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('status', $status, set_value('status')); ?>
+                 <label>Status</label>
+            </div>
+        </div>
+    <div class="row">
 <div class="input-field col s6">
-<label for="Name">Name</label>
-<input type="text" id="Name" name="name" value='<?php echo set_value('name');?>'>
+<label for="Quantity">Quantity</label>
+<input type="text" id="Quantity" name="quantity" value='<?php echo set_value('quantity');?>'>
 </div>
 </div>
  <div class="row">
@@ -32,34 +46,25 @@
                  <label>Type</label>
             </div>
         </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Description">Description</label>
-<input type="text" id="Description" name="description" value='<?php echo set_value('description');?>'>
-</div>
-</div>
-<div class="row">
-            <div class="input-field col s12 m8">
-                <?php echo form_dropdown('visibility', $visibility, set_value('visibility')); ?>
-                 <label> Visibility</label>
-            </div>
-        </div>
+
+
 <div class="row">
 <div class="input-field col s6">
 <label for="Price">Price</label>
 <input type="text" id="Price" name="price" value='<?php echo set_value('price');?>'>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Related Product">Related Product</label>
-<input type="text" id="Related Product" name="relatedproduct" value='<?php echo set_value('relatedproduct');?>'>
-</div>
-</div>
+
 <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('category', $category, set_value('category')); ?>
                  <label> Category</label>
+            </div>
+        </div>
+     <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('subcategory', $subcategory, set_value('subcategory')); ?>
+                 <label>Sub Category</label>
             </div>
         </div>
  <div class="row">
@@ -80,12 +85,71 @@
                  <label>Size Chart</label>
             </div>
         </div>
- <div class="row">
-            <div class="input-field col s12 m8">
-                <?php echo form_dropdown('status', $status, set_value('status')); ?>
-                 <label>Status</label>
-            </div>
-        </div>
+<div class="row">
+<div class="input-field col s6">
+<label for="Related Product">Related Product</label>
+<input type="text" id="Related Product" name="relatedproduct" value='<?php echo set_value('relatedproduct');?>'>
+</div>
+</div>
+    <div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image1</span>
+<input type="file" name="image1" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image1');?>'>
+</div>
+</div>
+</div>
+    
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image2</span>
+<input type="file" name="image2" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image2');?>'>
+</div>
+</div>
+</div>
+    
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image3</span>
+<input type="file" name="image3" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image3');?>'>
+</div>
+</div>
+</div>
+    
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image4</span>
+<input type="file" name="image4" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image4');?>'>
+</div>
+</div>
+</div>
+    
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image5</span>
+<input type="file" name="image5" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image5');?>'>
+</div>
+</div>
+</div>
 <div class="row">
 <div class="col s12 m6">
 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>

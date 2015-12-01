@@ -1146,7 +1146,45 @@ $size=$this->input->get_post("size");
 $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
     $sku=$this->input->get_post("sku");
-if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku)==0)
+     $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
+    $filename="image3";
+			$image3="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image3=$uploaddata['file_name'];
+			}
+    $filename="image4";
+			$image4="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image4=$uploaddata['file_name'];
+			}
+    $filename="image5";
+			$image5="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image5=$uploaddata['file_name'];
+			}
+if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5)==0)
 $data["alerterror"]="New product could not be created.";
 else
 $data["alertsuccess"]="product created Successfully.";
@@ -1227,7 +1265,45 @@ $size=$this->input->get_post("size");
 $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
 $sku=$this->input->get_post("sku");
-if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku)==0)
+     $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
+    $filename="image3";
+			$image3="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image3=$uploaddata['file_name'];
+			}
+    $filename="image4";
+			$image4="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image4=$uploaddata['file_name'];
+			}
+    $filename="image5";
+			$image5="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image5=$uploaddata['file_name'];
+			}
+if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5)==0)
 $data["alerterror"]="New product could not be Updated.";
 else
 $data["alertsuccess"]="product Updated Successfully.";
@@ -4172,6 +4248,17 @@ $this->load->view("redirect",$data);
     $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `contact`");
     $this->load->view("json",$data);
 }
+    function printorderinvoice()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'category' ] =$this->category_model->getcategorydropdown();
+		$data[ 'table' ] =$this->order_model->getorderitem($this->input->get('id'));
+		$data['before']=$this->order_model->beforeedit($this->input->get('id'));
+        $data['id']=$this->input->get('id');
+		$data['page']='orderinvoice';
+		$this->load->view('templateinvoice',$data);
+	}
 
 }
 ?>

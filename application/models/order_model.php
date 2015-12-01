@@ -62,5 +62,14 @@ return $query;
 		
 		return $return;
 	}
+    function getorderitem($id)
+	{
+        $query=$this->db->query("SELECT `fynx_orderitem`.`id`,`fynx_order`.`firstname`,`fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`product`.`name`,`product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+		INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` 
+		INNER JOIN `product` ON `product`.`id`=`fynx_orderitem`.`product` AND `fynx_orderitem`.`order`='$id'
+        " )->result();
+		
+		return $query;
+	}
 }
 ?>
