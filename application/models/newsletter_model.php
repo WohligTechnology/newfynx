@@ -36,5 +36,12 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_newsletter` WHERE `id`='$id'");
 return $query;
 }
+    public function beforeeditcontact($id)
+{
+$this->db->where("id",$id);
+$query=$this->db->get("contact")->row();
+return $query;
+}
+    
 }
 ?>
