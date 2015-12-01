@@ -36,5 +36,11 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_productimage` WHERE `id`='$id'");
 return $query;
 }
+     public function getImageById($id)
+    {
+        $query = $this->db->query('SELECT `image` FROM `fynx_productimage` WHERE `id`=('.$this->db->escape($id).')')->row();
+
+        return $query;
+    }
 }
 ?>

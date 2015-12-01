@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Edit product</h4>
+<h4 class="pad-left-15">Edit Product</h4>
 </div>
 </div>
 <div class="row">
@@ -21,7 +21,7 @@
 <div class="row">
 <div class="input-field col s6">
 <label for="sku">Sku</label>
-<input type="text" id="sku" name="sku" value='<?php echo set_value('sku',$before->quantity);?>'>
+<input type="text" id="sku" name="sku" value='<?php echo set_value('sku',$before->sku);?>'>
 </div>
 </div>
 <div class="row">
@@ -43,11 +43,11 @@
 </div>
 </div>
 <div class="row">
-<div class="input-field col s6">
-<label for="Visibility">Visibility</label>
-<input type="text" id="Visibility" name="visibility" value='<?php echo set_value('visibility',$before->visibility);?>'>
-</div>
-</div>
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('visibility', $visibility, set_value('visibility',$before->visibility)); ?>
+                 <label> Visibility</label>
+            </div>
+        </div>
 <div class="row">
 <div class="input-field col s6">
 <label for="Price">Price</label>
@@ -61,11 +61,11 @@
 </div>
 </div>
 <div class="row">
-<div class="input-field col s6">
-<label for="Category">Category</label>
-<input type="text" id="Category" name="category" value='<?php echo set_value('category',$before->category);?>'>
-</div>
-</div>
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('category', $category, set_value('category')); ?>
+                 <label> Category</label>
+            </div>
+        </div>
 <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('color', $color, set_value('color',$before->color)); ?>

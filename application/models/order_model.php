@@ -49,5 +49,18 @@ return $query;
 		}
 		return $return;
 	}
+    public function getorderdropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `fynx_order`  ORDER BY `id` ASC")->result();
+		$return=array(
+		"" => ""
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->firstname." ".$row->lastname;
+		}
+		
+		return $return;
+	}
 }
 ?>

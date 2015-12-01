@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create product</h4>
+<h4 class="pad-left-15">Create Product</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createproductsubmit");?>' enctype= 'multipart/form-data'>
  <div class="row">
@@ -39,11 +39,11 @@
 </div>
 </div>
 <div class="row">
-<div class="input-field col s6">
-<label for="Visibility">Visibility</label>
-<input type="text" id="Visibility" name="visibility" value='<?php echo set_value('visibility');?>'>
-</div>
-</div>
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('visibility', $visibility, set_value('visibility')); ?>
+                 <label> Visibility</label>
+            </div>
+        </div>
 <div class="row">
 <div class="input-field col s6">
 <label for="Price">Price</label>
@@ -57,11 +57,11 @@
 </div>
 </div>
 <div class="row">
-<div class="input-field col s6">
-<label for="Category">Category</label>
-<input type="text" id="Category" name="category" value='<?php echo set_value('category');?>'>
-</div>
-</div>
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('category', $category, set_value('category')); ?>
+                 <label> Category</label>
+            </div>
+        </div>
  <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('color', $color, set_value('color')); ?>

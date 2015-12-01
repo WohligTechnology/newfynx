@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Edit orderitem</h4>
+<h4 class="pad-left-15">Edit Order Item</h4>
 </div>
 </div>
 <div class="row">
@@ -18,10 +18,10 @@
 <label for="Order">Order</label>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Product">Product</label>
-<input type="text" id="Product" name="product" value='<?php echo set_value('product',$before->product);?>'>
+<div class=" row">
+<div class=" input-field col s12 m6">
+<?php echo form_dropdown("product",$product,set_value('product',$before->product));?>
+<label for="product">Product</label>
 </div>
 </div>
 <div class="row">
@@ -45,7 +45,7 @@
 <div class="row">
 <div class="col s6">
 <button type="submit" class="btn btn-primary waves-effect waves-light  blue darken-4">Save</button>
-<a href='<?php echo site_url("site/vieworderitem"); ?>' class='btn btn-secondary waves-effect waves-light red'>Cancel</a>
+<a href='<?php echo site_url("site/vieworderitem?id=").$this->input->get("productid"); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>
 </div>
 </div>
 </form>

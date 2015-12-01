@@ -48,5 +48,12 @@ return $query;
 
         return $return;
     }
+      public function getImageById($id)
+    {
+        $query = $this->db->query('SELECT `image` FROM `fynx_sizechart` WHERE `id`=('.$this->db->escape($id).')')->row();
+
+        return $query;
+    
+    }
 }
 ?>

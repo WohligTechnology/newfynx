@@ -1,12 +1,12 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create newsletter</h4>
+<h4 class="pad-left-15">Create Newsletter</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createnewslettersubmit");?>' enctype= 'multipart/form-data'>
-<div class="row">
-<div class="input-field col s6">
-<label for="User">User</label>
-<input type="text" id="User" name="user" value='<?php echo set_value('user');?>'>
+<div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("user",$user,set_value('user'));?>
+<label>user</label>
 </div>
 </div>
 <div class="row">
@@ -15,10 +15,10 @@
 <input type="email" id="Email Id" name="email" value='<?php echo set_value('email');?>'>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Status">Status</label>
-<input type="text" id="Status" name="status" value='<?php echo set_value('status');?>'>
+<div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("status",$status,set_value('status'));?>
+<label>Status</label>
 </div>
 </div>
 <div class="row">

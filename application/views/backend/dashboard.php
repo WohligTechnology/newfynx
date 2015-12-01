@@ -17,7 +17,7 @@
             <div class="card red darken-1">
                 <div class="card-content white-text text-center">
                     <i class="large mdi-action-account-child block"></i>
-                    <span class="card-title"><?php echo $usercount;?> Users</span>
+<!--                    <span class="card-title"><?php echo $usercount;?> Users</span>-->
                 </div>
             </div>
         </div>

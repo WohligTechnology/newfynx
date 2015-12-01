@@ -5,7 +5,7 @@ class designs_model extends CI_Model
 {
 public function create($designer,$image,$status,$timestamp)
 {
-$data=array("designer" => $designer,"image" => $image,"status" => $status,"timestamp" => $timestamp);
+$data=array("designer" => $designer,"image" => $image,"status" => $status);
 $query=$this->db->insert( "fynx_designs", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -36,5 +36,21 @@ public function delete($id)
 $query=$this->db->query("DELETE FROM `fynx_designs` WHERE `id`='$id'");
 return $query;
 }
+    public function getstatusdropdown()
+	{
+		$status= array(
+			 "1" => "Approved",
+			 "2" => "Waiting",
+			 "3" => "Reject",
+			 "4" => "Publish"
+			);
+		return $status;
+	}
+    public function getImageById($id)
+    {
+        $query = $this->db->query('SELECT `image` FROM `fynx_designs` WHERE `id`=('.$this->db->escape($id).')')->row();
+
+        return $query;
+    }
 }
 ?>

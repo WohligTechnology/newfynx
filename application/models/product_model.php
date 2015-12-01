@@ -58,5 +58,18 @@ return $query;
 			);
 		return $status;
 	}
+    public function getcategorydropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `fynx_category`  ORDER BY `id` ASC")->result();
+		$return=array(
+		
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
 }
 ?>

@@ -1,14 +1,16 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create size</h4>
+<h4 class="pad-left-15">Create Size</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createsizesubmit");?>' enctype= 'multipart/form-data'>
+<!--
  <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('status', $status, set_value('status',$before->status)); ?>
                  <label>Status</label>
             </div>
         </div>
+-->
 <div class="row">
 <div class="input-field col s6">
 <label for="Name">Name</label>

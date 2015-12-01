@@ -243,9 +243,8 @@ class Site extends CI_Controller
 		$data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
 		$data['before']=$this->user_model->beforeedit($this->input->get('id'));
 		$data['page']='edituser';
-		$data['page2']='block/userblock';
 		$data['title']='Edit User';
-		$this->load->view('templatewith2',$data);
+		$this->load->view('template',$data);
 	}
 	function editusersubmit()
 	{
@@ -1057,6 +1056,12 @@ $elements[13]->field="`fynx_product`.`status`";
 $elements[13]->sort="1";
 $elements[13]->header="Status";
 $elements[13]->alias="status";
+
+$elements[14]=new stdClass();
+$elements[14]->field="`fynx_product`.`sku`";
+$elements[14]->sort="1";
+$elements[14]->header="sku";
+$elements[14]->alias="sku";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -1080,7 +1085,7 @@ public function createproduct()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createproduct";
-    $data['product']=$this->product_model->getproductdropdown();
+    
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 		$data['visibility']=$this->product_model->getvisibility();
@@ -1221,7 +1226,7 @@ $color=$this->input->get_post("color");
 $size=$this->input->get_post("size");
 $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
-$status=$this->input->get_post("sku");
+$sku=$this->input->get_post("sku");
 if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku)==0)
 $data["alerterror"]="New product could not be Updated.";
 else
@@ -1246,12 +1251,13 @@ $data["page"]="viewproductimage";
 $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
-$data["base_url"]=site_url("site/viewproductimagejson");
+$data["base_url"]=site_url("site/viewproductimagejson?id=").$this->input->get('id');
 $data["title"]="View productimage";
 $this->load->view("templatewith2",$data);
 }
 function viewproductimagejson()
 {
+$id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`fynx_productimage`.`id`";
@@ -1292,7 +1298,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_productimage`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_productimage`","WHERE `fynx_productimage`.`product`='$id'");
 $this->load->view("json",$data);
 }
 
@@ -1301,8 +1307,13 @@ public function createproductimage()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Create productimage";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function createproductimagesubmit() 
 {
@@ -1316,6 +1327,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createproductimage";
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Create productimage";
 $this->load->view("template",$data);
 }
@@ -1323,14 +1336,47 @@ else
 {
 $product=$this->input->get_post("product");
 $order=$this->input->get_post("order");
-$image=$this->input->get_post("image");
+//$image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
+  $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $image = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
 if($this->productimage_model->create($product,$order,$image,$status)==0)
 $data["alerterror"]="New productimage could not be created.";
 else
 $data["alertsuccess"]="productimage created Successfully.";
-$data["redirect"]="site/viewproductimage";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproductimage?id=".$product;
+$this->load->view("redirect2",$data);
 }
 }
 public function editproductimage()
@@ -1339,9 +1385,13 @@ $access=array("1");
 $this->checkaccess($access);
       $data['status']=$this->user_model->getstatusdropdown();
 $data["page"]="editproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+$data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editproductimagesubmit()
 {
@@ -1356,6 +1406,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editproductimage";
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1367,12 +1419,29 @@ $product=$this->input->get_post("product");
 $order=$this->input->get_post("order");
 $image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
+ $config['upload_path'] = './uploads/';
+						$config['allowed_types'] = 'gif|jpg|png|jpeg';
+						$this->load->library('upload', $config);
+						$filename="image";
+						$image="";
+						if (  $this->upload->do_upload($filename))
+						{
+							$uploaddata = $this->upload->data();
+							$image=$uploaddata['file_name'];
+						}
+
+						if($image=="")
+						{
+						$image=$this->productimage_model->getimagebyid($id);
+						   // print_r($image);
+							$image=$image->image;
+						}
 if($this->productimage_model->edit($id,$product,$order,$image,$status)==0)
 $data["alerterror"]="New productimage could not be Updated.";
 else
 $data["alertsuccess"]="productimage Updated Successfully.";
-$data["redirect"]="site/viewproductimage";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproductimage?id=".$product;
+$this->load->view("redirect2",$data);
 }
 }
 public function deleteproductimage()
@@ -1380,8 +1449,8 @@ public function deleteproductimage()
 $access=array("1");
 $this->checkaccess($access);
 $this->productimage_model->delete($this->input->get("id"));
-$data["redirect"]="site/viewproductimage";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproductimage?id=".$this->input->get("productid");
+$this->load->view("redirect2",$data);
 }
 public function viewdesigner()
 {
@@ -1494,9 +1563,12 @@ public function editdesigner()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editdesigner";
+$data["page2"]="block/designblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
 $data["title"]="Edit designer";
 $data["before"]=$this->designer_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editdesignersubmit()
 {
@@ -1547,12 +1619,16 @@ public function viewdesigns()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewdesigns";
-$data["base_url"]=site_url("site/viewdesignsjson");
+$data["page2"]="block/designblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+$data["base_url"]=site_url("site/viewdesignsjson?id=").$this->input->get("id");
 $data["title"]="View designs";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 function viewdesignsjson()
 {
+$id=$this->input->get("id");
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`fynx_designs`.`id`";
@@ -1593,7 +1669,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_designs`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_designs`","WHERE `fynx_designs`.`designer`='$id'");
 $this->load->view("json",$data);
 }
 
@@ -1603,9 +1679,13 @@ $access=array("1");
 $this->checkaccess($access);
        $data['status']=$this->user_model->getstatusdropdown();
 $data["page"]="createdesigns";
+$data["page2"]="block/designblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+    $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Create designs";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function createdesignssubmit() 
 {
@@ -1618,6 +1698,7 @@ $this->form_validation->set_rules("timestamp","Timestamp","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
+    $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data["page"]="createdesigns";
        $data['status']=$this->user_model->getstatusdropdown();
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
@@ -1627,15 +1708,48 @@ $this->load->view("template",$data);
 else
 {
 $designer=$this->input->get_post("designer");
-$image=$this->input->get_post("image");
+//$image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
 $timestamp=$this->input->get_post("timestamp");
+  $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $image = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
 if($this->designs_model->create($designer,$image,$status,$timestamp)==0)
 $data["alerterror"]="New designs could not be created.";
 else
 $data["alertsuccess"]="designs created Successfully.";
-$data["redirect"]="site/viewdesigns";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewdesigns?id=".$designer;
+$this->load->view("redirect2",$data);
 }
 }
 public function editdesigns()
@@ -1643,10 +1757,14 @@ public function editdesigns()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editdesigns";
+$data["page2"]="block/designblock";
+$data["before1"]=$this->input->get("id");
+    $data[ 'status' ] =$this->designs_model->getstatusdropdown();
+$data["before2"]=$this->input->get("id");
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Edit designs";
 $data["before"]=$this->designs_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editdesignssubmit()
 {
@@ -1660,6 +1778,7 @@ $this->form_validation->set_rules("timestamp","Timestamp","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
+    $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data["page"]="editdesigns";
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Edit designs";
@@ -1673,12 +1792,29 @@ $designer=$this->input->get_post("designer");
 $image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
 $timestamp=$this->input->get_post("timestamp");
+     $config['upload_path'] = './uploads/';
+						$config['allowed_types'] = 'gif|jpg|png|jpeg';
+						$this->load->library('upload', $config);
+						$filename="image";
+						$image="";
+						if (  $this->upload->do_upload($filename))
+						{
+							$uploaddata = $this->upload->data();
+							$image=$uploaddata['file_name'];
+						}
+
+						if($image=="")
+						{
+						$image=$this->designs_model->getimagebyid($id);
+						   // print_r($image);
+							$image=$image->image;
+						}
 if($this->designs_model->edit($id,$designer,$image,$status,$timestamp)==0)
 $data["alerterror"]="New designs could not be Updated.";
 else
 $data["alertsuccess"]="designs Updated Successfully.";
-$data["redirect"]="site/viewdesigns";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewdesigns?id=".$designer;
+$this->load->view("redirect2",$data);
 }
 }
 public function deletedesigns()
@@ -1686,8 +1822,9 @@ public function deletedesigns()
 $access=array("1");
 $this->checkaccess($access);
 $this->designs_model->delete($this->input->get("id"));
-$data["redirect"]="site/viewdesigns";
-$this->load->view("redirect",$data);
+$designer=$this->input->get("id");
+$data["redirect"]="site/viewdesigns?id=".$designer;
+$this->load->view("redirect2",$data);
 }
 public function viewhomeslide()
 {
@@ -1774,6 +1911,7 @@ public function createhomeslide()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createhomeslide";
+$data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create homeslide";
 $this->load->view("template",$data);
 }
@@ -1783,6 +1921,7 @@ $access=array("1");
 $this->checkaccess($access);
 $this->form_validation->set_rules("name","Name","trim");
 $this->form_validation->set_rules("link","Link","trim");
+$data['status']=$this->user_model->getstatusdropdown();
 $this->form_validation->set_rules("target","Target","trim");
 $this->form_validation->set_rules("status","Status","trim");
 $this->form_validation->set_rules("image","Image","trim");
@@ -1794,6 +1933,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createhomeslide";
+$data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create homeslide";
 $this->load->view("template",$data);
 }
@@ -1803,11 +1943,44 @@ $name=$this->input->get_post("name");
 $link=$this->input->get_post("link");
 $target=$this->input->get_post("target");
 $status=$this->input->get_post("status");
-$image=$this->input->get_post("image");
+//$image=$this->input->get_post("image");
 $template=$this->input->get_post("template");
 $class=$this->input->get_post("class");
 $text=$this->input->get_post("text");
 $centeralign=$this->input->get_post("centeralign");
+  $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $image = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
 if($this->homeslide_model->create($name,$link,$target,$status,$image,$template,$class,$text,$centeralign)==0)
 $data["alerterror"]="New homeslide could not be created.";
 else
@@ -1821,6 +1994,7 @@ public function edithomeslide()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="edithomeslide";
+$data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit homeslide";
 $data["before"]=$this->homeslide_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1843,6 +2017,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="edithomeslide";
+$data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit homeslide";
 $data["before"]=$this->homeslide_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1859,6 +2034,23 @@ $template=$this->input->get_post("template");
 $class=$this->input->get_post("class");
 $text=$this->input->get_post("text");
 $centeralign=$this->input->get_post("centeralign");
+ $config['upload_path'] = './uploads/';
+						$config['allowed_types'] = 'gif|jpg|png|jpeg';
+						$this->load->library('upload', $config);
+						$filename="image";
+						$image="";
+						if (  $this->upload->do_upload($filename))
+						{
+							$uploaddata = $this->upload->data();
+							$image=$uploaddata['file_name'];
+						}
+
+						if($image=="")
+						{
+						$image=$this->homeslide_model->getimagebyid($id);
+						   // print_r($image);
+							$image=$image->image;
+						}
 if($this->homeslide_model->edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign)==0)
 $data["alerterror"]="New homeslide could not be Updated.";
 else
@@ -1930,6 +2122,7 @@ public function createtype()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createtype";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create type";
 $this->load->view("template",$data);
 }
@@ -1944,6 +2137,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createtype";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create type";
 $this->load->view("template",$data);
 }
@@ -1965,6 +2159,7 @@ public function edittype()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="edittype";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit type";
 $data["before"]=$this->type_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1981,6 +2176,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="edittype";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit type";
 $data["before"]=$this->type_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2077,6 +2273,7 @@ public function createcategory()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create category";
 $this->load->view("template",$data);
 }
@@ -2094,6 +2291,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create category";
 $this->load->view("template",$data);
 }
@@ -2103,8 +2301,25 @@ $order=$this->input->get_post("order");
 $name=$this->input->get_post("name");
 $parent=$this->input->get_post("parent");
 $status=$this->input->get_post("status");
-$image1=$this->input->get_post("image1");
-$image2=$this->input->get_post("image2");
+//$image1=$this->input->get_post("image1");
+//$image2=$this->input->get_post("image2");
+    $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
 if($this->category_model->create($order,$name,$parent,$status,$image1,$image2)==0)
 $data["alerterror"]="New category could not be created.";
 else
@@ -2119,6 +2334,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editcategory";
 $data["title"]="Edit category";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["before"]=$this->category_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -2137,6 +2353,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit category";
 $data["before"]=$this->category_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2150,6 +2367,23 @@ $parent=$this->input->get_post("parent");
 $status=$this->input->get_post("status");
 $image1=$this->input->get_post("image1");
 $image2=$this->input->get_post("image2");
+    $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
 if($this->category_model->edit($id,$order,$name,$parent,$status,$image1,$image2)==0)
 $data["alerterror"]="New category could not be Updated.";
 else
@@ -2220,6 +2454,7 @@ public function createcolor()
 {
 $access=array("1");
 $this->checkaccess($access);
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["page"]="createcolor";
 $data["title"]="Create color";
 $this->load->view("template",$data);
@@ -2235,6 +2470,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createcolor";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create color";
 $this->load->view("template",$data);
 }
@@ -2256,6 +2492,7 @@ public function editcolor()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editcolor";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit color";
 $data["before"]=$this->color_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2272,6 +2509,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editcolor";
+   $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit color";
 $data["before"]=$this->color_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2668,6 +2906,8 @@ public function createsubcategory()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createsubcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
+$data['category']=$this->product_model->getcategorydropdown();
 $data["title"]="Create subcategory";
 $this->load->view("template",$data);
 }
@@ -2685,6 +2925,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createsubcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
+$data['category']=$this->product_model->getcategorydropdown();
 $data["title"]="Create subcategory";
 $this->load->view("template",$data);
 }
@@ -2694,8 +2936,25 @@ $category=$this->input->get_post("category");
 $name=$this->input->get_post("name");
 $order=$this->input->get_post("order");
 $status=$this->input->get_post("status");
-$image1=$this->input->get_post("image1");
-$image2=$this->input->get_post("image2");
+//$image1=$this->input->get_post("image1");
+//$image2=$this->input->get_post("image2");
+    $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
 if($this->subcategory_model->create($category,$name,$order,$status,$image1,$image2)==0)
 $data["alerterror"]="New subcategory could not be created.";
 else
@@ -2709,6 +2968,8 @@ public function editsubcategory()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editsubcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
+$data['category']=$this->product_model->getcategorydropdown();
 $data["title"]="Edit subcategory";
 $data["before"]=$this->subcategory_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2728,6 +2989,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editsubcategory";
+   $data['status']=$this->user_model->getstatusdropdown();
+$data['category']=$this->product_model->getcategorydropdown();
 $data["title"]="Edit subcategory";
 $data["before"]=$this->subcategory_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2741,6 +3004,23 @@ $order=$this->input->get_post("order");
 $status=$this->input->get_post("status");
 $image1=$this->input->get_post("image1");
 $image2=$this->input->get_post("image2");
+    $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			$filename="image1";
+			$image1="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image1=$uploaddata['file_name'];
+			}
+			$filename="image2";
+			$image2="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image2=$uploaddata['file_name'];
+			}
 if($this->subcategory_model->edit($id,$category,$name,$order,$status,$image1,$image2)==0)
 $data["alerterror"]="New subcategory could not be Updated.";
 else
@@ -2879,6 +3159,18 @@ $elements[21]->field="`fynx_order`.`orderstatus`";
 $elements[21]->sort="1";
 $elements[21]->header="Order Status";
 $elements[21]->alias="orderstatus";
+    
+$elements[22]=new stdClass();
+$elements[22]->field="`user`.`name`";
+$elements[22]->sort="1";
+$elements[22]->header="username";
+$elements[22]->alias="username";
+    
+$elements[23]=new stdClass();
+$elements[23]->field="`orderstatus`.`name`";
+$elements[23]->sort="1";
+$elements[23]->header="orderstatusname";
+$elements[23]->alias="orderstatusname";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -2893,7 +3185,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_order`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_order` LEFT OUTER JOIN `user` ON `user`.`id`=`fynx_order`.`user` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`");
 $this->load->view("json",$data);
 }
 
@@ -2977,11 +3269,14 @@ public function editorder()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editorder";
+$data["page2"]="block/orderblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
 $data["title"]="Edit order";
 $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editordersubmit()
 {
@@ -3064,12 +3359,16 @@ public function vieworderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="vieworderitem";
-$data["base_url"]=site_url("site/vieworderitemjson");
+$data["page2"]="block/orderblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+$data["base_url"]=site_url("site/vieworderitemjson?id=").$this->input->get("id");
 $data["title"]="View orderitem";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 function vieworderitemjson()
 {
+$id=$this->input->get("id");
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`fynx_orderitem`.`id`";
@@ -3106,6 +3405,12 @@ $elements[6]->field="`fynx_orderitem`.`finalprice`";
 $elements[6]->sort="1";
 $elements[6]->header="Final Price";
 $elements[6]->alias="finalprice";
+    
+$elements[7]=new stdClass();
+$elements[7]->field="`fynx_product`.`name`";
+$elements[7]->sort="1";
+$elements[7]->header="productname";
+$elements[7]->alias="productname";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -3120,7 +3425,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_orderitem`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_orderitem` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product`","WHERE `fynx_orderitem`.`order`=$id");
 $this->load->view("json",$data);
 }
 
@@ -3129,8 +3434,13 @@ public function createorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createorderitem";
+$data["page2"]="block/orderblock";
+$data["before1"]=$this->input->get("id");
+$data['product']=$this->product_model->getproductdropdown();
+$data["before2"]=$this->input->get("id");
+$data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Create orderitem";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function createorderitemsubmit() 
 {
@@ -3146,6 +3456,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createorderitem";
+$data['product']=$this->product_model->getproductdropdown();
+$data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Create orderitem";
 $this->load->view("template",$data);
 }
@@ -3161,8 +3473,8 @@ if($this->orderitem_model->create($discount,$order,$product,$quantity,$price,$fi
 $data["alerterror"]="New orderitem could not be created.";
 else
 $data["alertsuccess"]="orderitem created Successfully.";
-$data["redirect"]="site/vieworderitem";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/vieworderitem?id=".$order;
+$this->load->view("redirect2",$data);
 }
 }
 public function editorderitem()
@@ -3170,9 +3482,14 @@ public function editorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editorderitem";
+$data["page2"]="block/orderblock";
+$data['product']=$this->product_model->getproductdropdown();
+$data["before1"]=$this->input->get("orderid");
+$data["before2"]=$this->input->get("orderid");
+$data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Edit orderitem";
 $data["before"]=$this->orderitem_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editorderitemsubmit()
 {
@@ -3189,6 +3506,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editorderitem";
+$data['product']=$this->product_model->getproductdropdown();
+$data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Edit orderitem";
 $data["before"]=$this->orderitem_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -3206,8 +3525,8 @@ if($this->orderitem_model->edit($id,$discount,$order,$product,$quantity,$price,$
 $data["alerterror"]="New orderitem could not be Updated.";
 else
 $data["alertsuccess"]="orderitem Updated Successfully.";
-$data["redirect"]="site/vieworderitem";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/vieworderitem?id=".$order;
+$this->load->view("redirect2",$data);
 }
 }
 public function deleteorderitem()
@@ -3215,8 +3534,8 @@ public function deleteorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $this->orderitem_model->delete($this->input->get("id"));
-$data["redirect"]="site/vieworderitem";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/vieworderitem?id=".$this->input->get("productid");
+$this->load->view("redirect2",$data);
 }
 public function viewnewsletter()
 {
@@ -3250,6 +3569,12 @@ $elements[3]->field="`fynx_newsletter`.`status`";
 $elements[3]->sort="1";
 $elements[3]->header="Status";
 $elements[3]->alias="status";
+
+$elements[4]=new stdClass();
+$elements[4]->field="`user`.`name`";
+$elements[4]->sort="1";
+$elements[4]->header="username";
+$elements[4]->alias="username";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -3264,7 +3589,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_newsletter`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_newsletter` LEFT OUTER JOIN `user` ON `user`.`id`=`fynx_newsletter`.`user`");
 $this->load->view("json",$data);
 }
 
@@ -3273,6 +3598,8 @@ public function createnewsletter()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createnewsletter";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data["title"]="Create newsletter";
 $this->load->view("template",$data);
 }
@@ -3287,6 +3614,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createnewsletter";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data["title"]="Create newsletter";
 $this->load->view("template",$data);
 }
@@ -3308,6 +3637,8 @@ public function editnewsletter()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editnewsletter";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data["title"]="Edit newsletter";
 $data["before"]=$this->newsletter_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -3324,6 +3655,8 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editnewsletter";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data["title"]="Edit newsletter";
 $data["before"]=$this->newsletter_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -3523,6 +3856,7 @@ public function createsize()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createsize";
+ $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create size";
 $this->load->view("template",$data);
 }
@@ -3536,6 +3870,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createsize";
+ $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create size";
 $this->load->view("template",$data);
 }
@@ -3557,6 +3892,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editsize";
 $data["title"]="Edit size";
+ $data['status']=$this->user_model->getstatusdropdown();
 $data["before"]=$this->size_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -3571,6 +3907,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="editsize";
+ $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit size";
 $data["before"]=$this->size_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -3665,7 +4002,40 @@ $this->load->view("template",$data);
 else
 {
 $name=$this->input->get_post("name");
-$image=$this->input->get_post("image");
+//$image=$this->input->get_post("image");
+     $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $image = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
 if($this->sizechart_model->create($name,$image)==0)
 $data["alerterror"]="New sizechart could not be created.";
 else
@@ -3702,7 +4072,24 @@ else
 {
 $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
-$image=$this->input->get_post("image");
+//$image=$this->input->get_post("image");
+      $config['upload_path'] = './uploads/';
+						$config['allowed_types'] = 'gif|jpg|png|jpeg';
+						$this->load->library('upload', $config);
+						$filename="image";
+						$image="";
+						if (  $this->upload->do_upload($filename))
+						{
+							$uploaddata = $this->upload->data();
+							$image=$uploaddata['file_name'];
+						}
+
+						if($image=="")
+						{
+						$image=$this->sizechart_model->getimagebyid($id);
+						   // print_r($image);
+							$image=$image->image;
+						}
 if($this->sizechart_model->edit($id,$name,$image)==0)
 $data["alerterror"]="New sizechart could not be Updated.";
 else

@@ -5,7 +5,7 @@ class color_model extends CI_Model
 {
 public function create($name,$status,$timestamp)
 {
-$data=array("name" => $name,"status" => $status,"timestamp" => $timestamp);
+$data=array("name" => $name,"status" => $status);
 $query=$this->db->insert( "fynx_color", $data );
 $id=$this->db->insert_id();
 if(!$query)

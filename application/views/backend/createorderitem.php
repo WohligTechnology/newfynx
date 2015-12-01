@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create orderitem</h4>
+<h4 class="pad-left-15">Create Order Item</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createorderitemsubmit");?>' enctype= 'multipart/form-data'>
 <div class="row">
@@ -11,14 +11,14 @@
 </div>
 <div class=" row">
 <div class=" input-field col s6">
-<?php echo form_dropdown("order",$order,set_value('order'));?>
+<?php echo form_dropdown("order",$order,set_value('order',$this->input->get("id")));?>
 <label>Order</label>
 </div>
 </div>
-<div class="row">
-<div class="input-field col s6">
-<label for="Product">Product</label>
-<input type="text" id="Product" name="product" value='<?php echo set_value('product');?>'>
+<div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("product",$product,set_value('product'));?>
+<label>Product</label>
 </div>
 </div>
 <div class="row">
@@ -42,7 +42,7 @@
 <div class="row">
 <div class="col s12 m6">
 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>
-<a href="<?php echo site_url("site/vieworderitem"); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>
+<a href="<?php echo site_url("site/vieworderitem?id=").$this->input->get("id"); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>
 </div>
 </div>
 </form>

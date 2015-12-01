@@ -91,65 +91,7 @@
 				<label>Address</label>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Event Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="eventnotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Photo Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="photonotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Video Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="videonotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Blog Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="blognotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
+	
 
 		<div class=" form-group">
 			<div class="row">

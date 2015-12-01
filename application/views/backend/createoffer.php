@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create offer</h4>
+<h4 class="pad-left-15">Create Offer</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createoffersubmit");?>' enctype= 'multipart/form-data'>
 <div class="row">
