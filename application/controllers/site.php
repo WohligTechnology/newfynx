@@ -3436,14 +3436,14 @@ public function editorder()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editorder";
-$data["page2"]="block/orderblock";
+//$data["page2"]="block/orderblock";
 $data["before1"]=$this->input->get("id");
 $data["before2"]=$this->input->get("id");
 $data["title"]="Edit order";
 $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
 }
 public function editordersubmit()
 {
@@ -3526,12 +3526,12 @@ public function vieworderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="vieworderitem";
-$data["page2"]="block/orderblock";
+//$data["page2"]="block/orderblock";
 $data["before1"]=$this->input->get("id");
 $data["before2"]=$this->input->get("id");
 $data["base_url"]=site_url("site/vieworderitemjson?id=").$this->input->get("id");
 $data["title"]="View orderitem";
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
 }
 function vieworderitemjson()
 {
@@ -3601,13 +3601,13 @@ public function createorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createorderitem";
-$data["page2"]="block/orderblock";
+//$data["page2"]="block/orderblock";
 $data["before1"]=$this->input->get("id");
 $data['product']=$this->product_model->getproductdropdown();
 $data["before2"]=$this->input->get("id");
 $data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Create orderitem";
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
 }
 public function createorderitemsubmit() 
 {
@@ -3640,8 +3640,8 @@ if($this->orderitem_model->create($discount,$order,$product,$quantity,$price,$fi
 $data["alerterror"]="New orderitem could not be created.";
 else
 $data["alertsuccess"]="orderitem created Successfully.";
-$data["redirect"]="site/vieworderitem?id=".$order;
-$this->load->view("redirect2",$data);
+$data["redirect"]="site/vieworderitem";
+$this->load->view("redirect",$data);
 }
 }
 public function editorderitem()
@@ -3649,14 +3649,14 @@ public function editorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editorderitem";
-$data["page2"]="block/orderblock";
+//$data["page2"]="block/orderblock";
 $data['product']=$this->product_model->getproductdropdown();
 $data["before1"]=$this->input->get("orderid");
 $data["before2"]=$this->input->get("orderid");
 $data['order']=$this->order_model->getorderdropdown();
 $data["title"]="Edit orderitem";
 $data["before"]=$this->orderitem_model->beforeedit($this->input->get("id"));
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
 }
 public function editorderitemsubmit()
 {
@@ -3692,8 +3692,8 @@ if($this->orderitem_model->edit($id,$discount,$order,$product,$quantity,$price,$
 $data["alerterror"]="New orderitem could not be Updated.";
 else
 $data["alertsuccess"]="orderitem Updated Successfully.";
-$data["redirect"]="site/vieworderitem?id=".$order;
-$this->load->view("redirect2",$data);
+$data["redirect"]="site/vieworderitem";
+$this->load->view("redirect",$data);
 }
 }
 public function deleteorderitem()
@@ -3701,8 +3701,8 @@ public function deleteorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $this->orderitem_model->delete($this->input->get("id"));
-$data["redirect"]="site/vieworderitem?id=".$this->input->get("orderid");
-$this->load->view("redirect2",$data);
+$data["redirect"]="site/vieworderitem";
+$this->load->view("redirect",$data);
 }
 public function viewnewsletter()
 {
