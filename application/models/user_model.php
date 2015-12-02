@@ -32,7 +32,7 @@ class User_model extends CI_Model
 	}
 	
 	
-	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json)
+	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)
 	{
 		$data  = array(
 			'name' => $name,
@@ -43,7 +43,30 @@ class User_model extends CI_Model
             'socialid'=> $socialid,
             'image'=> $image,
             'json'=> $json,
-			'logintype' => $logintype
+			'firstname' => $firstname,
+			'lastname' => $lastname,
+			'phone' => $phone,
+			'billingaddress' => $billingaddress,
+			'billingcity' => $billingcity,
+			'billingstate' => $billingstate,
+			'billingcountry' => $billingcountry,
+			'billingpincode' => $billingpincode,
+			'billingcontact' => $billingcontact,
+			'shippingaddress' => $shippingaddress,
+			'shippingcity' => $shippingcity,
+			'shippingstate' => $shippingstate,
+			'shippingcountry' => $shippingcountry,
+			'shippingpincode' => $shippingpincode,
+			'shippingcontact' => $shippingcontact,
+			'shippingname' => $shippingname,
+			'currency' => $currency,
+			'credit' => $credit,
+			'companyname' => $companyname,
+			'registrationno' => $registrationno,
+			'vatnumber' => $vatnumber,
+			'country' => $country,
+			'fax' => $fax,
+			'gender' => $gender
 		);
 		$query=$this->db->insert( 'user', $data );
 		$id=$this->db->insert_id();
@@ -87,7 +110,7 @@ class User_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json)
+	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)
 	{
 		$data  = array(
 			'name' => $name,
@@ -97,7 +120,31 @@ class User_model extends CI_Model
             'socialid'=> $socialid,
             'image'=> $image,
             'json'=> $json,
-			'logintype' => $logintype
+			'logintype' => $logintype,
+            'firstname' => $firstname,
+			'lastname' => $lastname,
+			'phone' => $phone,
+			'billingaddress' => $billingaddress,
+			'billingcity' => $billingcity,
+			'billingstate' => $billingstate,
+			'billingcountry' => $billingcountry,
+			'billingpincode' => $billingpincode,
+			'billingcontact' => $billingcontact,
+			'shippingaddress' => $shippingaddress,
+			'shippingcity' => $shippingcity,
+			'shippingstate' => $shippingstate,
+			'shippingcountry' => $shippingcountry,
+			'shippingpincode' => $shippingpincode,
+			'shippingcontact' => $shippingcontact,
+			'shippingname' => $shippingname,
+			'currency' => $currency,
+			'credit' => $credit,
+			'companyname' => $companyname,
+			'registrationno' => $registrationno,
+			'vatnumber' => $vatnumber,
+			'country' => $country,
+			'fax' => $fax,
+			'gender' => $gender
 		);
 		if($password != "")
 			$data['password'] =md5($password);
@@ -409,7 +456,15 @@ class User_model extends CI_Model
 		
 		return $return;
 	}
-    
+    public function getgenderdropdown()
+	{
+		$status= array(
+			 "" => "Choose Gender",
+			 "1" => "Male",
+			 "2" => "Female"
+			);
+		return $status;
+	}
 	public function frontendlogout($user)
 	{
         $query=$this->db->query("SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json` FROM `user` WHERE `id`='$user' LIMIT 0,1")->row();

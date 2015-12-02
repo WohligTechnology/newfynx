@@ -27,6 +27,16 @@ return $query;
 public function edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status, $sku,$image1,$image2,$image3,$image4,$image5)
 {
 $data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $name,"type" => $type,"description" => $description,"visibility" => $visibility,"price" => $price,"relatedproduct" => $relatedproduct,"category" => $category,"color" => $color,"size" => $size,"sizechart" => $sizechart,"status" => $status,"sku" => $sku,"image1" => $image1,"image2" => $image2,"image3" => $image3,"image4" => $image4,"image5" => $image5);
+    if($image1 != "")
+			$data['image1']=$image1;
+		if($image2 != "")
+			$data['image2']=$image2;
+    if($image3 != "")
+			$data['image3']=$image3;
+    if($image4 != "")
+			$data['image4']=$image4;
+    if($image5 != "")
+			$data['image5']=$image5;
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_product", $data );
 return 1;

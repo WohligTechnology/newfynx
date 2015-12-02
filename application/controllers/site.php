@@ -62,6 +62,7 @@ class Site extends CI_Controller
 		$data['accesslevel']=$this->user_model->getaccesslevels();
 		$data[ 'status' ] =$this->user_model->getstatusdropdown();
 		$data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
+        $data['gender']=$this->user_model->getgenderdropdown();
 //        $data['category']=$this->category_model->getcategorydropdown();
 		$data[ 'page' ] = 'createuser';
 		$data[ 'title' ] = 'Create User';
@@ -83,6 +84,7 @@ class Site extends CI_Controller
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
+            $data['gender']=$this->user_model->getgenderdropdown();
 			$data['accesslevel']=$this->user_model->getaccesslevels();
             $data[ 'status' ] =$this->user_model->getstatusdropdown();
             $data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
@@ -100,8 +102,32 @@ class Site extends CI_Controller
             $socialid=$this->input->post('socialid');
             $logintype=$this->input->post('logintype');
             $json=$this->input->post('json');
-//            $category=$this->input->post('category');
+            $firstname=$this->input->post('firstname');
+            $lastname=$this->input->post('lastname');
+            $phone=$this->input->post('phone');
+            $billingaddress=$this->input->post('billingaddress');
+            $billingcity=$this->input->post('billingcity');
+            $billingstate=$this->input->post('billingstate');
+            $billingcountry=$this->input->post('billingcountry');
+            $billingpincode=$this->input->post('billingpincode');
+            $billingcontact=$this->input->post('billingcontact');
             
+            $shippingaddress=$this->input->post('shippingaddress');
+            $shippingcity=$this->input->post('shippingcity');
+            $shippingstate=$this->input->post('shippingstate');
+            $shippingcountry=$this->input->post('shippingcountry');
+            $shippingpincode=$this->input->post('shippingpincode');
+            $shippingcontact=$this->input->post('shippingcontact');
+            $shippingname=$this->input->post('shippingname');
+            $currency=$this->input->post('currency');
+            $credit=$this->input->post('credit');
+            $companyname=$this->input->post('companyname');
+            $registrationno=$this->input->post('registrationno');
+            $vatnumber=$this->input->post('vatnumber');
+            $country=$this->input->post('country');
+            $fax=$this->input->post('fax');
+            $gender=$this->input->post('gender');
+            	
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -137,7 +163,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json)==0)
+			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)==0)
 			$data['alerterror']="New user could not be created.";
 			else
 			$data['alertsuccess']="User created Successfully.";
@@ -239,12 +265,19 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$data[ 'status' ] =$this->user_model->getstatusdropdown();
+        $data["before1"]=$this->input->get('id');
+        $data["before2"]=$this->input->get('id');
+        $data["before3"]=$this->input->get('id');
+        $data["before4"]=$this->input->get('id');
+        $data["before5"]=$this->input->get('id');
 		$data['accesslevel']=$this->user_model->getaccesslevels();
+		$data['gender']=$this->user_model->getgenderdropdown();
 		$data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
 		$data['before']=$this->user_model->beforeedit($this->input->get('id'));
 		$data['page']='edituser';
+		$data['page2']='block/userblock';
 		$data['title']='Edit User';
-		$this->load->view('template',$data);
+		$this->load->view('templatewith2',$data);
 	}
 	function editusersubmit()
 	{
@@ -264,6 +297,7 @@ class Site extends CI_Controller
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
+            $data['gender']=$this->user_model->getgenderdropdown();
 			$data['accesslevel']=$this->user_model->getaccesslevels();
             $data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
 			$data['before']=$this->user_model->beforeedit($this->input->post('id'));
@@ -285,7 +319,31 @@ class Site extends CI_Controller
             $logintype=$this->input->get_post('logintype');
             $json=$this->input->get_post('json');
 //            $category=$this->input->get_post('category');
+            $firstname=$this->input->post('firstname');
+            $lastname=$this->input->post('lastname');
+            $phone=$this->input->post('phone');
+            $billingaddress=$this->input->post('billingaddress');
+            $billingcity=$this->input->post('billingcity');
+            $billingstate=$this->input->post('billingstate');
+            $billingcountry=$this->input->post('billingcountry');
+            $billingpincode=$this->input->post('billingpincode');
+            $billingcontact=$this->input->post('billingcontact');
             
+            $shippingaddress=$this->input->post('shippingaddress');
+            $shippingcity=$this->input->post('shippingcity');
+            $shippingstate=$this->input->post('shippingstate');
+            $shippingcountry=$this->input->post('shippingcountry');
+            $shippingpincode=$this->input->post('shippingpincode');
+            $shippingcontact=$this->input->post('shippingcontact');
+            $shippingname=$this->input->post('shippingname');
+            $currency=$this->input->post('currency');
+            $credit=$this->input->post('credit');
+            $companyname=$this->input->post('companyname');
+            $registrationno=$this->input->post('registrationno');
+            $vatnumber=$this->input->post('vatnumber');
+            $country=$this->input->post('country');
+            $fax=$this->input->post('fax');
+            $gender=$this->input->post('gender');
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -328,7 +386,7 @@ class Site extends CI_Controller
                 $image=$image->image;
             }
             
-			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json)==0)
+			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)==0)
 			$data['alerterror']="User Editing was unsuccesful";
 			else
 			$data['alertsuccess']="User edited Successfully.";
@@ -1898,7 +1956,7 @@ public function deletedesigns()
 $access=array("1");
 $this->checkaccess($access);
 $this->designs_model->delete($this->input->get("id"));
-$designer=$this->input->get("id");
+$designer=$this->input->get("designer");
 $data["redirect"]="site/viewdesigns?id=".$designer;
 $this->load->view("redirect2",$data);
 }
@@ -3610,7 +3668,7 @@ public function deleteorderitem()
 $access=array("1");
 $this->checkaccess($access);
 $this->orderitem_model->delete($this->input->get("id"));
-$data["redirect"]="site/vieworderitem?id=".$this->input->get("productid");
+$data["redirect"]="site/vieworderitem?id=".$this->input->get("orderid");
 $this->load->view("redirect2",$data);
 }
 public function viewnewsletter()
@@ -4258,6 +4316,18 @@ $this->load->view("redirect",$data);
         $data['id']=$this->input->get('id');
 		$data['page']='orderinvoice';
 		$this->load->view('templateinvoice',$data);
+	}
+    function printorderlabel()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'category' ] =$this->category_model->getcategorydropdown();
+		$data[ 'table' ] =$this->order_model->getorderitem($this->input->get('id'));
+		$data['before']=$this->order_model->beforeedit($this->input->get('id'));
+        $data['id']=$this->input->get('id');
+		$data['page']='templatelabel';
+		$data['title']='Edit order items';
+		$this->load->view('templatelabel',$data);
 	}
 
 }
