@@ -3318,10 +3318,16 @@ $elements[22]->header="username";
 $elements[22]->alias="username";
     
 $elements[23]=new stdClass();
-$elements[23]->field="`orderstatus`.`name`";
+$elements[23]->field="`fynx_order`.`timestamp`";
 $elements[23]->sort="1";
-$elements[23]->header="orderstatusname";
-$elements[23]->alias="orderstatusname";
+$elements[23]->header="Timestamp";
+$elements[23]->alias="timestamp";
+    
+$elements[24]=new stdClass();
+$elements[24]->field="`orderstatus`.`name`";
+$elements[24]->sort="1";
+$elements[24]->header="orderstatusname";
+$elements[24]->alias="orderstatusname";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -3342,6 +3348,9 @@ $queryarray = $data["message"]->queryresult;
     foreach($queryarray as $row)
     {
         $row->orderproduct = $this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order` = '$row->id'")->result(); 
+        $row->orderproduct = $this->db->query("SELECT `fynx_orderitem`.`id`, `fynx_orderitem`.`discount`, `fynx_orderitem`.`order`, `fynx_orderitem`.`product`,`fynx_product`.`name` as `productname`, `fynx_orderitem`.`quantity`, `fynx_orderitem`.`price`, `fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product`
+WHERE `fynx_orderitem`.`order`=$row->id")->result(); 
     }
     
 $this->load->view("json",$data);

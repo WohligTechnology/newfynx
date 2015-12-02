@@ -15,7 +15,7 @@ function drawtable(resultrow) {
     
     for(var i=0;i<resultrow.orderproduct.length;i++) {
         var row= resultrow.orderproduct[i];
-        orderitems += "<tr class=\"repeat\"> <td>"+row.product+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
+        orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
     }
     
    var strVar="";
