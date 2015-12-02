@@ -363,12 +363,18 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 .ordercard {
-    padding: 10px 20px;
-    border-bottom: 3px solid #989898;
+    border-bottom: 2px solid #989898;
 }
+
 .ordercard td,
 th {
-        padding: 5px;
+        padding: 5px 10px;
+}
+table.ordercard-table1 th {
+ border-bottom: 2px solid #989898;
+}
+    table.ordercard-table2 th {
+    font-weight: 300;
 }
 
 .drawchintantable.padding {
