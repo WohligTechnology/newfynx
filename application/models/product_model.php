@@ -5,14 +5,27 @@ class product_model extends CI_Model
 {
 public function create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5)
 {
-$data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $name,"type" => $type,"description" => $description,"visibility" => $visibility,"price" => $price,"relatedproduct" => $relatedproduct,"category" => $category,"color" => $color,"size" => $size,"sizechart" => $sizechart,"status" => $status,"sku" => $sku,"image1" => $image1,"image2" => $image2,"image3" => $image3,"image4" => $image4,"image5" => $image5);
+$data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $name,"type" => $type,"description" => $description,"visibility" => $visibility,"price" => $price,"category" => $category,"color" => $color,"size" => $size,"sizechart" => $sizechart,"status" => $status,"sku" => $sku,"image1" => $image1,"image2" => $image2,"image3" => $image3,"image4" => $image4,"image5" => $image5);
 $query=$this->db->insert( "fynx_product", $data );
 $id=$this->db->insert_id();
+    foreach($relatedproduct AS $key=>$value)
+        {
+            $this->product_model->createrelatedproduct($value,$id);
+        }
 if(!$query)
 return  0;
 else
 return  $id;
 }
+    public function createrelatedproduct($value,$productid)
+	{
+		$data  = array(
+			'relatedproduct' => $value,
+			'product' => $productid
+		);
+		$query=$this->db->insert( 'relatedproduct', $data );
+		return  1;
+	}
 public function beforeedit($id)
 {
 $this->db->where("id",$id);
@@ -81,5 +94,19 @@ return $query;
 		
 		return $return;
 	}
+    public function getrelatedproductcount($id)
+	{
+		$query=$this->db->query("SELECT `fynx_product`.`id`,`fynx_product`.`name` FROM `fynx_product` LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id` WHERE `relatedproduct`.`product`='$id'");
+		  if($query->num_rows() > 0)
+        {
+            $query=$query->result();
+            foreach($query as $row)
+            {
+                $return[]=$row->id;
+            }
+        }
+         return $return;
+	}
+    
 }
 ?>
