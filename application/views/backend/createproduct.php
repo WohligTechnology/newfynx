@@ -90,12 +90,8 @@
         </div>
         <div class="row">
             <div class="input-field col s12 m8">
-                <select multiple>
-                    <option value="" disabled selected>Choose Related Product</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                </select>
+                
+                <?php echo form_multiselect('relatedproduct', $relatedproduct, set_value('relatedproduct[]')); ?>
                 <label>Materialize Multiple Select</label>
             </div>
         </div>

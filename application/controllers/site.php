@@ -1212,6 +1212,8 @@ $description=$this->input->get_post("description");
 $visibility=$this->input->get_post("visibility");
 $price=$this->input->get_post("price");
 $relatedproduct=$this->input->get_post("relatedproduct");
+//    print_r($_POST);
+    print_r($relatedproduct);
 $category=$this->input->get_post("category");
 $color=$this->input->get_post("color");
 $size=$this->input->get_post("size");
@@ -1260,8 +1262,8 @@ if($this->product_model->create($subcategory,$quantity,$name,$type,$description,
 $data["alerterror"]="New product could not be created.";
 else
 $data["alertsuccess"]="product created Successfully.";
-$data["redirect"]="site/viewproduct";
-$this->load->view("redirect",$data);
+//$data["redirect"]="site/viewproduct";
+//$this->load->view("redirect",$data);
 }
 }
 public function editproduct()
