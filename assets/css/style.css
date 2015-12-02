@@ -67,6 +67,7 @@ footer.page-footer {
 
 input[type="search"] {
     /*    background-color: rgba(255, 255, 255, 0.3);*/
+    
     border-radius: 0px;
     background-color: #fff;
     border-radius: 3px;
@@ -270,9 +271,11 @@ ul.side-nav.fixed li a {
     display: block;
     padding: 1rem 1rem;
 }
+
 .hidden {
     display: none;
 }
+
 .panel-body ul#nav-mobile li a {
     padding: 10px 15px;
     color: #0D47A1;
@@ -286,6 +289,7 @@ ul.side-nav.fixed li a {
     color: white;
     background-color: #0D47A1;
 }
+
 .chisorting {
     background-color: white !important;
     color: #0D47A1;
@@ -329,16 +333,12 @@ textarea.materialize-textarea:focus:not([readonly]) {
     width: 8px;
     border-radius: 0px !important;
 }
-
-
 /* Track */
 
 ::-webkit-scrollbar-track {
     border: 1px solid #eee;
     border-radius: 0px !important;
 }
-
-
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
@@ -357,6 +357,20 @@ textarea.materialize-textarea:focus:not([readonly]) {
         width: 32px;
     }
 }
+
 .pagination li {
     vertical-align: middle;
+}
+
+.ordercard {
+    padding: 20px 0;
+}
+
+.ordercard td,
+th {
+    padding: 5px;
+}
+
+.drawchintantable.padding {
+       padding: 12px 0;
 }
