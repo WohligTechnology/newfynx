@@ -364,12 +364,11 @@ textarea.materialize-textarea:focus:not([readonly]) {
 
 .ordercard {
     padding: 10px 20px;
-    box-shadow: 0px 1px 1px 1px #ddd;
-    margin: 12px 0px;
+    border-bottom: 3px solid #989898;
 }
 .ordercard td,
 th {
-        padding: 5px 0px;
+        padding: 5px;
 }
 
 .drawchintantable.padding {
