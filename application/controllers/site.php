@@ -1180,7 +1180,6 @@ $this->form_validation->set_rules("type","Type","trim");
 $this->form_validation->set_rules("description","Description","trim");
 $this->form_validation->set_rules("visibility","Visibility","trim");
 $this->form_validation->set_rules("price","Price","trim");
-$this->form_validation->set_rules("relatedproduct","Related Product","trim");
 $this->form_validation->set_rules("category","Category","trim");
 $this->form_validation->set_rules("color","Color","trim");
 $this->form_validation->set_rules("size","Size","trim");
@@ -1212,8 +1211,6 @@ $description=$this->input->get_post("description");
 $visibility=$this->input->get_post("visibility");
 $price=$this->input->get_post("price");
 $relatedproduct=$this->input->get_post("relatedproduct");
-//    print_r($_POST);
-    print_r($relatedproduct);
 $category=$this->input->get_post("category");
 $color=$this->input->get_post("color");
 $size=$this->input->get_post("size");
@@ -1262,8 +1259,8 @@ if($this->product_model->create($subcategory,$quantity,$name,$type,$description,
 $data["alerterror"]="New product could not be created.";
 else
 $data["alertsuccess"]="product created Successfully.";
-//$data["redirect"]="site/viewproduct";
-//$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproduct";
+$this->load->view("redirect",$data);
 }
 }
 public function editproduct()
@@ -1273,8 +1270,10 @@ $this->checkaccess($access);
 $data["page"]="editproduct";
 //$data["page2"]="block/productblock";
 $data["before1"]=$this->input->get('id');
-$data["before2"]=$this->input->get('id');
+$productid=$this->input->get('id');
 $data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['selectedrelatedproduct']=$this->product_model->getrelatedproductcount($productid);
+    print_r($data['selectedrelatedproduct']);
 $data['category']=$this->category_model->getcategorydropdown();
 $data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 $data['visibility']=$this->product_model->getvisibility();

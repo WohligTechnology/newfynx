@@ -91,8 +91,8 @@
         <div class="row">
             <div class="input-field col s12 m8">
                 
-                <?php echo form_multiselect('relatedproduct', $relatedproduct, set_value('relatedproduct[]')); ?>
-                <label>Materialize Multiple Select</label>
+                <?php echo form_multiselect('relatedproduct[]', $relatedproduct); ?>
+                <label>Related Product</label>
             </div>
         </div>
         <script>

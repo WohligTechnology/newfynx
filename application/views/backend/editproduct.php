@@ -91,13 +91,14 @@
                  <label>Size Chart</label>
             </div>
         </div>
-
-    <div class="row">
-<div class="input-field col s6">
-<label for="Related Product">Related Product</label>
-<input type="text" id="Related Product" name="relatedproduct" value='<?php echo set_value('relatedproduct',$before->relatedproduct);?>'>
-</div>
-</div>
+  <div class="row">
+            <div class="input-field col s12 m8">
+                
+                <?php echo form_multiselect('relatedproduct[]',$relatedproduct, $selectedrelatedproduct); ?>
+                <label>Related Product</label>
+            </div>
+        </div>
+        
 <!--    // IMAGE 1-->
     
     <div class="row">
