@@ -1,8 +1,9 @@
 <div class="row">
 <div class="col s12">
+<table class="ordercard-table1"><thead> <tr> <th>Id </th> <th>Name </th> <th>Email </th> <th>Order Status</th><th>Time Stamp</th><th>Action</th> </tr></thead></table>
 <div class="row">
-<div class="col s12 drawchintantable padding">
-</div>
+<div class="drawchintantable padding">
+    </div>
 </div>
 <?php $this->chintantable->createpagination();?>
 <div class="createbuttonplacement"><a class="btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" href="<?php echo site_url("site/createorder"); ?>"data-position="top" data-delay="50" data-tooltip="Create"><i class="material-icons">add</i></a></div>
@@ -19,7 +20,7 @@ function drawtable(resultrow) {
     }
     
    var strVar="";
-strVar += "<div class=\"ordercard\"> <table  class=\"ordercard-table1\"> <thead> <tr> <th>Id <\/th> <th>Name <\/th> <th>Email <\/th> <th>Order Status<\/th><th>Time Stamp<\/th><th>Action<\/th> <\/tr><\/thead><tr> <td> <span class=\"id\">"+resultrow.id+"<\/span> <\/td><td> <span class=\"name\">"+resultrow.firstname+" " + resultrow.lastname+"<\/span> <\/td><td> <span class=\"email\">"+resultrow.email+"<\/span> <\/td><td> <span class=\"status\">"+resultrow.orderstatusname+"<\/span> <\/td><td> <span class=\"timestamp\">"+resultrow.timestamp+"<\/span><\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/editorder?id=');?>"+resultrow.id+"'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deleteorder?id='); ?>"+resultrow.id+"'><i class='material-icons propericon'>delete</i></a></td><\/tr><\/table> <table  class=\"ordercard-table2\"> <thead> <tr> <th>Product <\/th> <th>Amount <\/th> <th>Quantity <\/th> <th>Total Amount <\/th> <\/tr><\/thead> <tbody>"+orderitems+" <\/tbody> <\/table><\/div>";
+strVar += "<div class=\"ordercard\"> <table  class=\"ordercard-table1\"><tr> <td> <span class=\"id\">"+resultrow.id+"<\/span> <\/td><td> <span class=\"name\">"+resultrow.firstname+" " + resultrow.lastname+"<\/span> <\/td><td> <span class=\"email\">"+resultrow.email+"<\/span> <\/td><td> <span class=\"status\">"+resultrow.orderstatusname+"<\/span> <\/td><td> <span class=\"timestamp\">"+resultrow.timestamp+"<\/span><\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/editorder?id=');?>"+resultrow.id+"'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deleteorder?id='); ?>"+resultrow.id+"'><i class='material-icons propericon'>delete</i></a></td><\/tr><\/table> <table  class=\"ordercard-table2\"> <thead> <tr> <th>Product <\/th> <th>Amount <\/th> <th>Quantity <\/th> <th>Total Amount <\/th> <\/tr><\/thead> <tbody>"+orderitems+" <\/tbody> <\/table><\/div>";
 
 
 return strVar;
