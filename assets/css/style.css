@@ -363,8 +363,9 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 .ordercard {
-    border-bottom: 2px solid #989898;
     padding-bottom: 10px;
+    box-shadow: 0px 0px 2px 2px #ddd;
+    margin: 10px 0;
 }
 
 .ordercard td,
@@ -374,6 +375,7 @@ th {
 
 table.ordercard-table1 th {
     border-bottom: 2px solid #989898;
+    text-transform: uppercase;
 }
 
 table.ordercard-table2 th {
