@@ -38,6 +38,7 @@ function generatejquery(url) {
                     if (appendval) {
                         appendtext = appendtext.replace("<tr>", "<tr><td><input type='checkbox' data-id='" + whatappend + "' name='chintansideselect' id='chintansideselect" + whatappend + "' /><label for='chintansideselect" + whatappend + "'></label></td>");
                     }
+                    console.log(appendtext);
                     $(".drawchintantable table tbody").append(appendtext);
                 }
 
@@ -162,6 +163,164 @@ function generatejquery(url) {
     });
 }
 
+
+function generateorder(url) {
+    //console.log("ABCD");
+    var isselectalldone = false;
+    $(document).ready(function () {
+
+        var search = $(".chintantablesearch").val();
+        var pageno = 1;
+        var orderby = "";
+        var orderorder = "";
+        var maxrow = 10;
+        $(".drawchintantable .maxrow").val(maxrow);
+
+
+
+
+
+        function fillchintandata() {
+            $(".drawchintantable .loader").show();
+            $.getJSON(url, {
+                search: search,
+                pageno: pageno,
+                orderby: orderby,
+                orderorder: orderorder,
+                maxrow: maxrow
+            }, function (data) {
+
+                $(".drawchintantable").html("");
+                var result = data.queryresult;
+
+                var appendval = $(".drawchintantable thead tr th[data-selectall='true']").attr('data-field');
+
+                for (var i = 0; i < result.length; i++) {
+                    var appendtext = drawtable(result[i]);
+                    console.log(appendtext);
+                    $(".drawchintantable").html($(".drawchintantable").html() + appendtext);
+                }
+
+                $(".chintantablepagination ul.pagination").html("");
+                if (data.pageno != 1) {
+                    $(".chintantablepagination ul.pagination").append('<li class="waves-effect"><a href="#" data-page="' + (data.pageno - 1) + '"><span aria-hidden="true">&laquo;</span></a></li>');
+                } else {
+                    $(".chintantablepagination ul.pagination").append('<li class="disabled"><a href="#" data-page="' + (data.pageno) + '"><span aria-hidden="true">&laquo;</span></a></li>');
+                }
+
+                for (var i = 0; i < data.lastpage; i++) {
+                    if ((i + 1) == data.pageno)
+                        $(".chintantablepagination ul.pagination").append('<li class="active" ><a href="#" data-page="' + (i + 1) + '">' + (i + 1) + '</a>');
+                    else
+                        $(".chintantablepagination ul.pagination").append('<li class="waves-effect"><a href="#" data-page="' + (i + 1) + '">' + (i + 1) + '</a>');
+                }
+                if (data.pageno != data.lastpage) {
+                    $(".chintantablepagination ul.pagination").append('<li class="waves-effect"><a href="#" data-page="' + (data.pageno + 1) + '"><span aria-hidden="true">&raquo;</span></a></li>');
+                } else {
+                    $(".chintantablepagination ul.pagination").append('<li class="disabled"><a href="#" data-page="' + (data.pageno) + '"><span aria-hidden="true">&raquo;</span></a></li>');
+                }
+
+                $(".chintantablepagination ul.pagination li").click(function () {
+                    $(this).children("a").trigger("click");
+                });
+
+                $(".chintantablepagination ul.pagination li a").click(function () {
+                    var liattr = $(this).parent("li").hasClass("disabled");
+                    var liactive = $(this).parent("li").hasClass("active");
+                    if (!liattr && !liactive) {
+                        pageno = parseInt($(this).attr("data-page"));
+                        fillchintandata();
+                    }
+                    return false;
+
+                });
+                var allpages = $(".chintantablepagination ul.pagination li a");
+                var totalwidth = 0;
+                console.log("Length: " + allpages.length);
+                for (var i = 0; i < allpages.length; i++) {
+                    totalwidth += $(allpages).eq(i).width() + 26;
+                }
+                $(".chintantablepagination ul.pagination").width(totalwidth);
+                //                    $(".chintantablepagination").css({"overflow-x": "scroll","height": "72px","overflow-y": "hidden"});
+
+                for (var i = 0; i < data.elements.length; i++) {
+                    var element = data.elements[i];
+                    $(".drawchintantable thead tr th[data-field='" + element.alias + "']").html(element.header);
+
+                    var isselectall = $(".drawchintantable thead tr th[data-field='" + element.alias + "']").attr("data-selectall");
+                    if (isselectall == "true" && !isselectalldone) {
+                        var tablehtml = $(".drawchintantable thead tr").html();
+                        tablehtml = "<th><input type='checkbox' name='chintanselectall' id='chintanselectall' /><label for='chintanselectall' onClick='chintanselectallcall();'></label></th>" + tablehtml;
+                        $(".drawchintantable").append("<a href='#' onClick='chintandeleteselected()' class='red btn less-pad z-depth-0 waves-effect waves-light'><i class='material-icons'>delete</i></a>");
+                        isselectalldone = true;
+                        $(".drawchintantable thead tr").html(tablehtml);
+                    }
+
+
+
+                    if (element.sort == "ASC") {
+                        $(".drawchintantable thead tr th[data-field='" + element.alias + "']").append("<button data-sort='DESC' class='btn chisorting text-blue waves-effect waves-blue z-depth-0'><i class='material-icons'>keyboard_arrow_down</i></button>");
+                    } else if (element.sort == "DESC") {
+                        $(".drawchintantable thead tr th[data-field='" + element.alias + "']").append("<button data-sort='ASC' class='btn chisorting text-blue waves-effect waves-blue z-depth-0'><i class='material-icons'>keyboard_arrow_up</i></button>");
+                    } else if (element.sort == "1") {
+                        $(".drawchintantable thead tr th[data-field='" + element.alias + "']").append("<button data-sort='ASC' class='btn chisorting text-blue waves-effect waves-blue z-depth-0'><i class='material-icons'>swap_vert</i></button>");
+                    }
+                }
+
+                $(".drawchintantable .chisorting").click(function () {
+                    orderby = $(this).parents("th").attr("data-field");
+                    orderorder = $(this).attr("data-sort");
+                    maxrow = $(".drawchintantable select.maxrow").val();
+                    fillchintandata();
+                });
+
+
+                $(".drawchintantable .loader").hide();
+
+            });
+
+
+
+
+        };
+
+        $('.drawchintantable .chintantablesearch').keypress(function (e) {
+            var key = e.which;
+            if (key == 13) // the enter key code
+            {
+                $(".chintantablesearchgo").trigger("click");
+            }
+        });
+
+        $(".chintantablesearchgo").click(function () {
+            search = $(".chintantablesearch").val();
+            pageno = 1;
+            maxrow = $(".drawchintantable select.maxrow").val();
+            fillchintandata();
+        });
+
+        $(".chintantablesearchgo").click(function () {
+            search = $(".chintantablesearch").val();
+            pageno = 1;
+            maxrow = $(".drawchintantable select.maxrow").val();
+            fillchintandata();
+        });
+        $(".drawchintantable .maxrow").change(function () {
+            search = $(".chintantablesearch").val();
+            pageno = 1;
+            maxrow = $(".drawchintantable select.maxrow").val();
+            fillchintandata();
+        });
+
+        globalfilldata = fillchintandata;
+        fillchintandata();
+
+
+
+
+
+    });
+}
 
 
 function generatepiechart(texttitle, target, value) {
@@ -306,4 +465,15 @@ function getDragDropOrdering(base_url, orderfield, tablename, where) {
         });
 
     });
+}
+
+
+function getStringtoJson(str) {
+    var myjson={};
+    try {
+        myjson=JSON.parse(str);
+    } catch (e) {
+        console.log(e);
+    }
+    return myjson;
 }

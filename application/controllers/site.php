@@ -1164,6 +1164,7 @@ $data["page"]="createproduct";
         $data['size']=$this->size_model->getsizedropdown();
         $data['color']=$this->color_model->getcolordropdown();
         $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
+        $data['relatedproduct']=$this->product_model->getproductdropdown();
     $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create product";
 $this->load->view("template",$data);
@@ -1268,7 +1269,7 @@ public function editproduct()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editproduct";
-$data["page2"]="block/productblock";
+//$data["page2"]="block/productblock";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
 $data['relatedproduct']=$this->product_model->getproductdropdown();
@@ -1282,7 +1283,7 @@ $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
 $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit product";
 $data["before"]=$this->product_model->beforeedit($this->input->get("id"));
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
 }
 public function editproductsubmit()
 {
@@ -3190,6 +3191,9 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="vieworder";
 $data["base_url"]=site_url("site/vieworderjson");
+$data["tablename"] = 'fynx_order';
+$data["orderfield"] = 'id';
+    $data["where"] = '';
 $data["title"]="View order";
 $this->load->view("template",$data);
 }
@@ -3333,6 +3337,13 @@ $orderby="id";
 $orderorder="ASC";
 }
 $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_order` LEFT OUTER JOIN `user` ON `user`.`id`=`fynx_order`.`user` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`");
+$queryarray = $data["message"]->queryresult;
+    
+    foreach($queryarray as $row)
+    {
+        $row->orderproduct = $this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order` = '$row->id'")->result(); 
+    }
+    
 $this->load->view("json",$data);
 }
 

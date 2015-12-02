@@ -7,25 +7,11 @@
 <thead>
 <tr>
 <th data-field="id">ID</th>
-<!--<th data-field="subcategory">Subcategory</th>-->
 <th data-field="name">Name</th>
 <th data-field="quantity">Quantity</th>
 <th data-field="sku">Sku</th>
-
-<!--
-<th data-field="type">Type</th>
-<th data-field="description">Description</th>
-<th data-field="visibility">Visibility</th>
--->
 <th data-field="price">Price</th>
-<!--
-<th data-field="relatedproduct">Related Product</th>
-<th data-field="category">Category</th>
-<th data-field="color">Color</th>
-<th data-field="size">Size</th>
-<th data-field="sizechart">Size Chart</th>
-<th data-field="status">Status</th>
--->
+
 <th data-field="action">action</th>
 </tr>
 </thead>

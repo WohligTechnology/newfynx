@@ -34,9 +34,7 @@
         if (!resultrow.username) {
             resultrow.username = "";
         }
-        if (!resultrow.logintype) {
-            resultrow.logintype = "";
-        }
+      
         if (!resultrow.json) {
             resultrow.json = "";
         }
