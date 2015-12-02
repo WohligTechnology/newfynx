@@ -214,7 +214,7 @@ class Site extends CI_Controller
         $elements[3]->alias="socialid";
         
         $elements[4]=new stdClass();
-        $elements[4]->field="`logintype`.`name`";
+        $elements[4]->field="`user`.`logintype`";
         $elements[4]->sort="1";
         $elements[4]->header="Logintype";
         $elements[4]->alias="logintype";
@@ -632,12 +632,19 @@ public function viewcart()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewcart";
-$data["base_url"]=site_url("site/viewcartjson");
+    $data["before1"]=$this->input->get('id');
+        $data["before2"]=$this->input->get('id');
+        $data["before3"]=$this->input->get('id');
+        $data["before4"]=$this->input->get('id');
+        $data["before5"]=$this->input->get('id');
+$data['page2']='block/userblock';
+$data["base_url"]=site_url("site/viewcartjson?id=").$this->input->get('id');
 $data["title"]="View cart";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 function viewcartjson()
 {
+    $id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`fynx_cart`.`id`";
@@ -678,7 +685,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_cart`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_cart`","WHERE `fynx_cart`.`user`='$id'");
 $this->load->view("json",$data);
 }
 
@@ -773,9 +780,15 @@ public function viewwishlist()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewwishlist";
+    $data["before1"]=$this->input->get('id');
+        $data["before2"]=$this->input->get('id');
+        $data["before3"]=$this->input->get('id');
+        $data["before4"]=$this->input->get('id');
+        $data["before5"]=$this->input->get('id');
+$data['page2']='block/userblock';
 $data["base_url"]=site_url("site/viewwishlistjson");
 $data["title"]="View wishlist";
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 function viewwishlistjson()
 {
