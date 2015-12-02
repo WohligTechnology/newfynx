@@ -363,12 +363,13 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 .ordercard {
-    padding: 20px 0;
+    padding: 10px 20px;
+    box-shadow: 0px 1px 1px 1px #ddd;
+    margin: 12px 0px;
 }
-
 .ordercard td,
 th {
-    padding: 5px;
+        padding: 5px 0px;
 }
 
 .drawchintantable.padding {
