@@ -2469,5 +2469,12 @@ echo $filepath;
      $data['message']=$this->restapi_model->getFilters($categoryid);
         $this->load->view("json", $data);
     }
+ function loginuser() {
+      $data = json_decode(file_get_contents('php://input'), true);
+      $email=$data["email"];
+      $password=$data["password"];
+        $data["message"] = $this->user_model->loginuser($email, $password);
+        $this->load->view("json", $data);
+    }
     
 } ?>

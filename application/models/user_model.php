@@ -556,5 +556,69 @@ class User_model extends CI_Model
             return $newdata;
         }
     }
+    function registeruser($firstname,$lastname,$email,$password)
+    {
+    	$newdata=0;
+        $password=md5($password);
+        //echo $email;
+        $query=$this->db->query("SELECT `id` FROM `user` WHERE `email`='$email'");
+				$num=$query->num_rows();
+
+        if($num == 0)
+        {
+             $this->db->query("INSERT INTO `user`(`firstname`, `lastname`, `email`, `password`) VALUE('$firstname','$lastname','$email','$password')");
+            $user=$this->db->insert_id();
+           
+            $newdata = array(
+                    'id' => $user,
+                    'email' => $email,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'logged_in' => 'true'
+            );
+
+            $this->session->set_userdata($newdata);
+
+
+        }
+        else
+        {
+						$newdata=false;
+
+				}
+        return $newdata;
+
+    }
+      function loginuser($email,$password)
+    {
+        $password=md5($password);
+        $query=$this->db->query("SELECT `id`,`firstname`,`lastname`,`username`,`name` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
+        if($query->num_rows > 0)
+        {
+            $user=$query->row();
+            $userid=$user->id;
+            $firstname=$user->firstname;
+            $lastname=$user->lastname;
+            $username=$user->username;
+            $name=$user->name;
+
+
+            $newdata = array(
+                'email'     => $email,
+                'firstname'     => $firstname,
+                'lastname'     => $lastname,
+                'username'     => $username,
+                'name'     => $name,
+                'logged_in' => 'true',
+                'id'=> $userid
+            );
+
+            $this->session->set_userdata($newdata);
+
+            return $newdata;
+        }
+        else
+        return false;
+    }
 }
 ?>
