@@ -96,6 +96,7 @@ return $query;
 	}
     public function getrelatedproductcount($id)
 	{
+        $return=array();
 		$query=$this->db->query("SELECT `fynx_product`.`id`,`fynx_product`.`name` FROM `fynx_product` LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id` WHERE `relatedproduct`.`product`='$id'");
 		  if($query->num_rows() > 0)
         {
