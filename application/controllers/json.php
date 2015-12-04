@@ -1615,15 +1615,7 @@ $this->load->view("json",$data);
         $data['message'] = $this->email->print_debugger();
         $this->load->view('json', $data);
     }
-    function usercontact() {
-        $name = $this->input->get_post('name');
-        $email = $this->input->get_post('email');
-        $phone = $this->input->get_post('phone');
-        $comment = $this->input->get_post('comment');
-        $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
-    
-        $this->load->view("json", $data);
-    }
+  
   
     function placeorder() {
         $order = json_decode(file_get_contents('php://input'), true);
@@ -2362,46 +2354,87 @@ echo $filepath;
          $data['data']=$_GET;
          $this->load->view('paymentpage',$data);
      }
-    
-    public function productimagereorderbyid()
-    {
-        $id=$this->input->get_post("id");
-        $data['message']=$this->product_model->productimagereorderbyid($id);
-        $this->load->view('json',$data);
+  
+    public function getsubscribe(){
+        $email=$this->input->get('email');
+        $data['message']=$this->restapi_model->getsubscribe($email);
+        $this->load->view("json", $data);
     }
-    public function getbrand()
+    
+    public function gethomecontent(){
+    $data['message']=$this->restapi_model->gethomecontent();
+        $this->load->view("json", $data);
+    }
+  
+    function usercontact() 
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $elements = array();      
+        $name = $this->input->get_post('name');
+        $email = $this->input->get_post('email');
+        $phone = $this->input->get_post('phone');
+        $comment = $this->input->get_post('comment');
+        $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
+        $this->load->view("json", $data);
+    }
+  function getproductbycategory() {
+        $userid=$this->session->userdata("id");
+        $category = $this->input->get_post("category");
+        $color = $this->input->get_post("color");
+        $type = $this->input->get_post("type");
+        $price = $this->input->get_post("price");
+        $size = $this->input->get_post("size");
+        $subcategory = $this->input->get_post("subcategory");
+            $where1="";
+        $where = " AND ";
+        if($category !="")
+        {
+            $where .= "  `fynx_product`.`category`='$category' AND";
+        } 
+      if($color !="")
+        {
+            $where .= "  `fynx_product`.`color` IN ($color) AND";
+        }
+      
+      if($type !="")
+        {
+            $where .= "  `fynx_product`.`type` IN ($type) AND";
+        }
+      if($size !="")
+        {
+            $where .= "  `fynx_product`.`size` IN ($size) AND";
+        }
+      if($subcategory !="")
+        {
+            $where .= "  `fynx_product`.`subcategory` IN ($subcategory) AND";
+        }
+     
+        
+        
+        
+        $elements = array();
         $elements[0] = new stdClass();
-        $elements[0]->field = "`brand`.`id`";
+        $elements[0]->field = "`fynx_product`.`id`";
         $elements[0]->sort = "1";
         $elements[0]->header = "ID";
         $elements[0]->alias = "id";
-        
         $elements[1] = new stdClass();
-        $elements[1]->field = "`brand`.`name`";
+        $elements[1]->field = "`fynx_product`.`name`";
         $elements[1]->sort = "1";
         $elements[1]->header = "Name";
         $elements[1]->alias = "name";
-        
+       
         $elements[2] = new stdClass();
-        $elements[2]->field = "`brand`.`order`";
+        $elements[2]->field = "`fynx_product`.`price`";
         $elements[2]->sort = "1";
-        $elements[2]->header = "order";
-        $elements[2]->alias = "order";
-        
+        $elements[2]->header = "price";
+        $elements[2]->alias = "price"; 
+      
         $elements[3] = new stdClass();
-        $elements[3]->field = "`brand`.`logo`";
+        $elements[3]->field = "`fynx_product`.`image1`";
         $elements[3]->sort = "1";
-        $elements[3]->header = "logo";
-        $elements[3]->alias = "logo"; 
-        
-        $elements[4] = new stdClass();
-        $elements[4]->field = "`brand`.`isdistributer`";
-        $elements[4]->sort = "1";
-        $elements[4]->header = "isdistributer";
-        $elements[4]->alias = "isdistributer";
+        $elements[3]->header = "image1";
+        $elements[3]->alias = "image1";
+       
+      
         
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
@@ -2409,40 +2442,25 @@ echo $filepath;
         $orderorder = $this->input->get_post("orderorder");
         $maxrow = $this->input->get_post("maxrow");
         if ($maxrow == "") {
-            $maxrow = 20;
+            $maxrow = 6;
         }
-        if ($orderby == "") {
-            $orderby = "id";
-            $orderorder = "ASC";
+      if($price=="" || $price==1)
+        {
+        $orderby="price";
+        $orderorder="ASC";
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `brand`");
+      else if($price==2){
+        $orderby="price";
+        $orderorder="DESC";
+      }
+        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `fynx_product`
+        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$userid' ", "WHERE `fynx_product`.`status`=2 $where 1 $where1" , ' GROUP BY `fynx_product`.`id` ');
         $this->load->view("json", $data);
     }
-    
-    
-    
-    public function getsubscribe(){
-        $email=$this->input->get('email');
-        $data['message']=$this->restapi_model->getsubscribe($email);
-        $this->load->view("json", $data);
-    }
-    
-    public function getofferproducts(){
-      $offerid=$this->input->get('offerid');
-        $data['message']=$this->restapi_model->getofferproducts($offerid);
-        $this->load->view("json", $data);
-    }
-    public function getallcategory(){
-     $data['message']=$this->restapi_model->getallcategory();
-        $this->load->view("json", $data);
-    }
-    public function gethomecontent(){
-    $data['message']=$this->restapi_model->gethomecontent();
-        $this->load->view("json", $data);
-    }
-    public function getSubCategoryProductHome(){
-        $id=$this->input->get('id');
-    $data['message']=$this->restapi_model->getSubCategoryProductHome($id);
+  public function getFilters()
+   {
+          $categoryid=$this->input->get('category');
+     $data['message']=$this->restapi_model->getFilters($categoryid);
         $this->load->view("json", $data);
     }
     
