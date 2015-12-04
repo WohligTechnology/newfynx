@@ -2383,6 +2383,11 @@ echo $filepath;
         $price = $this->input->get_post("price");
         $size = $this->input->get_post("size");
         $subcategory = $this->input->get_post("subcategory");
+      if($category=="" && $color=="" &&  $type=="" &&  $price=="" && $size=="" && $subcategory==""){
+          $data["message"] =0;
+          
+      }
+      else{
             $where1="";
         $where = " AND ";
         if($category !="")
@@ -2455,6 +2460,7 @@ echo $filepath;
       }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `fynx_product`
         LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$userid' ", "WHERE `fynx_product`.`status`=2 $where 1 $where1" , ' GROUP BY `fynx_product`.`id` ');
+      }
         $this->load->view("json", $data);
     }
   public function getFilters()
