@@ -1658,47 +1658,18 @@ $this->load->view("json",$data);
         $data["message"] = $this->order_model->addcartsession($cart);
         $this->load->view("json", $data);
     }
-    function addtocart() {
+    function addToCart() {
          $product = $this->input->get_post('product');
-         $productname = $this->input->get_post('productname');
          $quantity = $this->input->get_post('quantity');
-         $price = $this->input->get_post('price');
-//        $data = json_decode(file_get_contents('php://input'), true);
-//        $product=$data['product'];
-//        $productname=$data['productname'];
-//        $quantity=$data['quantity'];
-//        $price=$data['price'];
-        $data["message"] = $this->user_model->addtocart($product, $productname, $quantity, $price);
-        //$data["message"]=$this->order_model->addtocart($user,$product,$quantity);
+
+        $data["message"] = $this->user_model->addToCart($product, $quantity);
         $this->load->view("json", $data);
     }
     function destroycart() {
         $data["message"] = $this->user_model->destroycart();
         $this->load->view("json", $data);
     }
-    function showcart() {
-        $userid=$this->session->userdata("id");
-        if($userid!="")
-        {
-            $cart = $this->cart->contents();
-            $newcart = array();
-            foreach ($cart as $item) {
-                array_push($newcart, $item);
-            }
-            $data["message"] = $newcart;
-            $this->load->view("json", $data);
-        }
-        else
-        {
-            $cart = $this->cart->contents();
-            $newcart = array();
-            foreach ($cart as $item) {
-                array_push($newcart, $item);
-            }
-            $data["message"] = $newcart;
-            $this->load->view("json", $data);
-        }
-    }
+  
     function totalcart() {
         $data["message"] = $this->cart->total();
         $this->load->view("json", $data);
@@ -1753,13 +1724,7 @@ $this->load->view("json",$data);
         $data["message"] = $this->product_model->addtowishlist($user, $product);
         $this->load->view("json", $data);
     } 
-    function removefromwishlist() {
-         $data = json_decode(file_get_contents('php://input'), true);
-      $user=$data["user"];
-      $product=$data["product"];
-        $data["message"] = $this->restapi_model->removefromwishlist($user, $product);
-        $this->load->view("json", $data);
-    }
+    
     public function authenticate() {
         $data['message'] = $this->user_model->authenticate();
         $this->load->view('json', $data);
@@ -2463,9 +2428,38 @@ echo $filepath;
     }
  function getProductDetails() {
          $id = $this->input->get_post("id");
-//         $user = $this->input->get_post("user");
         $user=$this->session->userdata('id');
         $data["message"] = $this->product_model->getProductDetails($id,$user);
+        $this->load->view("json", $data);
+    }
+   function showCart() {
+        $userid=$this->session->userdata("id");
+        if($userid!="")
+        {
+            $cart = $this->cart->contents();
+            $newcart = array();
+            foreach ($cart as $item) {
+                array_push($newcart, $item);
+            }
+            $data["message"] = $newcart;
+            $this->load->view("json", $data);
+        }
+        else
+        {
+            $cart = $this->cart->contents();
+            $newcart = array();
+            foreach ($cart as $item) {
+                array_push($newcart, $item);
+            }
+            $data["message"] = $newcart;
+            $this->load->view("json", $data);
+        }
+    }
+ function removeFromWishlist() {
+         $data = json_decode(file_get_contents('php://input'), true);
+          $user=$data["user"];
+          $product=$data["product"];
+        $data["message"] = $this->restapi_model->removeFromWishlist($user, $product);
         $this->load->view("json", $data);
     }
     

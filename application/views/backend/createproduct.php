@@ -99,6 +99,13 @@
             $('select').material_select();
         </script>
         <div class="row">
+            <div class="input-field col s6">
+                <label for="baseproduct">Base Product</label>
+                <input type="text" id="baseproduct" name="baseproduct" value='<?php echo set_value('baseproduct');?>'>
+            </div>
+        </div>
+       
+        <div class="row">
             <div class="file-field input-field col s12 m6">
                 <div class="btn blue darken-4">
                     <span>Image1</span>

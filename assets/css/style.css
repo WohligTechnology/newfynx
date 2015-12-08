@@ -386,3 +386,8 @@ table.ordercard-table2 th {
 table.ordercard-table2 td {
     font-size: 12px;
 }
+
+
+.capitalize{ 
+    text-transform: capitalize;  
+}

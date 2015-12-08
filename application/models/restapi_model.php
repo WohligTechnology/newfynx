@@ -4,18 +4,6 @@ if ( !defined( 'BASEPATH' ) )
 class restapi_model extends CI_Model
 {
     
-    
-   
-    public function removefromwishlist($user, $product){
-        $query=$this->db->query(" DELETE FROM `userwishlist` WHERE `user`='$user' AND `product`='$product'");
-        if($query){
-        return 1;
-        }
-        else{
-        return false;
-        }
-    }
-    
     public function getsubscribe($email){
         $query1=$this->db->query("SELECT * FROM `subscribe` WHERE `email`='$email'");
         $num=$query1->num_rows();
@@ -84,6 +72,15 @@ class restapi_model extends CI_Model
        WHERE `fynx_product`.`category`='$catid' AND `fynx_subcategory`.`status`=2 AND `fynx_subcategory`.`category`='$catid'")->result();
        
       return $query;
+    }
+    public function removeFromWishlist($user, $product){
+        $query=$this->db->query(" DELETE FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product'");
+        if($query){
+        return 1;
+        }
+        else{
+        return false;
+        }
     }
 	
 }

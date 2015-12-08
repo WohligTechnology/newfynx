@@ -671,6 +671,18 @@ $elements[4]->field="`fynx_cart`.`timestamp`";
 $elements[4]->sort="1";
 $elements[4]->header="Timestamp";
 $elements[4]->alias="timestamp";
+    
+$elements[5]=new stdClass();
+$elements[5]->field="`fynx_cart`.`size`";
+$elements[5]->sort="1";
+$elements[5]->header="Size";
+$elements[5]->alias="size";
+
+$elements[6]=new stdClass();
+$elements[6]->field="`fynx_cart`.`color`";
+$elements[6]->sort="1";
+$elements[6]->header="Color";
+$elements[6]->alias="color";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -786,12 +798,13 @@ $data["page"]="viewwishlist";
         $data["before4"]=$this->input->get('id');
         $data["before5"]=$this->input->get('id');
 $data['page2']='block/userblock';
-$data["base_url"]=site_url("site/viewwishlistjson");
+$data["base_url"]=site_url("site/viewwishlistjson?id=".$this->input->get('id'));
 $data["title"]="View wishlist";
 $this->load->view("templatewith2",$data);
 }
 function viewwishlistjson()
 {
+    $user=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`fynx_wishlist`.`id`";
@@ -813,6 +826,12 @@ $elements[3]->field="`fynx_wishlist`.`timestamp`";
 $elements[3]->sort="1";
 $elements[3]->header="Timestamp";
 $elements[3]->alias="timestamp";
+    
+$elements[4]=new stdClass();
+$elements[4]->field="`fynx_product`.`name`";
+$elements[4]->sort="1";
+$elements[4]->header="Product Name";
+$elements[4]->alias="productname";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -827,7 +846,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_wishlist`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_wishlist` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_wishlist`.`product`","WHERE `fynx_wishlist`.`user`='$user'");
 $this->load->view("json",$data);
 }
 
@@ -1216,6 +1235,7 @@ $color=$this->input->get_post("color");
 $size=$this->input->get_post("size");
 $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
+$baseproduct=$this->input->get_post("baseproduct");
     $sku=$this->input->get_post("sku");
      $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
@@ -1255,7 +1275,7 @@ $status=$this->input->get_post("status");
 				$uploaddata = $this->upload->data();
 				$image5=$uploaddata['file_name'];
 			}
-if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5)==0)
+if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct)==0)
 $data["alerterror"]="New product could not be created.";
 else
 $data["alertsuccess"]="product created Successfully.";
@@ -1273,7 +1293,6 @@ $data["before1"]=$this->input->get('id');
 $productid=$this->input->get('id');
 $data['relatedproduct']=$this->product_model->getproductdropdown();
 $data['selectedrelatedproduct']=$this->product_model->getrelatedproductcount($productid);
-    print_r($data['selectedrelatedproduct']);
 $data['category']=$this->category_model->getcategorydropdown();
 $data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 $data['visibility']=$this->product_model->getvisibility();
@@ -1298,7 +1317,6 @@ $this->form_validation->set_rules("type","Type","trim");
 $this->form_validation->set_rules("description","Description","trim");
 $this->form_validation->set_rules("visibility","Visibility","trim");
 $this->form_validation->set_rules("price","Price","trim");
-$this->form_validation->set_rules("relatedproduct","Related Product","trim");
 $this->form_validation->set_rules("category","Category","trim");
 $this->form_validation->set_rules("color","Color","trim");
 $this->form_validation->set_rules("size","Size","trim");
@@ -1338,6 +1356,7 @@ $size=$this->input->get_post("size");
 $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
 $sku=$this->input->get_post("sku");
+$baseproduct=$this->input->get_post("baseproduct");
      $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$this->load->library('upload', $config);
@@ -1376,7 +1395,7 @@ $sku=$this->input->get_post("sku");
 				$uploaddata = $this->upload->data();
 				$image5=$uploaddata['file_name'];
 			}
-if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5)==0)
+if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct)==0)
 $data["alerterror"]="New product could not be Updated.";
 else
 $data["alertsuccess"]="product Updated Successfully.";

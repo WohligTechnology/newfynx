@@ -10,6 +10,8 @@
 <!--<th data-field="user">User</th>-->
 <th data-field="quantity">Quantity</th>
 <th data-field="product">Product</th>
+<th data-field="size">Size</th>
+<th data-field="color">Color</th>
 <th data-field="timestamp">Timestamp</th>
 </tr>
 </thead>
@@ -24,7 +26,7 @@
 </div>
 <script>
 function drawtable(resultrow) {
-return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.product + "</td><td>" + resultrow.timestamp + "</td><td></td></tr>";
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.product + "</td><td>" + resultrow.size + "</td><td>" + resultrow.color + "</td><td>" + resultrow.timestamp + "</td><td></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>

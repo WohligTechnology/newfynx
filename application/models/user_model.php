@@ -620,5 +620,63 @@ class User_model extends CI_Model
         else
         return false;
     }
+        function addToCart($product, $quantity) {
+        //$data=$this->cart->contents();
+
+        $sizequery=$this->db->query("SELECT `size`,`name`,`price`,`color`,`image1` FROM `fynx_product` WHERE `id` = '$product' LIMIT 0,1")->row();
+        $size=$sizequery->size;
+        $productname=$sizequery->name;
+        $price=$sizequery->price;
+        $color=$sizequery->color;
+        $image=$sizequery->image1;
+        
+        $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
+        $sizeid=$getsize->id;
+        $sizename=$getsize->name;
+        $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
+        $colorid=$getcolor->id;
+        $colorname=$getcolor->name;
+        $data = array(
+               'id'      => $product,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+               'image'   => $image,
+                'options' =>array(
+                    'realname' => $productname,
+                    'sizeid' => $sizeid,
+                    'colorid' => $colorid,
+                    'sizename' => $sizename,
+                    'colorname' => $colorname
+                )
+        );
+        $userid=$this->session->userdata('id');
+        if($userid=="")
+        {
+            $this->cart->insert($data);
+            $returnval=$this->cart->insert($data);
+            print_r($this->cart->contents());
+            if(!empty($returnval)){
+            return true;
+            }
+            else{
+            return false;
+            }
+        }
+        else
+        {
+            $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`size`,`color`) VALUES ('$userid','$product','$quantity',NULL,'$size','$color')");
+            $this->cart->insert($data);
+            print_r($this->cart->contents());
+            if($query)
+            return true;
+            else
+            return false;
+        }
+         
+    }
+    function deletecartfromdb($id){
+    $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id'");
+    }
 }
 ?>
