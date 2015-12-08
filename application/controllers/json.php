@@ -1734,7 +1734,8 @@ $this->load->view("json",$data);
     }
     function deletecart() {
         $id = intval($this->input->get_post("id"));
-        $this->user_model->deletecartfromdb($id);
+        $user=$this->session->userdata('id');
+        $this->user_model->deletecartfromdb($id,$user);
         $cart = $this->cart->contents();
         $newcart = array();
         foreach ($cart as $item) {
