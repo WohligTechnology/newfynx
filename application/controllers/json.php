@@ -1617,7 +1617,7 @@ $this->load->view("json",$data);
     }
   
   
-    function placeorder() {
+    function placeOrder() {
         $order = json_decode(file_get_contents('php://input'), true);
         //print_r($order);
         $user = $order['user'];
@@ -1625,7 +1625,6 @@ $this->load->view("json",$data);
         $lastname = $order['lastname'];
         $email = $order['email'];
         $billingcontact = $order['billingcontact'];
-        $status = $order['status'];
         $company = $order['company'];
         $billingaddress = $order['billingaddress'];
         $billingcity = $order['billingcity'];
@@ -1639,13 +1638,12 @@ $this->load->view("json",$data);
         $billingpincode = $order['billingpincode'];
         $shippingmethod = $order['shippingmethod'];
         $carts = $order['cart'];
-        $finalamount = $order['finalamount'];
         $shippingname = $order['shippingname'];
         $shippingcontact = $order['shippingcontact'];
-        $customernote = $order['customernote'];
+        $shippingname = $order['shippingname'];
         $design = $order['design'];
-        $data["message"] = $this->order_model->placeorder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$design);
-        //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
+        $data["message"] = $this->order_model->placeOrder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $company, $carts, $shippingmethod, $shippingname, $shippingcontact,$design);
+       
         $this->load->view("json", $data);
     }
     function getusercart() {
@@ -1719,7 +1717,7 @@ $this->load->view("json",$data);
     }
     function addtowishlist() {
          $data = json_decode(file_get_contents('php://input'), true);
-      $user=$data["user"];
+      $user=$this->session->userdata('id');
       $product=$data["product"];
         $data["message"] = $this->product_model->addtowishlist($user, $product);
         $this->load->view("json", $data);
@@ -2457,10 +2455,11 @@ echo $filepath;
     }
  function removeFromWishlist() {
          $data = json_decode(file_get_contents('php://input'), true);
-          $user=$data["user"];
+          $user=$this->session->userdata('id');
           $product=$data["product"];
         $data["message"] = $this->restapi_model->removeFromWishlist($user, $product);
         $this->load->view("json", $data);
-    }
-    
+    } 
+ 
+ 
 } ?>
