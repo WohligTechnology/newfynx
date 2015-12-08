@@ -655,7 +655,6 @@ class User_model extends CI_Model
         {
             $this->cart->insert($data);
             $returnval=$this->cart->insert($data);
-            print_r($this->cart->contents());
             if(!empty($returnval)){
             return true;
             }
@@ -667,7 +666,6 @@ class User_model extends CI_Model
         {
             $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`size`,`color`) VALUES ('$userid','$product','$quantity',NULL,'$size','$color')");
             $this->cart->insert($data);
-            print_r($this->cart->contents());
             if($query)
             return true;
             else
