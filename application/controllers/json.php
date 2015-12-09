@@ -1716,10 +1716,12 @@ $this->load->view("json",$data);
         $this->load->view("json", $data);
     }
     function addtowishlist() {
-         $data = json_decode(file_get_contents('php://input'), true);
-      $user=$this->session->userdata('id');
-      $product=$data["product"];
-        $data["message"] = $this->product_model->addtowishlist($user, $product);
+          $data = json_decode(file_get_contents('php://input'), true);
+          $user=$this->session->userdata('id');
+          $product=$data["product"];
+          $color=$data["color"];
+          $size=$data["size"];
+        $data["message"] = $this->product_model->addtowishlist($user,$product,$color,$size);
         $this->load->view("json", $data);
     } 
     

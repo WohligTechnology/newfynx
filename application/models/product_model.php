@@ -134,14 +134,16 @@ WHERE `relatedproduct`.`product`='$product'")->result();
       
 		return $query;
 	}
-      function addtowishlist($user,$product)
+      function addtowishlist($user,$product,$color,$size)
     {
         if($user!="")
         {
-            $userwishlist=$this->db->query("SELECT * FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product'")->row();
+             $getexactproduct=$this->db->query("'SELECT `id` FROM `fynx_product` WHERE `color`='$color' AND `size`='$size' AND `baseproduct`=(SELECT `baseproduct` FROM `fynx_product` WHERE `id`='$product')")->row();
+            $exactproduct=$getexactproduct->id;
+            $userwishlist=$this->db->query("SELECT * FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$exactproduct' AND `color`='$color' AND `size`='$size'")->row();
             if(empty($userwishlist))
             {
-                $query=$this->db->query("INSERT INTO `fynx_wishlist`(`user`,`product`) VALUES ('$user','$product')");
+                $query=$this->db->query("INSERT INTO `fynx_wishlist`(`user`,`product`,`color`,`size`) VALUES ('$user','$exactproduct','$color','$size')");
                 return $query;
             }
             else
