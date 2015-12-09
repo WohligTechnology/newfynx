@@ -342,14 +342,17 @@ class User_model extends CI_Model
 
     }
     function authenticate() {
-        $is_logged_in = $this->session->userdata( 'logged_in' );
-        //print_r($is_logged_in);
-        if ( $is_logged_in !== 'true' || !isset( $is_logged_in ) ) {
+         $is_logged_in = $this->session->userdata( 'logged_in' );
+//        return $is_logged_in;
+        //print_r($this->session->userdata( 'logged_in' ));
+        if ( $is_logged_in != true) {
             return false;
         } //$is_logged_in !== 'true' || !isset( $is_logged_in )
         else {
-            $userid = $this->session->userdata( 'id' );
-         return $userid;
+		$userid=$this->session->userdata('id');
+		$query=$this->db->query("SELECT * FROM `user` WHERE `id`='$userid'")->row();
+           // $userid = $this->session->userdata( );
+         return $query;
         }
     }
     
@@ -521,7 +524,7 @@ class User_model extends CI_Model
 						break;
 					}
 
-            $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`,  `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '',  '$facebookid', '$googleid', '$twitterid')");
+            $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->region', '$user_profile->city', '', '$user_profile->country', '', '$facebookid', '$googleid', '$twitterid')");
             $id=$this->db->insert_id();
             $newdata = array(
                 'email'     => $user_profile->email,

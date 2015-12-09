@@ -82,6 +82,11 @@ class restapi_model extends CI_Model
         return false;
         }
     }
+    public function getAllSize(){
+        $query=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE 1")->result(); 
+        return $query;
+        
+    }
 	
 }
 ?>

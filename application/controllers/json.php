@@ -1408,45 +1408,45 @@ $id=$this->input->get_post("id");
 $data["message"]=$this->config_model->getsingleconfig($id);
 $this->load->view("json",$data);
 }
-function getallsize()
-{
-$elements=array();
-$elements[0]=new stdClass();
-$elements[0]->field="`fynx_size`.`id`";
-$elements[0]->sort="1";
-$elements[0]->header="ID";
-$elements[0]->alias="id";
-
-$elements=array();
-$elements[1]=new stdClass();
-$elements[1]->field="`fynx_size`.`status`";
-$elements[1]->sort="1";
-$elements[1]->header="status";
-$elements[1]->alias="status";
-
-$elements=array();
-$elements[2]=new stdClass();
-$elements[2]->field="`fynx_size`.`name`";
-$elements[2]->sort="1";
-$elements[2]->header="Name";
-$elements[2]->alias="name";
-
-$search=$this->input->get_post("search");
-$pageno=$this->input->get_post("pageno");
-$orderby=$this->input->get_post("orderby");
-$orderorder=$this->input->get_post("orderorder");
-$maxrow=$this->input->get_post("maxrow");
-if($maxrow=="")
-{
-}
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_size`");
-$this->load->view("json",$data);
-}
+//function getallsize()
+//{
+//$elements=array();
+//$elements[0]=new stdClass();
+//$elements[0]->field="`fynx_size`.`id`";
+//$elements[0]->sort="1";
+//$elements[0]->header="ID";
+//$elements[0]->alias="id";
+//
+//$elements=array();
+//$elements[1]=new stdClass();
+//$elements[1]->field="`fynx_size`.`status`";
+//$elements[1]->sort="1";
+//$elements[1]->header="status";
+//$elements[1]->alias="status";
+//
+//$elements=array();
+//$elements[2]=new stdClass();
+//$elements[2]->field="`fynx_size`.`name`";
+//$elements[2]->sort="1";
+//$elements[2]->header="Name";
+//$elements[2]->alias="name";
+//
+//$search=$this->input->get_post("search");
+//$pageno=$this->input->get_post("pageno");
+//$orderby=$this->input->get_post("orderby");
+//$orderorder=$this->input->get_post("orderorder");
+//$maxrow=$this->input->get_post("maxrow");
+//if($maxrow=="")
+//{
+//}
+//if($orderby=="")
+//{
+//$orderby="id";
+//$orderorder="ASC";
+//}
+//$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_size`");
+//$this->load->view("json",$data);
+//}
 public function getsinglesize()
 {
 $id=$this->input->get_post("id");
@@ -2461,6 +2461,11 @@ echo $filepath;
         $data["message"] = $this->restapi_model->removeFromWishlist($user, $product);
         $this->load->view("json", $data);
     } 
+ public function getAllSize()
+   {
+     $data['message']=$this->restapi_model->getAllSize();
+        $this->load->view("json", $data);
+    }
  
  
 } ?>
