@@ -1659,8 +1659,9 @@ $this->load->view("json",$data);
     function addToCart() {
          $product = $this->input->get_post('product');
          $quantity = $this->input->get_post('quantity');
-
-        $data["message"] = $this->user_model->addToCart($product, $quantity);
+         $size = $this->input->get_post('size');
+         $color = $this->input->get_post('color');
+        $data["message"] = $this->user_model->addToCart($product, $quantity,$size,$color);
         $this->load->view("json", $data);
     }
     function destroycart() {
