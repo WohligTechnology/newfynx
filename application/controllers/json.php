@@ -2430,9 +2430,9 @@ echo $filepath;
     }
  function getProductDetails() {
          $id = $this->input->get_post('id');
+         $size = $this->input->get_post('size');
+         $color = $this->input->get_post('color');
         $user=$this->session->userdata('id');
-        $size=$this->session->userdata('size');
-        $color=$this->session->userdata('color');
         $data["message"] = $this->product_model->getProductDetails($id,$user,$size,$color);
         $this->load->view("json", $data);
     }
