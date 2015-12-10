@@ -625,9 +625,21 @@ class User_model extends CI_Model
     }
         function addToCart($product, $quantity,$size,$color) {
         //$data=$this->cart->contents();
-       $getexactproduct=$this->db->query("'SELECT `id` FROM `fynx_product` WHERE `color`='$color' AND `size`='$size' AND `baseproduct`=(SELECT `baseproduct` FROM `fynx_product` WHERE `id`='$product')")->row();
-            $exactproduct=$getexactproduct->id;
-        $sizequery=$this->db->query("SELECT * FROM `fynx_product` WHERE `id` = '$exactproduct' LIMIT 0,1")->row();
+            $where="";
+            if($color){
+                $where .=" `color`='$color'";
+            }
+            else{
+                 $where .="1";
+            }
+            
+//       $getexactproduct=$this->db->query("SELECT `id` FROM `fynx_product` WHERE  `size`='$size' AND $where AND `baseproduct`=(SELECT `baseproduct` FROM `fynx_product` WHERE `id`='$product')")->row();
+//            $exactproduct=$getexactproduct->id;
+        $checkbaseproduct=$this->db->query("SELECT `baseproduct` FROM `fynx_product` WHERE `id` = '$product'")->row();
+        $baseproduct=$checkbaseproduct->baseproduct;
+            if($baseproduct){
+                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `baseproduct` = '$baseproduct' AND `size`='$size'")->row();
+            }
         $size=$sizequery->size;
         $productname=$sizequery->name;
         $price=$sizequery->price;
