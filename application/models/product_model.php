@@ -113,12 +113,28 @@ return $query;
         }
          return $return;
 	}
-    function getProductDetails($product,$user)
+    function getProductDetails($product,$user,$size,$color)
 	{
+        echo "size         ";
+        echo $size;
+        echo "     color     ";
+        echo $color;
+        $where="";
+        if($size !=" "){
+            $where .="AND `fynx_product`.`size`='$size' ";
+        }
+        if($color !=" "){
+            $where .="AND `fynx_product`.`color`='$color'";
+        }
         $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
         LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user' 
-        WHERE `fynx_product`.`id`='$product'")->row();
+        WHERE `fynx_product`.`id`='$product' $where")->row();
         
+        echo "SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
+        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user' 
+        WHERE `fynx_product`.`id`='$product' $where";
+        
+        echo "          QUWERY ENDS         ";
         $baseproduct=$query['product']->baseproduct;
         
 		$query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`

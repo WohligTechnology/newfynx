@@ -2429,9 +2429,11 @@ echo $filepath;
         $this->load->view("json", $data);
     }
  function getProductDetails() {
-         $id = $this->input->get_post("id");
+         $id = $this->input->get_post('id');
         $user=$this->session->userdata('id');
-        $data["message"] = $this->product_model->getProductDetails($id,$user);
+        $size=$this->session->userdata('size');
+        $color=$this->session->userdata('color');
+        $data["message"] = $this->product_model->getProductDetails($id,$user,$size,$color);
         $this->load->view("json", $data);
     }
    function showCart() {
