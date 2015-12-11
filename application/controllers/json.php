@@ -1722,7 +1722,8 @@ $this->load->view("json",$data);
           $product=$data["product"];
           $color=$data["color"];
           $size=$data["size"];
-        $data["message"] = $this->product_model->addtowishlist($user,$product,$color,$size);
+          $quantity=$data["quantity"];
+        $data["message"] = $this->product_model->addtowishlist($user,$product,$color,$size,$quantity);
         $this->load->view("json", $data);
     } 
     

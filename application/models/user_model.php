@@ -623,29 +623,31 @@ class User_model extends CI_Model
         else
         return false;
     }
-        function addToCart($product, $quantity,$size,$color) {
+        function addToCart($product, $quantity,$size,$color) 
+    {
         //$data=$this->cart->contents();
             $where="";
-            if($color){
+            if($color)
+            {
                 $where .=" `color`='$color'";
             }
-            else{
-                 $where .="1";
+            else
+            {
+                 $where .=" 1";
             }
             
-//       $getexactproduct=$this->db->query("SELECT `id` FROM `fynx_product` WHERE  `size`='$size' AND $where AND `baseproduct`=(SELECT `baseproduct` FROM `fynx_product` WHERE `id`='$product')")->row();
-//            $exactproduct=$getexactproduct->id;
         $checkbaseproduct=$this->db->query("SELECT `baseproduct` FROM `fynx_product` WHERE `id` = '$product'")->row();
         $baseproduct=$checkbaseproduct->baseproduct;
-            if($baseproduct){
-                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `baseproduct` = '$baseproduct' AND `size`='$size'")->row();
+            if($baseproduct)
+            {
+                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `size`='$size' AND $where AND `baseproduct` LIKE '$baseproduct'")->row();
             }
-        $size=$sizequery->size;
-        $productname=$sizequery->name;
-        $price=$sizequery->price;
-        $color=$sizequery->color;
-        $image=$sizequery->image1;
-        
+        $size=$getexactproduct->size;
+        $productname=$getexactproduct->name;
+        $price=$getexactproduct->price;
+        $color=$getexactproduct->color;
+        $image=$getexactproduct->image1;
+        $exactproduct=$getexactproduct->id;
         $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
         $sizeid=$getsize->id;
         $sizename=$getsize->name;
@@ -653,7 +655,7 @@ class User_model extends CI_Model
         $colorid=$getcolor->id;
         $colorname=$getcolor->name;
         $data = array(
-               'id'      => $product,
+               'id'      => $exactproduct,
                'name'      => '1',
                'qty'     => $quantity,
                'price'   => $price,
@@ -667,26 +669,34 @@ class User_model extends CI_Model
                 )
         );
         $userid=$this->session->userdata('id');
-        if($userid=="")
-        {
-            $this->cart->insert($data);
-            $returnval=$this->cart->insert($data);
-            if(!empty($returnval)){
-            return true;
+            //CHECK IF PRODUCT ALREADY THERE IN CART
+            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `size`='$sizeid' AND `color`='$colorid' AND `product`='$exactproduct'");
+         if ( $checkcart->num_rows() > 0 ) 
+         {
+             return 0;
+         }
+            {
+                    if($userid=="")
+                    {
+                        $this->cart->insert($data);
+                        $returnval=$this->cart->insert($data);
+                        if(!empty($returnval)){
+                        return true;
+                        }
+                        else{
+                        return false;
+                        }
+                    }
+                    else
+                    {
+                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`size`,`color`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$sizeid','$colorid')");
+                        $this->cart->insert($data);
+                        if($query)
+                        return true;
+                        else
+                        return false;
+                    }
             }
-            else{
-            return false;
-            }
-        }
-        else
-        {
-            $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`size`,`color`) VALUES ('$userid','$product','$quantity',NULL,'$size','$color')");
-            $this->cart->insert($data);
-            if($query)
-            return true;
-            else
-            return false;
-        }
          
     }
     function deletecartfromdb($id,$user){

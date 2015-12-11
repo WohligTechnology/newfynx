@@ -143,7 +143,7 @@ WHERE `relatedproduct`.`product`='$product'")->result();
       
 		return $query;
 	}
-      function addtowishlist($user,$product,$color,$size)
+      function addtowishlist($user,$product,$color,$size,$quantity)
     {
            $where="";
             if($color){
@@ -203,7 +203,6 @@ WHERE `relatedproduct`.`product`='$product'")->result();
             $image4=$row['image4'];
             $image5=$row['image5'];
             $baseproduct=$row['baseproduct'];
-            $sizechartimage=$row['sizechartimage'];
             if($relatedproduct){
              $allrelatedproduct=explode(",",$relatedproduct);
                 }
@@ -360,11 +359,11 @@ WHERE `relatedproduct`.`product`='$product'")->result();
                 $query=$this->db->update( "fynx_product", $data );
             }
             //INSERT sizechart
-             $query5=$this->db->query("SELECT `id` FROM `fynx_sizechart` WHERE `name` = '$sizechart' AND `image`='$sizechartimage'")->row();
+             $query5=$this->db->query("SELECT `id` FROM `fynx_sizechart` WHERE `name` = '$sizechart'")->row();
             
             if(empty($query5))
             {
-                $data=array("name" => $sizechart,"image" => $sizechartimage);
+                $data=array("name" => $sizechart);
                 $query=$this->db->insert( "fynx_sizechart", $data );
                 $sizechartid=$this->db->insert_id();
                 
