@@ -204,8 +204,9 @@ WHERE `relatedproduct`.`product`='$product'")->result();
             $image5=$row['image5'];
             $baseproduct=$row['baseproduct'];
             $sizechartimage=$row['sizechartimage'];
-            
+            if($relatedproduct){
              $allrelatedproduct=explode(",",$relatedproduct);
+                }
             
             
 		$data  = array(
@@ -381,7 +382,7 @@ WHERE `relatedproduct`.`product`='$product'")->result();
                 $query=$this->db->update( "fynx_product", $data );
             }
             
-            
+            if($allrelatedproduct){
             foreach($allrelatedproduct as $key => $relatedproduct)
 			{
                 $relatedproduct=trim($relatedproduct);
@@ -401,6 +402,7 @@ WHERE `relatedproduct`.`product`='$product'")->result();
 				);
 				$queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
 			}
+                }
             
             
             
