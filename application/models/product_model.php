@@ -116,68 +116,50 @@ return $query;
     function getProductDetails($product,$user,$size,$color)
 	{
         $where=" ";
-        if($size){
-            $where .="AND `fynx_product`.`size`='$size' ";
+        if($size && $color){
+            $query1=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+            $baseproduct=$query1->name;
+            $productid=$query1->id;
+            $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' AND `fynx_product`.`baseproduct` LIKE '$baseproduct'";
         }
-        else{}
-        if($color){
-            $where .="AND `fynx_product`.`color`='$color'";
+        else{
+              $where .="`fynx_product`.`id`='$product'";
         }
-          else{}
+        
+        
         $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
         LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user' 
-        WHERE `fynx_product`.`id`='$product' $where")->row();
-        
-        $baseproduct=$query['product']->baseproduct;
-		
-        
-      if($baseproduct !=""){
-          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`
+        WHERE  $where ")->row();
+   
+        $baseproduct=$query['product']->name;
+        $product=$query['product']->id;
+          $query['relatedproduct'] = $this->db->query("SELECT `fynx_designs`.`id` as `designid`, `fynx_designs`.`designer`, `fynx_designs`.`image` as `designimage`, `fynx_designs`.`status` as `designstatus`, `fynx_designs`.`timestamp`,`relatedproduct`.`relatedproduct`,`relatedproduct`.`design`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`
 LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id`
+LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`relatedproduct`.`design`
 WHERE `relatedproduct`.`product`='$product'")->result();
+      
+        
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size` 
-        WHERE `fynx_size`.`id` IN (SELECT `size` FROM `fynx_product` WHERE `baseproduct`='$baseproduct')")->result();
+        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `size` FROM `fynx_product` WHERE `baseproduct` LIKE '$baseproduct' OR `name` LIKE '$baseproduct')")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color` 
-        WHERE `fynx_color`.`id` IN (SELECT `color` FROM `fynx_product` WHERE `baseproduct`='$baseproduct')")->result();
-      }
+        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `color` FROM `fynx_product` WHERE `baseproduct` LIKE '$baseproduct' OR `name` LIKE '$baseproduct')")->result();
+      
       
 		return $query;
 	}
-      function addtowishlist($user,$product,$color,$size,$quantity)
+      function addtowishlist($user,$product,$quantity,$design)
     {
-           $where="";
-            if($color){
-                $where .=" `color`='$color' AND ";
-            }
-            else{
-                 $where .="1 AND ";
-            }
-          if($size){
-                $where .=" `size`='$size' AND ";
-            }
-            else{
-                 $where .="1 AND ";
-            }
-        if($user!="")
+        $userwishlist=$this->db->query("SELECT * FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product'AND `design`='$design'")->row();
+        if(empty($userwishlist))
         {
-             $getexactproduct=$this->db->query("SELECT `id` FROM `fynx_product` WHERE $where `baseproduct`=(SELECT `baseproduct` FROM `fynx_product` WHERE `id`='$product')")->row();
-            $exactproduct=$getexactproduct->id;
-            if($exactproduct)
-            {
-                $userwishlist=$this->db->query("SELECT * FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$exactproduct' AND `color`='$color' AND `size`='$size'")->row();
-                if(empty($userwishlist))
-                {
-                    $query=$this->db->query("INSERT INTO `fynx_wishlist`(`user`,`product`,`color`,`size`) VALUES ('$user','$exactproduct','$color','$size')");
-                    return $query;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+            $query=$this->db->query("INSERT INTO `fynx_wishlist`(`user`,`product`,`design`) VALUES ('$user','$product','$design')");
+            return $query;
+        }
+        else
+        {
+            return 0;
         }
         
-        return 0;
  
     }
     

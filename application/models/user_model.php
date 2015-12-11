@@ -623,25 +623,12 @@ class User_model extends CI_Model
         else
         return false;
     }
-        function addToCart($product, $quantity,$size,$color) 
+        function addToCart($product, $quantity, $design) 
     {
         //$data=$this->cart->contents();
-            $where="";
-            if($color)
-            {
-                $where .=" `color`='$color'";
-            }
-            else
-            {
-                 $where .=" 1";
-            }
             
-        $checkbaseproduct=$this->db->query("SELECT `baseproduct` FROM `fynx_product` WHERE `id` = '$product'")->row();
-        $baseproduct=$checkbaseproduct->baseproduct;
-            if($baseproduct)
-            {
-                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `size`='$size' AND $where AND `baseproduct` LIKE '$baseproduct'")->row();
-            }
+                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+            
         $size=$getexactproduct->size;
         $productname=$getexactproduct->name;
         $price=$getexactproduct->price;
@@ -654,6 +641,10 @@ class User_model extends CI_Model
         $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
         $colorid=$getcolor->id;
         $colorname=$getcolor->name;
+        $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
+        $designid=$getdesign->id;
+        $designer=$getdesign->designer;
+        $designimage=$getdesign->image;
         $data = array(
                'id'      => $exactproduct,
                'name'      => '1',
@@ -665,12 +656,15 @@ class User_model extends CI_Model
                     'sizeid' => $sizeid,
                     'colorid' => $colorid,
                     'sizename' => $sizename,
-                    'colorname' => $colorname
+                    'colorname' => $colorname,
+                    'designid' => $designid,
+                    'designer' => $designer,
+                    'designimage' => $designimage
                 )
         );
         $userid=$this->session->userdata('id');
             //CHECK IF PRODUCT ALREADY THERE IN CART
-            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `size`='$sizeid' AND `color`='$colorid' AND `product`='$exactproduct'");
+            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `product`='$exactproduct'");
          if ( $checkcart->num_rows() > 0 ) 
          {
              return 0;
@@ -689,7 +683,7 @@ class User_model extends CI_Model
                     }
                     else
                     {
-                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`size`,`color`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$sizeid','$colorid')");
+                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`design`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$design')");
                         $this->cart->insert($data);
                         if($query)
                         return true;
@@ -699,8 +693,8 @@ class User_model extends CI_Model
             }
          
     }
-    function deletecartfromdb($id,$user){
-    $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user'");
+    function deletecartfromdb($id,$user,$design){
+    $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
     }
 }
 ?>

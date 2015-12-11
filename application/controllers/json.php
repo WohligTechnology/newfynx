@@ -1659,9 +1659,8 @@ $this->load->view("json",$data);
     function addToCart() {
          $product = $this->input->get_post('product');
          $quantity = $this->input->get_post('quantity');
-         $size = $this->input->get_post('size');
-         $color = $this->input->get_post('color');
-        $data["message"] = $this->user_model->addToCart($product, $quantity,$size,$color);
+         $design = $this->input->get_post('design');
+        $data["message"] = $this->user_model->addToCart($product, $quantity, $design);
         $this->load->view("json", $data);
     }
     function destroycart() {
@@ -1720,10 +1719,9 @@ $this->load->view("json",$data);
           $data = json_decode(file_get_contents('php://input'), true);
           $user=$this->session->userdata('id');
           $product=$data["product"];
-          $color=$data["color"];
-          $size=$data["size"];
           $quantity=$data["quantity"];
-        $data["message"] = $this->product_model->addtowishlist($user,$product,$color,$size,$quantity);
+          $design=$data["design"];
+        $data["message"] = $this->product_model->addtowishlist($user,$product,$quantity,$design);
         $this->load->view("json", $data);
     } 
     
@@ -1738,8 +1736,9 @@ $this->load->view("json",$data);
     }
     function deletecart() {
         $id = intval($this->input->get_post("id"));
+        $design = intval($this->input->get_post("design"));
         $user=$this->session->userdata('id');
-        $this->user_model->deletecartfromdb($id,$user);
+        $this->user_model->deletecartfromdb($id,$user,$design);
         $cart = $this->cart->contents();
         $newcart = array();
         foreach ($cart as $item) {
@@ -2464,7 +2463,8 @@ echo $filepath;
          $data = json_decode(file_get_contents('php://input'), true);
           $user=$this->session->userdata('id');
           $product=$data["product"];
-        $data["message"] = $this->restapi_model->removeFromWishlist($user, $product);
+          $design=$data["design"];
+        $data["message"] = $this->restapi_model->removeFromWishlist($user, $product,$design);
         $this->load->view("json", $data);
     } 
  public function getAllSize()
