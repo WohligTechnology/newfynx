@@ -11,6 +11,12 @@
                  <label>Related Product</label>
             </div>
         </div>
+ <div class="row" style="display:none">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('product', $product, set_value('product',$this->input->get("id"))); ?>
+                 <label> Product</label>
+            </div>
+        </div>
 
     
    

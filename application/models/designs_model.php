@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class designs_model extends CI_Model
 {
-public function create($designer,$image,$status,$timestamp)
+public function create($designer,$image,$status,$timestamp,$name)
 {
-$data=array("designer" => $designer,"image" => $image,"status" => $status);
+$data=array("designer" => $designer,"image" => $image,"status" => $status,"name" => $name);
 $query=$this->db->insert( "fynx_designs", $data );
 $id=$this->db->insert_id();
     
@@ -35,9 +35,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_designs")->row();
 return $query;
 }
-public function edit($id,$designer,$image,$status,$timestamp)
+public function edit($id,$designer,$image,$status,$timestamp,$name)
 {
-$data=array("designer" => $designer,"image" => $image,"status" => $status,"timestamp" => $timestamp);
+$data=array("designer" => $designer,"image" => $image,"status" => $status,"timestamp" => $timestamp,"name" => $name);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_designs", $data );
 return 1;
@@ -65,9 +65,9 @@ return $query;
     }
      public function getdesignsdropdown()
 	{
-		$query=$this->db->query("SELECT * FROM `designs`  ORDER BY `id` ASC")->result();
+		$query=$this->db->query("SELECT * FROM `fynx_designs`  ORDER BY `id` ASC")->result();
 		$return=array(
-		"" => ""
+		"" => "Choose Design"
 		);
 		foreach($query as $row)
 		{

@@ -173,7 +173,6 @@ WHERE `relatedproduct`.`product`='$product'")->result();
             $type=$row['type'];
             $description=$row['description'];
             $price=$row['price'];
-            $relatedproduct=$row['relatedproduct'];
             $category=$row['category'];
             $color=$row['color'];
             $size=$row['size'];

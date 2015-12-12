@@ -672,17 +672,6 @@ $elements[4]->sort="1";
 $elements[4]->header="Timestamp";
 $elements[4]->alias="timestamp";
     
-$elements[5]=new stdClass();
-$elements[5]->field="`fynx_cart`.`size`";
-$elements[5]->sort="1";
-$elements[5]->header="Size";
-$elements[5]->alias="size";
-
-$elements[6]=new stdClass();
-$elements[6]->field="`fynx_cart`.`color`";
-$elements[6]->sort="1";
-$elements[6]->header="Color";
-$elements[6]->alias="color";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -1442,7 +1431,13 @@ $elements[2]=new stdClass();
 $elements[2]->field="`fynx_designs`.`image`";
 $elements[2]->sort="1";
 $elements[2]->header="Design";
-$elements[2]->alias="design";
+$elements[2]->alias="image";
+    
+$elements[3]=new stdClass();
+$elements[3]->field="`relatedproduct`.`product`";
+$elements[3]->sort="1";
+$elements[3]->header="productid";
+$elements[3]->alias="productid";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -1468,9 +1463,10 @@ $this->checkaccess($access);
 $data["page"]="createproductimage";
 $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get("id");
-$data['design']=$this->design_model->getdesigndropdown();
+$data['design']=$this->designs_model->getdesignsdropdown();
 $data["before2"]=$this->input->get("id");
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
 $data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Create productimage";
 $this->load->view("templatewith2",$data);
@@ -1487,18 +1483,20 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createproductimage";
-$data['design']=$this->design_model->getdesigndropdown();
+$data['design']=$this->designs_model->getdesignsdropdown();
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Create productimage";
 $this->load->view("template",$data);
 }
 else
 {
 $relatedproduct=$this->input->get_post("relatedproduct");
+    $product=$this->input->get_post("product");
 $design=$this->input->get_post("design");
 
-if($this->productimage_model->create($relatedproduct,$design)==0)
+if($this->productimage_model->create($relatedproduct,$design,$product)==0)
 $data["alerterror"]="New productimage could not be created.";
 else
 $data["alertsuccess"]="productimage created Successfully.";
@@ -1510,12 +1508,13 @@ public function editproductimage()
 {
 $access=array("1");
 $this->checkaccess($access);
-      $data['status']=$this->user_model->getstatusdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['product']=$this->product_model->getproductdropdown();
 $data["page"]="editproductimage";
 $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get("id");
 $data["before2"]=$this->input->get("id");
-$data['design']=$this->design_model->getdesigndropdown();
+$data['design']=$this->designs_model->getdesignsdropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
 $this->load->view("templatewith2",$data);
@@ -1534,8 +1533,9 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="editproductimage";
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
-    $data['design']=$this->designs_model->getdesignsdropdown();
 $data['product']=$this->product_model->getproductdropdown();
+    $data['design']=$this->designs_model->getdesignsdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -1544,9 +1544,10 @@ else
 {
 $id=$this->input->get_post("id");
 $relatedproduct=$this->input->get_post("relatedproduct");
+$product=$this->input->get_post("product");
 $design=$this->input->get_post("design");
 
-if($this->productimage_model->edit($id,$relatedproduct,$design)==0)
+if($this->productimage_model->edit($id,$relatedproduct,$design,$product)==0)
 $data["alerterror"]="New productimage could not be Updated.";
 else
 $data["alertsuccess"]="productimage Updated Successfully.";
@@ -1756,10 +1757,10 @@ $elements[2]->sort="1";
 $elements[2]->header="Image";
 $elements[2]->alias="image";
 $elements[3]=new stdClass();
-$elements[3]->field="`fynx_designs`.`status`";
+$elements[3]->field="`fynx_designs`.`name`";
 $elements[3]->sort="1";
-$elements[3]->header="Status";
-$elements[3]->alias="status";
+$elements[3]->header="Name";
+$elements[3]->alias="name";
 $elements[4]=new stdClass();
 $elements[4]->field="`fynx_designs`.`timestamp`";
 $elements[4]->sort="1";
@@ -1820,6 +1821,7 @@ else
 $designer=$this->input->get_post("designer");
 //$image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
+$name=$this->input->get_post("name");
 $timestamp=$this->input->get_post("timestamp");
   $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1854,7 +1856,7 @@ $timestamp=$this->input->get_post("timestamp");
                     // return false;
                 }
             }
-if($this->designs_model->create($designer,$image,$status,$timestamp)==0)
+if($this->designs_model->create($designer,$image,$status,$timestamp,$name)==0)
 $data["alerterror"]="New designs could not be created.";
 else
 $data["alertsuccess"]="designs created Successfully.";
@@ -1901,6 +1903,7 @@ $id=$this->input->get_post("id");
 $designer=$this->input->get_post("designer");
 $image=$this->input->get_post("image");
 $status=$this->input->get_post("status");
+$name=$this->input->get_post("name");
 $timestamp=$this->input->get_post("timestamp");
      $config['upload_path'] = './uploads/';
 						$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1919,7 +1922,7 @@ $timestamp=$this->input->get_post("timestamp");
 						   // print_r($image);
 							$image=$image->image;
 						}
-if($this->designs_model->edit($id,$designer,$image,$status,$timestamp)==0)
+if($this->designs_model->edit($id,$designer,$image,$status,$timestamp,$name)==0)
 $data["alerterror"]="New designs could not be Updated.";
 else
 $data["alertsuccess"]="designs Updated Successfully.";

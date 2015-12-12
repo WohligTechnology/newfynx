@@ -1682,9 +1682,124 @@ $this->load->view("json",$data);
         $this->load->view("json", $data);
     }
     function showwishlist() {
-        $user = $this->input->get_post('user');
-        $data["message"] = $this->wishlist_model->showwishlist($user);
-        $this->load->view("json", $data);
+        
+        $user=$this->input->get('user');
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`fynx_product`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+
+        $elements[1]=new stdClass();
+        $elements[1]->field="`fynx_product`.`subcategory`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Subcategory";
+        $elements[1]->alias="subcategory";
+
+        $elements[2]=new stdClass();
+        $elements[2]->field="`fynx_product`.`quantity`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Quantity";
+        $elements[2]->alias="quantity";
+
+        $elements[3]=new stdClass();
+        $elements[3]->field="`fynx_product`.`name`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Name";
+        $elements[3]->alias="name";
+
+        $elements[4]=new stdClass();
+        $elements[4]->field="`fynx_product`.`type`";
+        $elements[4]->sort="1";
+        $elements[4]->header="Type";
+        $elements[4]->alias="type";
+
+        $elements[5]=new stdClass();
+        $elements[5]->field="`fynx_product`.`description`";
+        $elements[5]->sort="1";
+        $elements[5]->header="Description";
+        $elements[5]->alias="description";
+
+        $elements[6]=new stdClass();
+        $elements[6]->field="`fynx_product`.`visibility`";
+        $elements[6]->sort="1";
+        $elements[6]->header="Visibility";
+        $elements[6]->alias="visibility";
+
+        $elements[7]=new stdClass();
+        $elements[7]->field="`fynx_product`.`price`";
+        $elements[7]->sort="1";
+        $elements[7]->header="Price";
+        $elements[7]->alias="price";
+
+        $elements[8]=new stdClass();
+        $elements[8]->field="`fynx_product`.`category`";
+        $elements[8]->sort="1";
+        $elements[8]->header="Category";
+        $elements[8]->alias="category";
+
+        $elements[9]=new stdClass();
+        $elements[9]->field="`fynx_product`.`color`";
+        $elements[9]->sort="1";
+        $elements[9]->header="Color";
+        $elements[9]->alias="color";
+
+        $elements[10]=new stdClass();
+        $elements[10]->field="`fynx_product`.`size`";
+        $elements[10]->sort="1";
+        $elements[10]->header="Size";
+        $elements[10]->alias="size";
+
+        $elements[11]=new stdClass();
+        $elements[11]->field="`fynx_product`.`sizechart`";
+        $elements[11]->sort="1";
+        $elements[11]->header="Size Chart";
+        $elements[11]->alias="sizechart";
+
+        $elements[12]=new stdClass();
+        $elements[12]->field="`fynx_size`.`id`";
+        $elements[12]->sort="1";
+        $elements[12]->header="sizeid";
+        $elements[12]->alias="sizeid";
+        
+        $elements[13]=new stdClass();
+        $elements[13]->field="`fynx_size`.`name`";
+        $elements[13]->sort="1";
+        $elements[13]->header="sizename";
+        $elements[13]->alias="sizename";
+        
+        $elements[14]=new stdClass();
+        $elements[14]->field="`fynx_color`.`id`";
+        $elements[14]->sort="1";
+        $elements[14]->header="colorid";
+        $elements[14]->alias="colorid";
+        
+        $elements[15]=new stdClass();
+        $elements[15]->field="`fynx_color`.`name`";
+        $elements[15]->sort="1";
+        $elements[15]->header="colorname";
+        $elements[15]->alias="colorname";
+
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        }
+        if($orderby=="")
+        {
+        $orderby="id";
+        $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_product` 
+        LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size` 
+        LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color` 
+        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` ","WHERE `fynx_product`.`status`=2 AND `fynx_wishlist`.`user`='$user'");
+        $this->load->view("json",$data);
+
     }
     function newsletter() {
         $id = $this->input->get_post('id');

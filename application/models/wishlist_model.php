@@ -38,11 +38,13 @@ return $query;
 }
       public function showwishlist($user)
 	{
-		$query="SELECT distinct `fynx_wishlist`.`user`,`fynx_wishlist`.`product`,`fynx_product`.`id`,`fynx_product`.`name`,`fynx_product`.`sku`,`fynx_product`.`description`,
-`fynx_product`.`price` ,`fynx_product`.`image1`,`fynx_product`.`image2`,`fynx_product`.`image3` FROM `fynx_wishlist` 
-INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_wishlist`.`product` WHERE `fynx_wishlist`.`user`='$user' GROUP BY `fynx_product`.`id`";
 	   
-		$query=$this->db->query($query)->result();
+		$query['product']=$this->db->query("SELECT distinct `fynx_wishlist`.`user`,`fynx_wishlist`.`product`,`fynx_product`.`id`,`fynx_product`.`name`,`fynx_product`.`sku`,`fynx_product`.`description`,
+`fynx_product`.`price` ,`fynx_product`.`image1`,`fynx_product`.`image2`,`fynx_product`.`image3` FROM `fynx_wishlist` 
+INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_wishlist`.`product` WHERE `fynx_wishlist`.`user`='$user' GROUP BY `fynx_product`.`id`")->result();
+          $query['size']=$this->db->query("SELECT distinct `fynx_wishlist`.`user`,`fynx_wishlist`.`product`,`fynx_product`.`id`,`fynx_product`.`name`,`fynx_product`.`sku`,`fynx_product`.`description`,
+`fynx_product`.`price` ,`fynx_product`.`image1`,`fynx_product`.`image2`,`fynx_product`.`image3` FROM `fynx_wishlist` 
+INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_wishlist`.`product` WHERE `fynx_wishlist`.`user`='$user' GROUP BY `fynx_product`.`id`")->result();
 		
 		return $query;
 	}

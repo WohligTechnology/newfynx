@@ -2,7 +2,7 @@
 <div class="col s12">
 <div class="row">
 <div class="col s12 drawchintantable">
-<?php $this->chintantable->createsearch(" List of cart");?>
+<?php $this->chintantable->createsearch(" cart");?>
 <table class="highlight responsive-table">
 <thead>
 <tr>
@@ -26,7 +26,7 @@
 </div>
 <script>
 function drawtable(resultrow) {
-return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.product + "</td><td>" + resultrow.size + "</td><td>" + resultrow.color + "</td><td>" + resultrow.timestamp + "</td><td></td></tr>";
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.product + "</td><td>" + resultrow.timestamp + "</td><td></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>
