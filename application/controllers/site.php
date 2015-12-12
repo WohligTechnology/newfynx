@@ -1288,8 +1288,9 @@ public function editproduct()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editproduct";
-//$data["page2"]="block/productblock";
+$data["page2"]="block/productblock";
 $data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
 $productid=$this->input->get('id');
 $data['relatedproduct']=$this->product_model->getproductdropdown();
 $data['selectedrelatedproduct']=$this->product_model->getrelatedproductcount($productid);
@@ -1303,7 +1304,7 @@ $data['sizechart']=$this->sizechart_model->getsizechartdropdown();
 $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Edit product";
 $data["before"]=$this->product_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
 }
 public function editproductsubmit()
 {
@@ -1428,30 +1429,20 @@ function viewproductimagejson()
 $id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
-$elements[0]->field="`fynx_productimage`.`id`";
+$elements[0]->field="`relatedproduct`.`id`";
 $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 $elements[1]=new stdClass();
-$elements[1]->field="`fynx_productimage`.`product`";
+$elements[1]->field="`fynx_product`.`name`";
 $elements[1]->sort="1";
-$elements[1]->header="Product";
-$elements[1]->alias="product";
+$elements[1]->header="Related Product";
+$elements[1]->alias="relatedproduct";
 $elements[2]=new stdClass();
-$elements[2]->field="`fynx_productimage`.`order`";
+$elements[2]->field="`fynx_designs`.`image`";
 $elements[2]->sort="1";
-$elements[2]->header="Order";
-$elements[2]->alias="order";
-$elements[3]=new stdClass();
-$elements[3]->field="`fynx_productimage`.`image`";
-$elements[3]->sort="1";
-$elements[3]->header="Image";
-$elements[3]->alias="image";
-$elements[4]=new stdClass();
-$elements[4]->field="`fynx_productimage`.`status`";
-$elements[4]->sort="1";
-$elements[4]->header="Status";
-$elements[4]->alias="status";
+$elements[2]->header="Design";
+$elements[2]->alias="design";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -1466,7 +1457,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_productimage`","WHERE `fynx_productimage`.`product`='$id'");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `relatedproduct` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`relatedproduct`.`relatedproduct` LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`relatedproduct`.`design`","WHERE `relatedproduct`.`product`='$id'");
 $this->load->view("json",$data);
 }
 
@@ -1477,6 +1468,7 @@ $this->checkaccess($access);
 $data["page"]="createproductimage";
 $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get("id");
+$data['design']=$this->design_model->getdesigndropdown();
 $data["before2"]=$this->input->get("id");
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
 $data['product']=$this->product_model->getproductdropdown();
@@ -1495,51 +1487,18 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createproductimage";
+$data['design']=$this->design_model->getdesigndropdown();
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
-$data['product']=$this->product_model->getproductdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
 $data["title"]="Create productimage";
 $this->load->view("template",$data);
 }
 else
 {
-$product=$this->input->get_post("product");
-$order=$this->input->get_post("order");
-//$image=$this->input->get_post("image");
-$status=$this->input->get_post("status");
-  $config['upload_path'] = './uploads/';
-            $config['allowed_types'] = 'gif|jpg|png|jpeg';
-            $this->load->library('upload', $config);
-            $filename = 'image';
-            $image = '';
-            if ($this->upload->do_upload($filename)) {
-                $uploaddata = $this->upload->data();
-                $image = $uploaddata['file_name'];
-                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
-                $config_r['maintain_ratio'] = true;
-                $config_t['create_thumb'] = false; ///add this
-                $config_r['width'] = 800;
-                $config_r['height'] = 800;
-                $config_r['quality'] = 100;
+$relatedproduct=$this->input->get_post("relatedproduct");
+$design=$this->input->get_post("design");
 
-                // end of configs
-
-                $this->load->library('image_lib', $config_r);
-                $this->image_lib->initialize($config_r);
-                if (!$this->image_lib->resize()) {
-                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
-
-                    // return false;
-                } else {
-
-                    // print_r($this->image_lib->dest_image);
-                    // dest_image
-
-                    $image = $this->image_lib->dest_image;
-
-                    // return false;
-                }
-            }
-if($this->productimage_model->create($product,$order,$image,$status)==0)
+if($this->productimage_model->create($relatedproduct,$design)==0)
 $data["alerterror"]="New productimage could not be created.";
 else
 $data["alertsuccess"]="productimage created Successfully.";
@@ -1556,7 +1515,7 @@ $data["page"]="editproductimage";
 $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get("id");
 $data["before2"]=$this->input->get("id");
-$data['product']=$this->product_model->getproductdropdown();
+$data['design']=$this->design_model->getdesigndropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
 $this->load->view("templatewith2",$data);
@@ -1575,6 +1534,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="editproductimage";
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
+    $data['design']=$this->designs_model->getdesignsdropdown();
 $data['product']=$this->product_model->getproductdropdown();
 $data["title"]="Edit productimage";
 $data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
@@ -1583,28 +1543,10 @@ $this->load->view("template",$data);
 else
 {
 $id=$this->input->get_post("id");
-$product=$this->input->get_post("product");
-$order=$this->input->get_post("order");
-$image=$this->input->get_post("image");
-$status=$this->input->get_post("status");
- $config['upload_path'] = './uploads/';
-						$config['allowed_types'] = 'gif|jpg|png|jpeg';
-						$this->load->library('upload', $config);
-						$filename="image";
-						$image="";
-						if (  $this->upload->do_upload($filename))
-						{
-							$uploaddata = $this->upload->data();
-							$image=$uploaddata['file_name'];
-						}
+$relatedproduct=$this->input->get_post("relatedproduct");
+$design=$this->input->get_post("design");
 
-						if($image=="")
-						{
-						$image=$this->productimage_model->getimagebyid($id);
-						   // print_r($image);
-							$image=$image->image;
-						}
-if($this->productimage_model->edit($id,$product,$order,$image,$status)==0)
+if($this->productimage_model->edit($id,$relatedproduct,$design)==0)
 $data["alerterror"]="New productimage could not be Updated.";
 else
 $data["alertsuccess"]="productimage Updated Successfully.";

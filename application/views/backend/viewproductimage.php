@@ -2,14 +2,14 @@
 <div class="col s12">
 <div class="row">
 <div class="col s12 drawchintantable">
-<?php $this->chintantable->createsearch(" List of Product Image");?>
+<?php $this->chintantable->createsearch(" List of Related Products");?>
 <table class="highlight responsive-table">
 <thead>
 <tr>
 <th data-field="id">ID</th>
 <!--<th data-field="product">Product</th>-->
-<th data-field="order">Order</th>
-<th data-field="image">Image</th>
+<th data-field="relatedproduct">Related Product</th>
+<th data-field="design">design</th>
 <!--<th data-field="status">Status</th>-->
 </tr>
 </thead>
