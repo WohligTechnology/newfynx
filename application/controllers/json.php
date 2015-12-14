@@ -2453,7 +2453,7 @@ public function getsinglesize()
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-        $orderby = "`fynx_product`.`price`";
+        $orderby = "price";
         if($price == "2")
         {
           $orderorder = "DESC";
