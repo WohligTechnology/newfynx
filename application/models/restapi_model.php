@@ -90,8 +90,8 @@ class restapi_model extends CI_Model
 
 		public function getFiltersLater ($query) {
 			$return = new stdClass();
-			$return->color = $this->db->query(" SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product`")->result();
-			$return->size = $this->db->query(" SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product`")->result();
+			$return->color = $this->db->query(" SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_product`.`color` = `fynx_color`.`id`")->result();
+			$return->size = $this->db->query(" SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_product`.`size` = `fynx_size`.`id`")->result();
 			$return->type = $this->db->query(" SELECT DISTINCT `fynx_subcategory`.`name`,`fynx_subcategory`.`id`,`fynx_subcategory`.`image1` FROM `fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory` = `fynx_subcategory`.`id`" )->result();
       return $return;
 		}

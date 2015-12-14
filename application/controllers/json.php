@@ -2425,6 +2425,13 @@ public function getsinglesize()
 
         $category = $this->input->get_post('category');
 
+        $subcategory  = $this->input->get_post("subcategory");
+        $color  = $this->input->get_post("color");
+        $size  = $this->input->get_post("size");
+
+        $subcategoryArr = explode(",",$subcategory);
+        $colorArr = explode(",",$color);
+        $sizeArr = explode(",",$size);
 
         $this->chintantable->createelement('`fynx_product`.`id`','1','ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`','1','name', 'name');
