@@ -2438,10 +2438,10 @@ public function getsinglesize()
         $orderby = $this->input->get_post('orderby');
         $orderorder = $this->input->get_post('orderorder');
         $maxrow = $this->input->get_post('maxrow');
+        $data['message'] = new stdClass();
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_category` ON `fynx_product`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category'  ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
 
-        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_category` ON `fynx_product`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category'  ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
-
-        $data["filters"] = "1";
+        $data["message"]->filter = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
 
         $this->load->view('json', $data);
     }
