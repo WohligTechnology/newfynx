@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.4.14
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 07, 2015 at 06:54 AM
--- Server version: 5.6.24
--- PHP Version: 5.5.24
+-- Host: localhost
+-- Generation Time: Dec 14, 2015 at 08:28 AM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `fynx`
@@ -73,8 +73,16 @@ CREATE TABLE IF NOT EXISTS `fynx_cart` (
   `user` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `product` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `design` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `fynx_cart`
+--
+
+INSERT INTO `fynx_cart` (`id`, `user`, `quantity`, `product`, `timestamp`, `design`) VALUES
+(4, 7, 1, '3', '2015-12-12 07:14:36', '');
 
 -- --------------------------------------------------------
 
@@ -97,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `fynx_category` (
 --
 
 INSERT INTO `fynx_category` (`id`, `order`, `name`, `parent`, `status`, `image1`, `image2`) VALUES
-(1, 1, 'Men', '', '2', '_32.jpg', '3Q9Q53311.JPG');
+(1, 0, 'Men', '', '1', '', '');
 
 -- --------------------------------------------------------
 
@@ -117,8 +125,8 @@ CREATE TABLE IF NOT EXISTS `fynx_color` (
 --
 
 INSERT INTO `fynx_color` (`id`, `name`, `status`, `timestamp`) VALUES
-(1, 'blue', '2', '0000-00-00 00:00:00'),
-(2, 'Black', '2', '2015-12-02 14:22:55');
+(1, 'Black', '1', '2015-12-11 06:44:44'),
+(2, 'Blue', '1', '2015-12-11 06:44:45');
 
 -- --------------------------------------------------------
 
@@ -304,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `fynx_order` (
   `shippingmethod` varchar(255) NOT NULL,
   `orderstatus` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_order`
@@ -312,7 +320,8 @@ CREATE TABLE IF NOT EXISTS `fynx_order` (
 
 INSERT INTO `fynx_order` (`id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcontact`, `billingcity`, `billingstate`, `billingpincode`, `billingcountry`, `shippingcity`, `shippingaddress`, `shippingname`, `shippingcountry`, `shippingcontact`, `shippingstate`, `shippingpincode`, `trackingcode`, `defaultcurrency`, `shippingmethod`, `orderstatus`, `timestamp`) VALUES
 (1, 1, 'Sachin', 'Patil', 'poojathakare55@gmail.com', 'huh', 'yugh', 'u', 'h', 'hu', 'yh', 'y', 'h', 'uh', 'u', 'yu', 'u', 'h', 'yu', 'u', 'u', '1', '2015-12-02 14:19:04'),
-(2, 1, 'Ramesh', 'Pal', 'wohlig@wohlig.com', 'arioli', '987987', 'navimumbai', 'maharashtra', '400708', 'india', 'navimumbai', 'arioli', 'puja', 'india', '987987', 'maharashtra', '400709', '789', '987', 'road', '1', '2015-12-02 14:20:06');
+(2, 1, 'Ramesh', 'Pal', 'wohlig@wohlig.com', 'arioli', '987987', 'navimumbai', 'maharashtra', '400708', 'india', 'navimumbai', 'arioli', 'puja', 'india', '987987', 'maharashtra', '400709', '789', '987', 'road', '1', '2015-12-02 14:20:06'),
+(3, 2, 'Pooja', 'Thakare', 'pthakare33@email.com', 'sion', '0221978622', 'mum', 'mah', '400506', 'ind', 'nmum', 'airoli', 'abcxyz', 'india', '02214668', 'maharashra', '400708', '', '', 'gjgj', '1', '2015-12-08 06:44:22');
 
 -- --------------------------------------------------------
 
@@ -364,19 +373,18 @@ CREATE TABLE IF NOT EXISTS `fynx_product` (
   `image2` varchar(255) NOT NULL,
   `image3` varchar(255) NOT NULL,
   `image4` varchar(255) NOT NULL,
-  `image5` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  `image5` varchar(255) NOT NULL,
+  `baseproduct` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_product`
 --
 
-INSERT INTO `fynx_product` (`id`, `subcategory`, `quantity`, `name`, `type`, `description`, `visibility`, `price`, `relatedproduct`, `category`, `color`, `size`, `sizechart`, `status`, `sku`, `image1`, `image2`, `image3`, `image4`, `image5`) VALUES
-(2, 0, '1', 'Polo Tshirt', '2', '<p>Polo Tshirt for men</p>', '1', '500', 'djh', '1', '1', '1', '', '1', 'A110', 't2.jpg', '', '', '', ''),
-(3, 1, '1', 'Graphics', '1', '<p>0</p>', '1', '324', '', '', '1', '1', '1', '2', 'A11', 't3.jpg', '', '', '', ''),
-(4, 1, '1', 'Puma', '1', '<p>rt</p>', '1', '800', '3', '1', '1', '1', '', '2', 'SAerjht', 't4.jpg', '3Q9Q533112.JPG', 'download_(1)7.jpg', '', 'images_(1)2.jpg'),
-(10, 1, '1', 'Adidas', '1', '<p>rt</p>', '1', '900', '3', '1', '1', '1', '', '2', 'SAerjht', 't5.jpg', '3Q9Q533112.JPG', 'download_(1)7.jpg', '', 'images_(1)2.jpg'),
-(15, 0, '', 'Nike', '', '', '', '', '', '', '', '', '', '1', '', 'tee.jpg', '', '', '', '');
+INSERT INTO `fynx_product` (`id`, `subcategory`, `quantity`, `name`, `type`, `description`, `visibility`, `price`, `relatedproduct`, `category`, `color`, `size`, `sizechart`, `status`, `sku`, `image1`, `image2`, `image3`, `image4`, `image5`, `baseproduct`) VALUES
+(1, 1, '1', 'Polo', '1', 'Polo Tshirt', '1', '800', '', '1', '1', '1', '1', '2', 'A110', 't1.jpg', 't2.jpg', 't3.jpg', 't4.jpg', 't5.jpg', ''),
+(2, 2, '1', 'Graphics', '2', 'Round Graphics shirt', '1', '750', '', '1', '2', '2', '2', '2', 'Z123', 't11.jpg', 't21.jpg', 't31.jpg', 't41.jpg', 't51.jpg', 'polo'),
+(3, 3, '1', 'Adidas', '3', 'Good quality Chain ', '1', '680', '', '1', '1', '1', '3', '2', 'G12d', 't12.jpg', 't22.jpg', 't32.jpg', 't42.jpg', 't52.jpg', 'graphics');
 
 -- --------------------------------------------------------
 
@@ -390,16 +398,7 @@ CREATE TABLE IF NOT EXISTS `fynx_productimage` (
   `order` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `fynx_productimage`
---
-
-INSERT INTO `fynx_productimage` (`id`, `product`, `order`, `image`, `status`) VALUES
-(1, 1, 1, '0', '1'),
-(3, 1, 0, '61fWioKx9aL._SX522__.jpg', '1'),
-(4, 2, 1, 'download1.jpg', '2');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -411,14 +410,15 @@ CREATE TABLE IF NOT EXISTS `fynx_size` (
   `id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_size`
 --
 
 INSERT INTO `fynx_size` (`id`, `status`, `name`) VALUES
-(1, 2, 'Xl');
+(1, 1, 'xxl'),
+(2, 1, 'xl');
 
 -- --------------------------------------------------------
 
@@ -430,14 +430,16 @@ CREATE TABLE IF NOT EXISTS `fynx_sizechart` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_sizechart`
 --
 
 INSERT INTO `fynx_sizechart` (`id`, `name`, `image`) VALUES
-(1, 't shirt sizechart', 'yhst-36415648955918_2214_4892944.jpg');
+(1, 'For Shirt', ''),
+(2, 'For Graphics', ''),
+(3, 'For Hoodies', '');
 
 -- --------------------------------------------------------
 
@@ -453,14 +455,16 @@ CREATE TABLE IF NOT EXISTS `fynx_subcategory` (
   `status` varchar(255) NOT NULL,
   `image1` varchar(255) NOT NULL,
   `image2` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_subcategory`
 --
 
 INSERT INTO `fynx_subcategory` (`id`, `category`, `name`, `order`, `status`, `image1`, `image2`) VALUES
-(1, 1, 'Tshirt', '1', '2', '0', '0');
+(1, 1, 'T-shirt', '', '1', '', ''),
+(2, 1, 'Caps', '', '1', '', ''),
+(3, 1, 'Shoes', '', '1', '', '');
 
 -- --------------------------------------------------------
 
@@ -472,15 +476,18 @@ CREATE TABLE IF NOT EXISTS `fynx_type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `subcategory` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_type`
 --
 
-INSERT INTO `fynx_type` (`id`, `name`, `status`, `timestamp`) VALUES
-(2, 'V-neck', '2', '2015-12-02 14:22:40');
+INSERT INTO `fynx_type` (`id`, `name`, `status`, `timestamp`, `subcategory`) VALUES
+(1, 'Polo Shirts', '1', '2015-12-14 07:17:07', 1),
+(2, 'Graphic T-Shirts', '1', '2015-12-14 07:17:09', 1),
+(3, 'Tanks', '1', '2015-12-14 07:17:10', 1);
 
 -- --------------------------------------------------------
 
@@ -513,15 +520,16 @@ CREATE TABLE IF NOT EXISTS `fynx_wishlist` (
   `id` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   `product` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `design` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_wishlist`
 --
 
-INSERT INTO `fynx_wishlist` (`id`, `user`, `product`, `timestamp`) VALUES
-(1, 1, '3', '2015-12-07 05:39:34');
+INSERT INTO `fynx_wishlist` (`id`, `user`, `product`, `timestamp`, `design`) VALUES
+(7, 7, '3', '2015-12-12 07:32:15', '1');
 
 -- --------------------------------------------------------
 
@@ -652,16 +660,18 @@ INSERT INTO `orderstatus` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `relatedproduct` (
   `id` int(11) NOT NULL,
   `product` int(11) NOT NULL,
-  `relatedproduct` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `relatedproduct` int(11) NOT NULL,
+  `design` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `relatedproduct`
 --
 
-INSERT INTO `relatedproduct` (`id`, `product`, `relatedproduct`) VALUES
-(3, 3, 2),
-(4, 3, 4);
+INSERT INTO `relatedproduct` (`id`, `product`, `relatedproduct`, `design`) VALUES
+(1, 2, 1, '4'),
+(2, 3, 1, '6'),
+(3, 3, 2, '');
 
 -- --------------------------------------------------------
 
@@ -724,15 +734,25 @@ CREATE TABLE IF NOT EXISTS `user` (
   `vatnumber` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
   `fax` varchar(255) NOT NULL,
-  `gender` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `gender` int(11) NOT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `google` varchar(255) NOT NULL,
+  `twitter` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `pincode` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `dob` date NOT NULL,
+  `city` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`) VALUES
-(1, 'wohlig', 'a63526467438df9566c508027d9cb06b', 'wohlig@wohlig.com', 1, '0000-00-00 00:00:00', 1, 'images_(2)1.jpg', '', '', 'Facebook', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
+INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`, `facebook`, `google`, `twitter`, `street`, `address`, `pincode`, `state`, `dob`, `city`) VALUES
+(1, 'wohlig', 'a63526467438df9566c508027d9cb06b', 'wohlig@wohlig.com', 1, '0000-00-00 00:00:00', 1, 'images_(2)1.jpg', '', '', 'Facebook', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', ''),
+(6, 'Pooja Thakare', '', 'pooja.wohlig@gmail.com', 3, '2015-12-09 06:02:37', 1, 'https://lh5.googleusercontent.com/-5B1PwZZrwdI/AAAAAAAAAAI/AAAAAAAAABw/J3Hf871N8IE/photo.jpg', '', '103402210128529539675', 'Google', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '103402210128529539675', '', '', '', '', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -794,7 +814,8 @@ INSERT INTO `userlog` (`id`, `onuser`, `status`, `description`, `timestamp`) VAL
 -- Indexes for table `accesslevel`
 --
 ALTER TABLE `accesslevel`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `contact`
@@ -988,7 +1009,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `fynx_cart`
 --
 ALTER TABLE `fynx_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `fynx_category`
 --
@@ -1043,7 +1064,7 @@ ALTER TABLE `fynx_offerproduct`
 -- AUTO_INCREMENT for table `fynx_order`
 --
 ALTER TABLE `fynx_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_orderitem`
 --
@@ -1053,32 +1074,32 @@ ALTER TABLE `fynx_orderitem`
 -- AUTO_INCREMENT for table `fynx_product`
 --
 ALTER TABLE `fynx_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_productimage`
 --
 ALTER TABLE `fynx_productimage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `fynx_size`
 --
 ALTER TABLE `fynx_size`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `fynx_sizechart`
 --
 ALTER TABLE `fynx_sizechart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_subcategory`
 --
 ALTER TABLE `fynx_subcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_type`
 --
 ALTER TABLE `fynx_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_useraddress`
 --
@@ -1088,7 +1109,7 @@ ALTER TABLE `fynx_useraddress`
 -- AUTO_INCREMENT for table `fynx_wishlist`
 --
 ALTER TABLE `fynx_wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `logintype`
 --
@@ -1103,7 +1124,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `relatedproduct`
 --
 ALTER TABLE `relatedproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `statuses`
 --
@@ -1113,7 +1134,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `userlog`
 --
