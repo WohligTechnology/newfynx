@@ -2429,9 +2429,19 @@ public function getsinglesize()
         $color  = $this->input->get_post("color");
         $size  = $this->input->get_post("size");
 
-        $subcategoryArr = explode(",",$subcategory);
-        $colorArr = explode(",",$color);
-        $sizeArr = explode(",",$size);
+        $where = " ";
+        if($subcategory != "")
+        {
+          $where .= " AND `fynx_product`.`subcategory` IN ($subcategory) ";
+        }
+        if($color != "")
+        {
+          $where .= " AND `fynx_product`.`subcategory` IN ($color) ";
+        }
+        if($size != "")
+        {
+          $where .= " AND `fynx_product`.`subcategory` IN ($size) ";
+        }
 
         $this->chintantable->createelement('`fynx_product`.`id`','1','ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`','1','name', 'name');
@@ -2446,9 +2456,9 @@ public function getsinglesize()
         $orderorder = $this->input->get_post('orderorder');
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
-        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_category` ON `fynx_product`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category'  ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
-
-        $data["message"]->filter = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_category` ON `fynx_product`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category' $where ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
+        //echo "";
+        $data["message"]->filter = $this->restapi_model->getFiltersLater($data["message"]->product->querycomplete);
 
         $this->load->view('json', $data);
     }
