@@ -198,6 +198,8 @@ class Json extends CI_Controller
         $elements[3]->header = 'Timestamp';
         $elements[3]->alias = 'timestamp';
 
+
+
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
         $orderby = $this->input->get_post('orderby');
@@ -1746,6 +1748,18 @@ public function getsinglesize()
         $elements[15]->header = 'colorname';
         $elements[15]->alias = 'colorname';
 
+        $elements[16] = new stdClass();
+        $elements[16]->field = '`fynx_designs`.`id`';
+        $elements[16]->sort = '1';
+        $elements[16]->header = 'designId';
+        $elements[16]->alias = 'designId';
+
+        $elements[17] = new stdClass();
+        $elements[17]->field = '`fynx_designs`.`image`';
+        $elements[17]->sort = '1';
+        $elements[17]->header = 'designImage';
+        $elements[17]->alias = 'designImage';
+
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
         $orderby = $this->input->get_post('orderby');
@@ -1757,10 +1771,15 @@ public function getsinglesize()
             $orderby = 'id';
             $orderorder = 'ASC';
         }
-        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_product`
+        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, '
+
+        FROM `fynx_product`
         LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
         LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
-        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` ', "WHERE `fynx_product`.`status`=2 AND `fynx_wishlist`.`user`='$user'");
+        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id`
+        LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_wishlist`.`design`
+
+        ', "WHERE `fynx_product`.`status`=2 AND `fynx_wishlist`.`user`='$user'");
         $this->load->view('json', $data);
     }
     public function newsletter()
