@@ -2428,7 +2428,7 @@ public function getsinglesize()
         $subcategory  = $this->input->get_post("subcategory");
         $color  = $this->input->get_post("color");
         $size  = $this->input->get_post("size");
-
+        $price = $this->input->get_post("price");
         $where = " ";
         if($subcategory != "")
         {
@@ -2443,6 +2443,7 @@ public function getsinglesize()
           $where .= " AND `fynx_product`.`subcategory` IN ($size) ";
         }
 
+
         $this->chintantable->createelement('`fynx_product`.`id`','1','ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`','1','name', 'name');
         $this->chintantable->createelement('`fynx_product`.`price`','1','price', 'price');
@@ -2452,8 +2453,15 @@ public function getsinglesize()
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-        $orderby = $this->input->get_post('orderby');
-        $orderorder = $this->input->get_post('orderorder');
+        $orderby = "`fynx_product`.`price`";
+        if($price == "2")
+        {
+          $orderorder = "DESC";
+        }
+        else {
+            $orderorder = "ASC";
+        }
+
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_category` ON `fynx_product`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category' $where ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
