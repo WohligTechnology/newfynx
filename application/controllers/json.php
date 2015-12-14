@@ -2425,22 +2425,22 @@ public function getsinglesize()
 
         $category = $this->input->get_post('category');
 
-        $subcategory  = $this->input->get_post("subcategory");
+        $type  = $this->input->get_post("type");
         $color  = $this->input->get_post("color");
         $size  = $this->input->get_post("size");
         $price = $this->input->get_post("price");
         $where = " ";
-        if($subcategory != "")
+        if($type != "")
         {
-          $where .= " AND `fynx_product`.`subcategory` IN ($subcategory) ";
+          $where .= " AND `fynx_product`.`type` IN ($type) ";
         }
         if($color != "")
         {
-          $where .= " AND `fynx_product`.`subcategory` IN ($color) ";
+          $where .= " AND `fynx_product`.`color` IN ($color) ";
         }
         if($size != "")
         {
-          $where .= " AND `fynx_product`.`subcategory` IN ($size) ";
+          $where .= " AND `fynx_product`.`size` IN ($size) ";
         }
 
 
