@@ -2238,6 +2238,7 @@ public function createtype()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createtype";
+    $data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
    $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create type";
 $this->load->view("template",$data);
@@ -2253,6 +2254,7 @@ if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
 $data["page"]="createtype";
+    $data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
    $data['status']=$this->user_model->getstatusdropdown();
 $data["title"]="Create type";
 $this->load->view("template",$data);
@@ -2262,7 +2264,8 @@ else
 $name=$this->input->get_post("name");
 $status=$this->input->get_post("status");
 $timestamp=$this->input->get_post("timestamp");
-if($this->type_model->create($name,$status,$timestamp)==0)
+$subcategory=$this->input->get_post("subcategory");
+if($this->type_model->create($name,$status,$timestamp,$subcategory)==0)
 $data["alerterror"]="New type could not be created.";
 else
 $data["alertsuccess"]="type created Successfully.";
@@ -2276,6 +2279,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="edittype";
    $data['status']=$this->user_model->getstatusdropdown();
+$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 $data["title"]="Edit type";
 $data["before"]=$this->type_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2293,6 +2297,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="edittype";
    $data['status']=$this->user_model->getstatusdropdown();
+$data['subcategory']=$this->subcategory_model->getsubcategorydropdown();
 $data["title"]="Edit type";
 $data["before"]=$this->type_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -2303,7 +2308,8 @@ $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
 $status=$this->input->get_post("status");
 $timestamp=$this->input->get_post("timestamp");
-if($this->type_model->edit($id,$name,$status,$timestamp)==0)
+    $subcategory=$this->input->get_post("subcategory");
+if($this->type_model->edit($id,$name,$status,$timestamp,$subcategory)==0)
 $data["alerterror"]="New type could not be Updated.";
 else
 $data["alertsuccess"]="type Updated Successfully.";
