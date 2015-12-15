@@ -697,5 +697,22 @@ class User_model extends CI_Model
     function deletecartfromdb($id,$user,$design){
     $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
     }
+     public function uploadImage(){
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $this->load->library('upload', $config);
+        $filename="image";
+        $image="";
+        if (  $this->upload->do_upload($filename))
+        {
+            $uploaddata = $this->upload->data();
+            $image=$uploaddata['file_name'];
+            $imagename=$image;
+           
+        }
+         $image = $imagename;
+        return $image;
+        
+    }
 }
 ?>

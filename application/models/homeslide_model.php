@@ -26,6 +26,12 @@ return $query;
 }
 public function edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign)
 {
+                    if($image=="")
+						{
+						$image=$this->homeslide_model->getimagebyid($id);
+						   // print_r($image);
+							$image=$image->image;
+						}
 $data=array("name" => $name,"link" => $link,"target" => $target,"status" => $status,"image" => $image,"template" => $template,"class" => $class,"text" => $text,"centeralign" => $centeralign);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_homeslide", $data );
