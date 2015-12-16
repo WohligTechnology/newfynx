@@ -2443,7 +2443,7 @@ public function getsinglesize()
     public function getproductbycategory() {
 
         $category = $this->input->get_post('category');
-
+        $name = $this->input->get_post('name');
         $type  = $this->input->get_post("type");
         $color  = $this->input->get_post("color");
         $size  = $this->input->get_post("size");
@@ -2460,6 +2460,10 @@ public function getsinglesize()
         if($size != "")
         {
           $where .= " AND `fynx_product`.`size` IN ($size) ";
+        }
+        if($name != "")
+        {
+          $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
         }
 
 
