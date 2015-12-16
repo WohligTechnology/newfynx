@@ -8,10 +8,10 @@ public function create($subcategory,$quantity,$name,$type,$description,$visibili
 $data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $name,"type" => $type,"description" => $description,"visibility" => $visibility,"price" => $price,"category" => $category,"color" => $color,"size" => $size,"sizechart" => $sizechart,"status" => $status,"sku" => $sku,"image1" => $image1,"image2" => $image2,"image3" => $image3,"image4" => $image4,"image5" => $image5,"baseproduct" => $baseproduct);
 $query=$this->db->insert( "fynx_product", $data );
 $id=$this->db->insert_id();
-    foreach($relatedproduct AS $key=>$value)
-        {
-            $this->product_model->createrelatedproduct($value,$id);
-        }
+//    foreach($relatedproduct AS $key=>$value)
+//        {
+//            $this->product_model->createrelatedproduct($value,$id);
+//        }
 if(!$query)
 return  0;
 else
@@ -50,11 +50,11 @@ $data=array("subcategory" => $subcategory,"quantity" => $quantity,"name" => $nam
 			$data['image4']=$image4;
     if($image5 != "")
 			$data['image5']=$image5;
-         $query1=$this->db->query("DELETE FROM `relatedproduct` WHERE `product`='$id'");
-    foreach($relatedproduct AS $key=>$value)
-        {
-            $this->product_model->createrelatedproduct($value,$id);
-        }
+//         $query1=$this->db->query("DELETE FROM `relatedproduct` WHERE `product`='$id'");
+//    foreach($relatedproduct AS $key=>$value)
+//        {
+//            $this->product_model->createrelatedproduct($value,$id);
+//        }
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_product", $data );
 return 1;
@@ -98,6 +98,31 @@ return $query;
 		}
 		
 		return $return;
+	}
+    public function getimage1byid($id)
+	{
+		$query=$this->db->query("SELECT `image1` FROM `fynx_product` WHERE `id`='$id'")->row();
+		return $query;
+	}
+    public function getimage2byid($id)
+	{
+		$query=$this->db->query("SELECT `image2` FROM `fynx_product` WHERE `id`='$id'")->row();
+		return $query;
+	}
+    public function getimage3byid($id)
+	{
+		$query=$this->db->query("SELECT `image3` FROM `fynx_product` WHERE `id`='$id'")->row();
+		return $query;
+	}
+    public function getimage4byid($id)
+	{
+		$query=$this->db->query("SELECT `image4` FROM `fynx_product` WHERE `id`='$id'")->row();
+		return $query;
+	}
+    public function getimage5byid($id)
+	{
+		$query=$this->db->query("SELECT `image5` FROM `fynx_product` WHERE `id`='$id'")->row();
+		return $query;
 	}
     public function getrelatedproductcount($id)
 	{

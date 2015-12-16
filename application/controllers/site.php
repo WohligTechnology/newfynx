@@ -1357,6 +1357,12 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image1=$uploaddata['file_name'];
 			}
+     if($image1=="")
+            {
+            $image1=$this->product_model->getimage1byid($id);
+               // print_r($image);
+                $image1=$image1->image1;
+            }
 			$filename="image2";
 			$image2="";
 			if (  $this->upload->do_upload($filename))
@@ -1364,6 +1370,12 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image2=$uploaddata['file_name'];
 			}
+    if($image2=="")
+            {
+            $image2=$this->product_model->getimage2byid($id);
+               // print_r($image);
+                $image2=$image2->image2;
+            }
     $filename="image3";
 			$image3="";
 			if (  $this->upload->do_upload($filename))
@@ -1371,6 +1383,12 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image3=$uploaddata['file_name'];
 			}
+     if($image3=="")
+            {
+            $image3=$this->product_model->getimage3byid($id);
+               // print_r($image);
+                $image3=$image3->image3;
+            }
     $filename="image4";
 			$image4="";
 			if (  $this->upload->do_upload($filename))
@@ -1378,6 +1396,12 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image4=$uploaddata['file_name'];
 			}
+    if($image4=="")
+            {
+            $image4=$this->product_model->getimage4byid($id);
+               // print_r($image);
+                $image4=$image4->image4;
+            }
     $filename="image5";
 			$image5="";
 			if (  $this->upload->do_upload($filename))
@@ -1385,6 +1409,12 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image5=$uploaddata['file_name'];
 			}
+     if($image5=="")
+            {
+            $image5=$this->product_model->getimage5byid($id);
+               // print_r($image);
+                $image5=$image5->image5;
+            }
 if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct)==0)
 $data["alerterror"]="New product could not be Updated.";
 else

@@ -88,7 +88,7 @@
                     <label>Size Chart</label>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="display:none">
             <div class="input-field col s12 m8">
                 
                 <?php echo form_multiselect('relatedproduct[]', $relatedproduct); ?>
