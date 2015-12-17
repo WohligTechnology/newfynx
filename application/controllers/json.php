@@ -1861,6 +1861,13 @@ public function getsinglesize()
         $data['message'] = $this->product_model->savequantity($product, $quantity);
         $this->load->view('json', $data);
     }
+//    public function getSubscribe()
+//    {
+//        echo "in subscribe";
+////         $email = $this->input->get_post('email');
+////        $data['message'] = $this->restapi_model->getSubscribe($email);
+////        $this->load->view('json', $data);
+//    }
     public function getnavigation()
     {
         $data['message'] = $this->navigation_model->getnavigation();

@@ -4403,6 +4403,50 @@ $this->load->view("redirect",$data);
         $data['redirect']="site/viewproduct";
         $this->load->view("redirect",$data);
     }
+    function viewsubscribe()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewsubscribe';
+        $data["base_url"]=site_url("site/viewsubscribejson");
+		$data['title']='View Subscribe';
+		$this->load->view('template',$data);
+	}
+    function viewsubscribejson()
+{
+    $elements=array();
+    $elements[0]=new stdClass();
+    $elements[0]->field="`subscribe`.`id`";
+    $elements[0]->sort="1";
+    $elements[0]->header="ID";
+    $elements[0]->alias="id";
+    $elements[1]=new stdClass();
+    $elements[1]->field="`subscribe`.`email`";
+    $elements[1]->sort="1";
+    $elements[1]->header="Email";
+    $elements[1]->alias="email";
+    $elements[2]=new stdClass();
+    $elements[2]->field="`subscribe`.`timestamp`";
+    $elements[2]->sort="1";
+    $elements[2]->header="timestamp";
+    $elements[2]->alias="timestamp";
+    $search=$this->input->get_post("search");
+    $pageno=$this->input->get_post("pageno");
+    $orderby=$this->input->get_post("orderby");
+    $orderorder=$this->input->get_post("orderorder");
+    $maxrow=$this->input->get_post("maxrow");
+    if($maxrow=="")
+    {
+    $maxrow=20;
+    }
+    if($orderby=="")
+    {
+    $orderby="id";
+    $orderorder="ASC";
+    }
+    $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `subscribe`");
+    $this->load->view("json",$data);
+}
 
 }
 ?>
