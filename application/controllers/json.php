@@ -2367,25 +2367,10 @@ public function getsinglesize()
         $data['message'] = $this->order_model->getstatusbyorderid($orderid);
         $this->load->view('json', $data);
     }
-    public function changepassword()
-    {
-        //        $order = json_decode(file_get_contents('php://input'), true);
-//        //print_r($order);
-//        $email = $order['form']['email'];
-//        $oldpassword = $order['form']['oldpassword'];
-//        $newpassword = $order['form']['newpassword'];
-//        $confirmpassword = $order['form']['confirmpassword'];
-        $data = json_decode(file_get_contents('php://input'), true);
-        $email = $data['email'];
-        $oldpassword = $data['oldpassword'];
-        $newpassword = $data['newpassword'];
-        $confirmpassword = $data['confirmpassword'];
-        $data['message'] = $this->user_model->changepasswordfront($email, $oldpassword, $newpassword, $confirmpassword);
-        $this->load->view('json', $data);
-    }
+   
     public function getuserdetails()
     {
-        $id = $this->session->userdata('id');
+        $id = $this->input->get_post('id');
         $data['message'] = $this->restapi_model->getuserdetails($id);
         $this->load->view('json', $data);
     }
