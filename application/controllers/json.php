@@ -2552,18 +2552,26 @@ public function getsinglesize()
     public function updateProfile()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $user = $this->session->userdata('id');
+        $user = $data['id'];
         $name = $data['name'];
         $email = $data['email'];
         $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $phone = $data['phone'];
-        $data['message'] = $this->restapi_model->updateProfile();
+        $billingline1 = $data['billingline1'];
+        $billingline2 = $data['billingline2'];
+        $billingline3 = $data['billingline3'];
+        $billingcity = $data['billingcity'];
+        $billingstate = $data['billingstate'];
+        $billingcountry = $data['billingcountry'];
+        $billingpincode = $data['billingpincode'];
+        $shippingline1 = $data['shippingline1'];
+        $shippingline2 = $data['shippingline2'];
+        $shippingline3 = $data['shippingline3'];
+        $shippingcity = $data['shippingcity'];
+        $shippingstate = $data['shippingstate'];
+        $shippingpincode = $data['shippingpincode'];
+        $shippingcountry = $data['shippingcountry'];
+        
+        $data['message'] = $this->restapi_model->updateProfile($user,$name,$email,$phone,$billingline1,$billingline2,$billingline3,$billingcity,$billingstate,$billingcountry,$billingpincode,$shippingline1,$shippingline2,$shippingline3,$shippingcity,$shippingstate,$shippingpincode,$shippingcountry);
         $this->load->view('json', $data);
     }
     public function changepassword() {

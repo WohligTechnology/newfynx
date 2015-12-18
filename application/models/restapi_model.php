@@ -104,9 +104,34 @@ class restapi_model extends CI_Model
 			}
 			return $return;
 		}
-    public function updateProfile(){
-        echo $email;
-        return $email;
+    public function updateProfile($user,$name,$email,$phone,$billingline1,$billingline2,$billingline3,$billingcity,$billingstate,$billingcountry,$billingpincode,$shippingline1,$shippingline2,$shippingline3,$shippingcity,$shippingstate,$shippingpincode,$shippingcountry){
+        $data  = array(
+			'name' => $name,
+			'email' => $email,
+			
+			'phone' => $phone,
+			
+			'billingcity' => $billingcity,
+			'billingstate' => $billingstate,
+			'billingcountry' => $billingcountry,
+			'billingpincode' => $billingpincode,
+			'shippingcity' => $shippingcity,
+			'shippingstate' => $shippingstate,
+			'shippingcountry' => $shippingcountry,
+			'shippingpincode' => $shippingpincode,
+            'billingline1' => $billingline1,
+            'billingline2' => $billingline2,
+            'billingline3' => $billingline3,
+            'shippingline1' => $shippingline1,
+            'shippingline2' => $shippingline2,
+            'shippingline3' => $shippingline3
+		);
+		
+		$this->db->where( 'id', $user );
+		$query=$this->db->update( 'user', $data );
+        
+        $useridquery = $this->db->query("SELECT `id`, `name`,`email`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`,  `billingline1`, `billingline2`, `shippingline1`, `shippingline2`, `billingline3`, `shippingline3` FROM `user` WHERE `id`='$user'")->row(); 
+        return $useridquery;
     }
      public function changepassword($id, $oldpassword, $newpassword, $confirmpassword) {
         $oldpassword = md5($oldpassword);
