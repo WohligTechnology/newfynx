@@ -2386,7 +2386,7 @@ public function getsinglesize()
     public function getuserdetails()
     {
         $id = $this->session->userdata('id');
-        $data['message'] = $this->user_model->getuserdetails($id);
+        $data['message'] = $this->restapi_model->getuserdetails($id);
         $this->load->view('json', $data);
     }
     public function updateuser()
@@ -2558,6 +2558,12 @@ public function getsinglesize()
         $data['message'] = $this->restapi_model->getAllSize();
         $this->load->view('json', $data);
     }
+//    public function getUserDetails()
+//    {
+//        $user = $this->session->userdata('id');
+//        $data['message'] = $this->restapi_model->getUserDetails($user);
+//        $this->load->view('json', $data);
+//    }
     public function updateProfile()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -2565,8 +2571,24 @@ public function getsinglesize()
         $name = $data['name'];
         $email = $data['email'];
         $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
+        $phone = $data['phone'];
         $data['message'] = $this->restapi_model->updateProfile();
         $this->load->view('json', $data);
+    }
+    public function changepassword() {
+         $data = json_decode(file_get_contents('php://input'), true);
+         $id = $data['id'];
+        $oldpassword = $data['oldpassword'];
+        $newpassword = $data['newpassword'];
+        $confirmpassword = $data['confirmpassword'];
+        $data["message"] = $this->restapi_model->changepassword($id,$oldpassword,$newpassword,$confirmpassword);
+        $this->load->view("json", $data);
     }
     
 }

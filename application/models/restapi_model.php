@@ -27,8 +27,10 @@ class restapi_model extends CI_Model
      public function gethomecontent(){
     $query=$this->db->query("SELECT `id`, `name`, `link` as `url`, `target`, `status`, `image` as `src`, `template`, `class`, `text`, `centeralign` as `centerAlign` FROM `fynx_homeslide` WHERE `status`=1")->result();
         return $query;
-
-
+    } 
+    public function getUserDetails($user){
+    $query=$this->db->query("SELECT `id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`, `facebook`, `google`, `twitter`, `street`, `address`, `pincode`, `state`, `dob`, `city`, `billingline1`, `billingline2`, `shippingline1`, `shippingline2`, `billingline3`, `shippingline3` FROM `user` WHERE `id`=$user")->row();
+        return $query;
     }
     public function getSubCategoryProductHome($id){
     $query['subcategorynames']=$this->db->query("SELECT `homecategoryproduct`.`id`, `homecategoryproduct`.`subcategory`,`subcategory`.`name` FROM `homecategoryproduct` LEFT OUTER JOIN `subcategory` ON `subcategory`.`id`=`homecategoryproduct`.`subcategory` GROUP BY `homecategoryproduct`.`subcategory`")->result();
@@ -105,6 +107,25 @@ class restapi_model extends CI_Model
     public function updateProfile(){
         echo $email;
         return $email;
+    }
+     public function changepassword($id, $oldpassword, $newpassword, $confirmpassword) {
+        $oldpassword = md5($oldpassword);
+        $newpassword = md5($newpassword);
+        $confirmpassword = md5($confirmpassword);
+        if ($newpassword == $confirmpassword) {
+            $useridquery = $this->db->query("SELECT `id` FROM `user` WHERE `password`='$oldpassword'");
+            if ($useridquery->num_rows() == 0) {
+                return 0;
+            } else {
+                $query = $useridquery->row();
+                $userid = $query->id;
+                $updatequery = $this->db->query("UPDATE `user` SET `password`='$newpassword' WHERE `id`='$userid'");
+                return 1;
+            }
+        } else {
+//            echo "New password and confirm password do not match!!!";
+			return -1;
+        }
     }
 }
 ?>
