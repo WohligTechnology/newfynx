@@ -2558,4 +2558,15 @@ public function getsinglesize()
         $data['message'] = $this->restapi_model->getAllSize();
         $this->load->view('json', $data);
     }
+    public function updateProfile()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = $this->session->userdata('id');
+        $name = $data['name'];
+        $email = $data['email'];
+        $phone = $data['phone'];
+        $data['message'] = $this->restapi_model->updateProfile();
+        $this->load->view('json', $data);
+    }
+    
 }

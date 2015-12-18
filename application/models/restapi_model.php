@@ -102,9 +102,9 @@ class restapi_model extends CI_Model
 			}
 			return $return;
 		}
-//    public function getSubscribe($email){
-//        echo $email;
-//        return $email;
-//    }
+    public function updateProfile(){
+        echo $email;
+        return $email;
+    }
 }
 ?>

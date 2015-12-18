@@ -32,7 +32,7 @@ class User_model extends CI_Model
 	}
 
 
-	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)
+	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)
 	{
 		$data  = array(
 			'name' => $name,
@@ -66,7 +66,13 @@ class User_model extends CI_Model
 			'vatnumber' => $vatnumber,
 			'country' => $country,
 			'fax' => $fax,
-			'gender' => $gender
+			'gender' => $gender,
+            'billingline1' => $billingline1,
+            'billingline2' => $billingline2,
+            'billingline3' => $billingline3,
+            'shippingline1' => $shippingline1,
+            'shippingline2' => $shippingline2,
+            'shippingline3' => $shippingline3
 		);
 		$query=$this->db->insert( 'user', $data );
 		$id=$this->db->insert_id();
@@ -110,7 +116,7 @@ class User_model extends CI_Model
 		return $query;
 	}
 
-	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender)
+	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json,$firstname,$lastname,$phone,$billingaddress,$billingcity,$billingstate,$billingcountry,$billingpincode,$billingcontact,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$shippingcontact,$shippingname,$currency,$credit,$companyname,$registrationno,$vatnumber,$country,$fax,$gender,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)
 	{
 		$data  = array(
 			'name' => $name,
@@ -144,7 +150,13 @@ class User_model extends CI_Model
 			'vatnumber' => $vatnumber,
 			'country' => $country,
 			'fax' => $fax,
-			'gender' => $gender
+			'gender' => $gender,
+            'billingline1' => $billingline1,
+            'billingline2' => $billingline2,
+            'billingline3' => $billingline3,
+            'shippingline1' => $shippingline1,
+            'shippingline2' => $shippingline2,
+            'shippingline3' => $shippingline3
 		);
 		if($password != "")
 			$data['password'] =md5($password);

@@ -97,10 +97,30 @@
 				</div>
 			</div>
 		</div>
+<!--
         <div class="row">
 			<div class="input-field col m6 s12">
 				<textarea name="billingaddress" class="materialize-textarea" length="120"><?php echo set_value( 'billingaddress',$before->billingaddress);?></textarea>
 				<label>Billing Address</label>
+			</div>
+		</div>
+-->
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline1">Billing line 1</label>
+				<input type="text" id="billingline1" name="billingline1" value="<?php echo set_value('billingline1',$before->billingline1);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline2">Billing line 2</label>
+				<input type="text" id="billingline2" name="billingline2" value="<?php echo set_value('billingline2',$before->billingline2);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline3">Billing line 3</label>
+				<input type="text" id="billingline3" name="billingline3" value="<?php echo set_value('billingline3',$before->billingline3);?>">
 			</div>
 		</div>
         <div class="row">
@@ -139,12 +159,32 @@
 				<input type="text" id="shippingname" name="shippingname" value="<?php echo set_value('shippingname',$before->shippingname);?>">
 			</div>
 		</div> 
+<!--
         <div class="row">
 			<div class="input-field col m6 s12">
 				<textarea name="shippingaddress" class="materialize-textarea" length="120"><?php echo set_value( 'shippingaddress',$before->shippingaddress);?></textarea>
 				<label>Shipping Address</label>
 			</div>
 		</div>
+-->
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline1">Shipping Line 1</label>
+				<input type="text" id="shippingline1" name="shippingline1" value="<?php echo set_value('shippingline1',$before->shippingline1);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline2">Shipping Line 2</label>
+				<input type="text" id="shippingline2" name="shippingline2" value="<?php echo set_value('shippingline2',$before->shippingline2);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline3">Shipping Line 3</label>
+				<input type="text" id="shippingline3" name="shippingline3" value="<?php echo set_value('shippingline3',$before->shippingline3);?>">
+			</div>
+		</div> 
         <div class="row">
 			<div class="input-field col m6 s12">
 				<label for="shippingcity">Shipping City</label>
