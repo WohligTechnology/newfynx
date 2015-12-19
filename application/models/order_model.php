@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-public function create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus)
+public function create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)
 {
-$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus);
+$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3);
 $query=$this->db->insert( "fynx_order", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_order")->row();
 return $query;
 }
-public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus)
+public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)
 {
-$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus);
+$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_order", $data );
 return 1;
@@ -71,37 +71,35 @@ return $query;
 		
 		return $query;
 	}
-    function placeOrder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $company, $carts, $shippingmethod, $shippingname, $shippingcontact,$design)
+    function placeOrder($user, $firstname, $lastname, $email, $phone,$billingline1,$billingline2,$billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $design,$shippingline1,$shippingline2,$shippingline3)
 	{
         $mysession=$this->session->all_userdata();
         
-          if($shippingaddress=="")
+          if($shippingline1=="")
           {
-         $query=$this->db->query("INSERT INTO `fynx_order`(`user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingmethod`,`orderstatus`,`billingcontact`,`shippingcontact`) VALUES ('$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$billingaddress','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$shippingmethod','1','$billingcontact','$billingcontact')");
+         $query=$this->db->query("INSERT INTO `fynx_order`(`user`, `firstname`, `lastname`, `email`,`billingcontact`, `billingline1`,`billingline2`,`billingline3`, `billingcity`, `billingstate`, `billingcountry`, `shippingline1`,`shippingline2`,`shippingline3`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`) VALUES ('$user','$firstname','$lastname','$email','$phone','$billingline1','$billingline2','$billingline3','$billingcity','$billingstate','$billingcountry','$billingline1','$billingline2','$billingline3','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$phone')");
         }
         else
         {
-        $query=$this->db->query("INSERT INTO `fynx_order`(`user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingmethod`,`orderstatus`,`shippingname`,`shippingcontact`,`billingcontact`) VALUES ('$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$shippingmethod','1','$shippingname','$shippingcontact','$billingcontact')");
+        $query=$this->db->query("INSERT INTO `fynx_order`(`user`, `firstname`, `lastname`, `email`,`billingcontact`, `billingline1`,`billingline2`,`billingline3`, `billingcity`, `billingstate`, `billingcountry`, `shippingline1`,`shippingline2`,`shippingline3`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`) VALUES ('$user','$firstname','$lastname','$email','$phone','$billingline1','$billingline2','$billingline3','$billingcity','$billingstate','$billingcountry','$shippingline1','$shippingline2','$shippingline3','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$phone')");
         }
-        
-        $billingaddressforuser=$billingaddress;
-        $shippingaddressforuser=$shippingaddress;
+      
         
         $order=$this->db->insert_id();
         $mysession["orderid"]=$order;
         $this->session->set_userdata($mysession);
         foreach($carts as $cart)
         {
-            $querycart=$this->db->query("INSERT INTO `fynx_orderitems`(`order`, `product`, `quantity`, `price`, `finalprice`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."')");
+            $querycart=$this->db->query("INSERT INTO `fynx_orderitem`(`order`, `product`, `quantity`, `price`, `finalprice`,`design`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."','".$design."')");
             $quantity=intval($cart['qty']);
             $productid=$cart['id'];
             $this->db->query("UPDATE `fynx_product` SET `fynx_product`.`quantity`=`fynx_product`.`quantity`-$quantity WHERE `fynx_product`.`id`='$productid'");
         }
         
-		$table =$this->order_model->getorderitem($order);
-		$before=$this->order_model->beforeedit($order);
+//		$table =$this->order_model->getorderitem($order);
+//		$before=$this->order_model->beforeedit($order);
         
-        $userquery=$this->db->query("UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`phone`='$billingcontact',`billingcontact`='$billingcontact',`status`='2',`billingaddress`='$billingaddressforuser',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`billingpincode`='$billingpincode',`shippingaddress`='$shippingaddressforuser',`shippingcity`='$shippingcity',`shippingcountry`='$shippingcountry',`shippingstate`='$shippingstate',`shippingpincode`='$shippingpincode',`shippingcontact`='$shippingcontact',`shippingname`='$shippingname',`companyname`='$company' WHERE `id`='$user'");
+        $userquery=$this->db->query("UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`phone`='$phone',`status`='2',`billingline1`='$billingline1',`billingline2`='$billingline2',`billingline3`='$billingline3',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`billingpincode`='$billingpincode',`shippingline1`='$shippingline1',`shippingline2`='$shippingline2',`shippingline3`='$shippingline3',`shippingcity`='$shippingcity',`shippingcountry`='$shippingcountry',`shippingstate`='$shippingstate',`shippingpincode`='$shippingpincode' WHERE `id`='$user'");
         if($query){
         return $order;
         }

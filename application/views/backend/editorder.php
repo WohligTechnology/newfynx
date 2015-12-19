@@ -30,12 +30,32 @@
 <input type="text" id="Email Id" name="email" value='<?php echo set_value('email',$before->email);?>'>
 </div>
 </div>
+<!--
 <div class="row">
 <div class="col s12 m6">
 <label>Billing Address</label>
 <textarea name="billingaddress" placeholder="Enter text ..."><?php echo set_value( 'billingaddress',$before->billingaddress);?></textarea>
 </div>
 </div>
+-->
+     <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline1">Billing line 1</label>
+				<input type="text" id="billingline1" name="billingline1" value="<?php echo set_value('billingline1',$before->billingline1);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline2">Billing line 2</label>
+				<input type="text" id="billingline2" name="billingline2" value="<?php echo set_value('billingline2',$before->billingline2);?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="billingline3">Billing line 3</label>
+				<input type="text" id="billingline3" name="billingline3" value="<?php echo set_value('billingline3',$before->billingline3);?>">
+			</div>
+		</div>
 <div class="row">
 <div class="input-field col s6">
 <label for="Billing Contact">Billing Contact</label>

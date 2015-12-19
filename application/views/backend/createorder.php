@@ -69,12 +69,32 @@
 <input type="text" id="Shipping City" name="shippingcity" value='<?php echo set_value('shippingcity');?>'>
 </div>
 </div>
+<!--
 <div class="row">
 <div class="input-field col s12">
 <textarea name="shippingaddress" class="materialize-textarea" length="400"><?php echo set_value( 'shippingaddress');?></textarea>
 <label>Shipping Address</label>
 </div>
 </div>
+-->
+     <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline1">Shipping Line 1</label>
+				<input type="text" id="shippingline1" name="shippingline1" value="<?php echo set_value('shippingline1');?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline2">Shipping Line 2</label>
+				<input type="text" id="shippingline2" name="shippingline2" value="<?php echo set_value('shippingline2');?>">
+			</div>
+		</div>
+        <div class="row">
+			<div class="input-field col m6 s12">
+				<label for="shippingline3">Shipping Line 3</label>
+				<input type="text" id="shippingline3" name="shippingline3" value="<?php echo set_value('shippingline3');?>">
+			</div>
+		</div> 
 <div class="row">
 <div class="input-field col s6">
 <label for="Shipping Name">Shipping Name</label>
