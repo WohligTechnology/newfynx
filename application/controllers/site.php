@@ -3445,7 +3445,8 @@ $orderstatus=$this->input->get_post("orderstatus");
             $shippingline1=$this->input->post('shippingline1');
             $shippingline2=$this->input->post('shippingline2');
             $shippingline3=$this->input->post('shippingline3');
-if($this->order_model->create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)==0)
+            $transactionid=$this->input->post('transactionid');
+if($this->order_model->create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)==0)
 $data["alerterror"]="New order could not be created.";
 else
 $data["alertsuccess"]="order created Successfully.";
@@ -3533,7 +3534,8 @@ $orderstatus=$this->input->get_post("orderstatus");
             $shippingline1=$this->input->post('shippingline1');
             $shippingline2=$this->input->post('shippingline2');
             $shippingline3=$this->input->post('shippingline3');
-if($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3)==0)
+    $transactionid=$this->input->post('transactionid');
+if($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)==0)
 $data["alerterror"]="New order could not be Updated.";
 else
 $data["alertsuccess"]="order Updated Successfully.";

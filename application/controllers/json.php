@@ -2296,52 +2296,40 @@ public function getsinglesize()
         $elements = array();
 
         $elements[0] = new stdClass();
-        $elements[0]->field = '`order`.`id`';
+        $elements[0]->field = '`fynx_order`.`id`';
         $elements[0]->sort = '1';
         $elements[0]->header = 'ID';
         $elements[0]->alias = 'id';
 
         $elements[1] = new stdClass();
-        $elements[1]->field = '`product`.`name`';
+        $elements[1]->field = '`fynx_order`.`transactionid`';
         $elements[1]->sort = '1';
-        $elements[1]->header = 'Product Name';
-        $elements[1]->alias = 'productname';
+        $elements[1]->header = 'transactionid';
+        $elements[1]->alias = 'transactionid';
 
         $elements[2] = new stdClass();
-        $elements[2]->field = 'DATE(`order`.`timestamp`)';
+        $elements[2]->field = 'DATE(`fynx_order`.`timestamp`)';
         $elements[2]->sort = '1';
         $elements[2]->header = 'Date';
         $elements[2]->alias = 'date';
 
         $elements[3] = new stdClass();
-        $elements[3]->field = '`product`.`sku`';
+        $elements[3]->field = '`fynx_order`.`orderstatus`';
         $elements[3]->sort = '1';
-        $elements[3]->header = 'sku';
-        $elements[3]->alias = 'sku';
+        $elements[3]->header = 'status';
+        $elements[3]->alias = 'status';
 
         $elements[4] = new stdClass();
-        $elements[4]->field = '`orderitems`.`quantity`';
+        $elements[4]->field = '`orderstatus`.`name`';
         $elements[4]->sort = '1';
-        $elements[4]->header = 'quantity';
-        $elements[4]->alias = 'quantity';
-
+        $elements[4]->header = 'orderstatusname';
+        $elements[4]->alias = 'orderstatusname';
+        
         $elements[5] = new stdClass();
-        $elements[5]->field = '`orderitems`.`price`';
+        $elements[5]->field = '`orderstatus`.`name`';
         $elements[5]->sort = '1';
-        $elements[5]->header = 'price';
-        $elements[5]->alias = 'price';
-
-        $elements[6] = new stdClass();
-        $elements[6]->field = '`order`.`orderstatus`';
-        $elements[6]->sort = '1';
-        $elements[6]->header = 'status';
-        $elements[6]->alias = 'status';
-
-        $elements[7] = new stdClass();
-        $elements[7]->field = '`orderstatus`.`name`';
-        $elements[7]->sort = '1';
-        $elements[7]->header = 'orderstatusname';
-        $elements[7]->alias = 'orderstatusname';
+        $elements[5]->header = 'orderstatusname';
+        $elements[5]->alias = 'orderstatusname';
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
@@ -2355,8 +2343,14 @@ public function getsinglesize()
             $orderby = 'id';
             $orderorder = 'ASC';
         }
-        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `orderitems` INNER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`', "WHERE `order`.`user`='$userid'");
-        $this->load->view('json', $data);
+        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_orderitem` INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`', "WHERE `fynx_order`.`user`='$userid'");
+       
+        
+        foreach($data['message']->queryresult as $row){
+            $orderid=$row->id;
+            $row->totalamt=$this->db->query("SELECT SUM(`finalprice`) AS `totalsum` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
+        }
+         $this->load->view('json', $data);
     }
 
     public function getordertrace()
