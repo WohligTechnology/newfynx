@@ -1578,34 +1578,33 @@ public function getsinglesize()
 
     public function placeOrder()
     {
-        $order = json_decode(file_get_contents('php://input'), true);
-        print_r($order);
-//        $user = $order['user'];
-//        $firstname = $order['firstname'];
-//        $lastname = $order['lastname'];
-//        $email = $order['email'];
-////        $billingcontact = $order['billingcontact'];
-//        $phone = $order['mobile'];
-//        $billingline1 = $order['billingline1'];
-//        $billingline2 = $order['billingline2'];
-//        $billingline3 = $order['billingline3'];
-//        $billingcity = $order['billingcity'];
-//        $billingstate = $order['billingstate'];
-//        $billingcountry = $order['billingcountry'];
-//        $billingpincode = $order['billingpincode'];
-//        $shippingcity = $order['shippingcity'];
-//        $shippingline1 = $order['shippingline1'];
-//        $shippingline2 = $order['shippingline2'];
-//        $shippingline3 = $order['shippingline3'];
-//        $shippingcountry = $order['shippingcountry'];
-//        $shippingstate = $order['shippingstate'];
-//        $shippingpincode = $order['shippingpincode'];
-//        $carts = $order['cart'];
-//        $design = $order['design'];
+       $data = json_decode(file_get_contents('php://input'), true);
+        $user = $data['user'];
+        $firstname = $data['firstname'];
+        $lastname = $data['lastname'];
+        $email = $data['email'];
+//        $billingcontact = $data['billingcontact'];
+        $phone = $data['mobile'];
+        $billingline1 = $data['billingline1'];
+        $billingline2 = $data['billingline2'];
+        $billingline3 = $data['billingline3'];
+        $billingcity = $data['billingcity'];
+        $billingstate = $data['billingstate'];
+        $billingcountry = $data['billingcountry'];
+        $billingpincode = $data['billingpincode'];
+        $shippingcity = $data['shippingcity'];
+        $shippingline1 = $data['shippingline1'];
+        $shippingline2 = $data['shippingline2'];
+        $shippingline3 = $data['shippingline3'];
+        $shippingcountry = $data['shippingcountry'];
+        $shippingstate = $data['shippingstate'];
+        $shippingpincode = $data['shippingpincode'];
+        $carts = $data['cart'];
+        $design = $data['design'];
 ////        print_r($order);
-//        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone,$billingline1,$billingline2,$billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $design,$shippingline1,$shippingline2,$shippingline3);
-//
-//        $this->load->view('json', $data);
+        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone,$billingline1,$billingline2,$billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $design,$shippingline1,$shippingline2,$shippingline3);
+
+        $this->load->view('json', $data);
     }
     public function getusercart()
     {
