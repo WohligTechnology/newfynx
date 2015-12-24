@@ -2586,8 +2586,9 @@ public function getsinglesize()
  {
      $orderid=$this->input->get('orderid');
      $transactionid=$this->input->get_post('transactionid');
+     $returnurl=$this->input->get_post('returnurl');
      $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid);
-     redirect('http://wohlig.com', 'refresh');
+     redirect($returnurl, 'refresh');
  }
     
 }
