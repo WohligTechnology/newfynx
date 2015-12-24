@@ -3378,6 +3378,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data[ 'user' ] =$this->user_model->getuserdropdown();
     $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
+    $data[ 'paymentmode' ] =$this->order_model->getpaymentmodedropdown();
 $data["page"]="createorder";
 $data["title"]="Create order";
 $this->load->view("template",$data);
@@ -3412,6 +3413,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
  $data[ 'user' ] =$this->user_model->getuserdropdown();  
 $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
+     $data[ 'paymentmode' ] =$this->order_model->getpaymentmodedropdown();
 $data["page"]="createorder";
 $data["title"]="Create order";
 $this->load->view("template",$data);
@@ -3446,7 +3448,8 @@ $orderstatus=$this->input->get_post("orderstatus");
             $shippingline2=$this->input->post('shippingline2');
             $shippingline3=$this->input->post('shippingline3');
             $transactionid=$this->input->post('transactionid');
-if($this->order_model->create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)==0)
+            $paymentmode=$this->input->post('paymentmode');
+if($this->order_model->create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode)==0)
 $data["alerterror"]="New order could not be created.";
 else
 $data["alertsuccess"]="order created Successfully.";
@@ -3462,6 +3465,7 @@ $data["page"]="editorder";
 //$data["page2"]="block/orderblock";
 $data["before1"]=$this->input->get("id");
 $data["before2"]=$this->input->get("id");
+     $data[ 'paymentmode' ] =$this->order_model->getpaymentmodedropdown();
 $data["title"]="Edit order";
 $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
@@ -3499,6 +3503,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="editorder";
 $data[ 'orderstatus' ] =$this->order_model->getorderstatus();
+     $data[ 'paymentmode' ] =$this->order_model->getpaymentmodedropdown();
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["title"]="Edit order";
 $data["before"]=$this->order_model->beforeedit($this->input->get("id"));
@@ -3535,7 +3540,8 @@ $orderstatus=$this->input->get_post("orderstatus");
             $shippingline2=$this->input->post('shippingline2');
             $shippingline3=$this->input->post('shippingline3');
     $transactionid=$this->input->post('transactionid');
-if($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)==0)
+     $paymentmode=$this->input->post('paymentmode');
+if($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode)==0)
 $data["alerterror"]="New order could not be Updated.";
 else
 $data["alertsuccess"]="order Updated Successfully.";

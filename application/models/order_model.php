@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class order_model extends CI_Model
 {
-public function create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)
+public function create($user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode)
 {
-$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3,'transactionid' => $transactionid);
+$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3,'transactionid' => $transactionid,'paymentmode' => $paymentmode);
 $query=$this->db->insert( "fynx_order", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_order")->row();
 return $query;
 }
-public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid)
+public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode)
 {
-$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3,'transactionid' => $transactionid);
+$data=array("user" => $user,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingaddress" => $billingaddress,"billingcontact" => $billingcontact,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingpincode" => $billingpincode,"billingcountry" => $billingcountry,"shippingcity" => $shippingcity,"shippingaddress" => $shippingaddress,"shippingname" => $shippingname,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingstate" => $shippingstate,"shippingpincode" => $shippingpincode,"trackingcode" => $trackingcode,"defaultcurrency" => $defaultcurrency,"shippingmethod" => $shippingmethod,"orderstatus" => $orderstatus,'billingline1' => $billingline1,'billingline2' => $billingline2,'billingline3' => $billingline3,'shippingline1' => $shippingline1,'shippingline2' => $shippingline2,'shippingline3' => $shippingline3,'transactionid' => $transactionid,'paymentmode' => $paymentmode);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_order", $data );
 return 1;
@@ -47,6 +47,19 @@ return $query;
 		{
 			$return[$row->id]=$row->name;
 		}
+		return $return;
+	}
+    public function getpaymentmodedropdown()
+	{
+		
+		$return=array(
+		"" => "Choose Payment Mode",
+		"1" => "Credit Card",
+		"2" => "Debit Card",
+		"3" => "Net Banking",
+		"4" => "Cash On Delivery",
+		);
+		
 		return $return;
 	}
     public function getorderdropdown()

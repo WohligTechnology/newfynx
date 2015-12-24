@@ -155,6 +155,12 @@
 <input type="text" id="transactionid" name="transactionid" value='<?php echo set_value('transactionid');?>'>
 </div>
 </div>
+    <div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("paymentmode",$paymentmode,set_value('paymentmode'));?>
+<label>Payment Mode</label>
+</div>
+</div>
 <div class="row">
 <div class="col s12 m6">
 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>
