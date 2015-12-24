@@ -152,5 +152,21 @@ class restapi_model extends CI_Model
 			return -1;
         }
     }
+     public function checkstatus($orderid){
+      $query=$this->db->query("SELECT * FROM `fynx_order` WHERE `id`='$orderid'")->row();
+        $orderstatus=$query->orderstatus;
+        if($orderstatus==1){
+        return 1;
+        }
+        else
+        {
+        return 0;
+        }
+    }
+     public function updateorderstatusafterpayment($orderid,$transactionid){
+          $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+        return 1;
+    
+    }
 }
 ?>
