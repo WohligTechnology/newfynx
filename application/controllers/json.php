@@ -198,8 +198,6 @@ class Json extends CI_Controller
         $elements[3]->header = 'Timestamp';
         $elements[3]->alias = 'timestamp';
 
-
-
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
         $orderby = $this->input->get_post('orderby');
@@ -1578,7 +1576,7 @@ public function getsinglesize()
 
     public function placeOrder()
     {
-       $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents('php://input'), true);
         $user = $data['user'];
         $firstname = $data['firstname'];
         $lastname = $data['lastname'];
@@ -1602,7 +1600,7 @@ public function getsinglesize()
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
 ////        print_r($order);
-        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone,$billingline1,$billingline2,$billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts,$shippingline1,$shippingline2,$shippingline3,$paymentmode);
+        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
 
         $this->load->view('json', $data);
     }
@@ -2346,12 +2344,11 @@ public function getsinglesize()
         }
         $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_orderitem` INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`', "WHERE `fynx_order`.`user`='$userid'");
 
-
-        foreach($data['message']->queryresult as $row){
-            $orderid=$row->id;
-            $row->totalamt=$this->db->query("SELECT SUM(`finalprice`) AS `totalsum` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
+        foreach ($data['message']->queryresult as $row) {
+            $orderid = $row->id;
+            $row->totalamt = $this->db->query("SELECT SUM(`finalprice`) AS `totalsum` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
         }
-         $this->load->view('json', $data);
+        $this->load->view('json', $data);
     }
 
     public function getordertrace()
@@ -2426,56 +2423,49 @@ public function getsinglesize()
         $data['message'] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
         $this->load->view('json', $data);
     }
-    public function getproductbycategory() {
-
+    public function getproductbycategory()
+    {
         $category = $this->input->get_post('category');
         $name = $this->input->get_post('name');
-        $type  = $this->input->get_post("type");
-        $color  = $this->input->get_post("color");
-        $size  = $this->input->get_post("size");
-        $price = $this->input->get_post("price");
-        $where = " ";
-        if($type != "")
-        {
-          $where .= " AND `fynx_product`.`type` IN ($type) ";
+        $type = $this->input->get_post('type');
+        $color = $this->input->get_post('color');
+        $size = $this->input->get_post('size');
+        $price = $this->input->get_post('price');
+        $where = ' ';
+        if ($type != '') {
+            $where .= " AND `fynx_product`.`type` IN ($type) ";
         }
-        if($color != "")
-        {
-          $where .= " AND `fynx_product`.`color` IN ($color) ";
+        if ($color != '') {
+            $where .= " AND `fynx_product`.`color` IN ($color) ";
         }
-        if($size != "")
-        {
-          $where .= " AND `fynx_product`.`size` IN ($size) ";
+        if ($size != '') {
+            $where .= " AND `fynx_product`.`size` IN ($size) ";
         }
-        if($name != "")
-        {
-          $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
+        if ($name != '') {
+            $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
         }
 
-
-        $this->chintantable->createelement('`fynx_product`.`id`','1','ID', 'id');
-        $this->chintantable->createelement('`fynx_product`.`name`','1','name', 'name');
-        $this->chintantable->createelement('`fynx_product`.`price`','1','price', 'price');
-        $this->chintantable->createelement('`fynx_product`.`image1`','1','image', 'image');
-        $this->chintantable->createelement('`fynx_designs`.`id`','1','designId', 'designId');
-        $this->chintantable->createelement('`fynx_designs`.`image`','1','designImage', 'designImage');
+        $this->chintantable->createelement('`fynx_product`.`id`', '1', 'ID', 'id');
+        $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
+        $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
+        $this->chintantable->createelement('`fynx_product`.`image1`', '1', 'image', 'image');
+        $this->chintantable->createelement('`fynx_designs`.`id`', '1', 'designId', 'designId');
+        $this->chintantable->createelement('`fynx_designs`.`image`', '1', 'designImage', 'designImage');
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-        $orderby = "price";
-        if($price == "2")
-        {
-          $orderorder = "DESC";
-        }
-        else {
-            $orderorder = "ASC";
+        $orderby = 'price';
+        if ($price == '2') {
+            $orderorder = 'DESC';
+        } else {
+            $orderorder = 'ASC';
         }
 
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
-        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search,"", "FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ", "WHERE `fynx_category`.`name` LIKE '$category' $where ","GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`");
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`');
         //echo "";
-        $data["message"]->filter = $this->restapi_model->getFiltersLater($data["message"]->product->querycomplete);
+        $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
         $this->load->view('json', $data);
     }
@@ -2565,49 +2555,62 @@ public function getsinglesize()
         $shippingpincode = $data['shippingpincode'];
         $shippingcountry = $data['shippingcountry'];
 
-        $data['message'] = $this->restapi_model->updateProfile($user,$name,$email,$phone,$billingline1,$billingline2,$billingline3,$billingcity,$billingstate,$billingcountry,$billingpincode,$shippingline1,$shippingline2,$shippingline3,$shippingcity,$shippingstate,$shippingpincode,$shippingcountry);
+        $data['message'] = $this->restapi_model->updateProfile($user, $name, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $billingpincode, $shippingline1, $shippingline2, $shippingline3, $shippingcity, $shippingstate, $shippingpincode, $shippingcountry);
         $this->load->view('json', $data);
     }
-    public function changepassword() {
-         $data = json_decode(file_get_contents('php://input'), true);
-         $id = $data['id'];
+    public function changepassword()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
         $oldpassword = $data['oldpassword'];
         $newpassword = $data['newpassword'];
         $confirmpassword = $data['confirmpassword'];
-        $data["message"] = $this->restapi_model->changepassword($id,$oldpassword,$newpassword,$confirmpassword);
-        $this->load->view("json", $data);
+        $data['message'] = $this->restapi_model->changepassword($id, $oldpassword, $newpassword, $confirmpassword);
+        $this->load->view('json', $data);
     }
-    public function checkstatus() {
-      $orderid=$this->input->get('orderid');
-    $data['message']=$this->restapi_model->checkstatus($orderid);
-	 $this->load->view('json',$data);
-        }
+    public function checkstatus()
+    {
+        $orderid = $this->input->get('orderid');
+        $data['message'] = $this->restapi_model->checkstatus($orderid);
+        $this->load->view('json', $data);
+    }
     public function payumoneysuccess()
- {
-     $orderid=$this->input->get('orderid');
-     $transactionid=$this->input->get_post('transactionid');
-     $returnurl=$this->input->get_post('returnurl');
-     $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid);
-     redirect($returnurl, 'refresh');
- }
+    {
+        $orderid = $this->input->get('orderid');
+        $transactionid = $this->input->get_post('transactionid');
+        $returnurl = $this->input->get_post('returnurl');
+        $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid);
+        redirect($returnurl, 'refresh');
+    }
 
- public function uploadImage(){
+    public function uploadImage()
+    {
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $this->load->library('upload', $config);
-        $filename="image";
-        $image="";
-        if (  $this->upload->do_upload($filename))
-        {
+        $filename = 'image';
+        $image = '';
+        if ($this->upload->do_upload($filename)) {
             $uploaddata = $this->upload->data();
-            $image=$uploaddata['file_name'];
-            $imagename=$image;
-
+            $image = $uploaddata['file_name'];
+            $imagename = $image;
         }
-         $data["message"] = $imagename;
-        $this->load->view("json", $data);
-
+        $data['message'] = $imagename;
+        $this->load->view('json', $data);
     }
-    
+
+    public function getImageForCustomize() {
+      $type = $this->input->get("type");
+      $color = $this->input->get("color");
+      if($color == "")
+      {
+        $color = "1";
+      }
+      $query = new stdClass();
+      $query->image = $this->db->query("SELECT `image1`,`image2`,`image3`,`image4`,`image5` FROM `fynx_product` WHERE `type`=1 AND `color`=1")->row();
+      $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.* FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`=1 AND `color`=1");
+      $data['message'] = $query;
+      $this->load->view('json', $data);
+    }
 
 }
