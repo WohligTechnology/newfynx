@@ -2325,7 +2325,7 @@ public function getsinglesize()
         $elements[4]->sort = '1';
         $elements[4]->header = 'orderstatusname';
         $elements[4]->alias = 'orderstatusname';
-        
+
         $elements[5] = new stdClass();
         $elements[5]->field = '`orderstatus`.`name`';
         $elements[5]->sort = '1';
@@ -2345,8 +2345,8 @@ public function getsinglesize()
             $orderorder = 'ASC';
         }
         $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_orderitem` INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`', "WHERE `fynx_order`.`user`='$userid'");
-       
-        
+
+
         foreach($data['message']->queryresult as $row){
             $orderid=$row->id;
             $row->totalamt=$this->db->query("SELECT SUM(`finalprice`) AS `totalsum` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
@@ -2361,7 +2361,7 @@ public function getsinglesize()
         $data['message'] = $this->order_model->getstatusbyorderid($orderid);
         $this->load->view('json', $data);
     }
-   
+
     public function getuserdetails()
     {
         $id = $this->input->get_post('id');
@@ -2564,7 +2564,7 @@ public function getsinglesize()
         $shippingstate = $data['shippingstate'];
         $shippingpincode = $data['shippingpincode'];
         $shippingcountry = $data['shippingcountry'];
-        
+
         $data['message'] = $this->restapi_model->updateProfile($user,$name,$email,$phone,$billingline1,$billingline2,$billingline3,$billingcity,$billingstate,$billingcountry,$billingpincode,$shippingline1,$shippingline2,$shippingline3,$shippingcity,$shippingstate,$shippingpincode,$shippingcountry);
         $this->load->view('json', $data);
     }
@@ -2590,5 +2590,24 @@ public function getsinglesize()
      $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid);
      redirect($returnurl, 'refresh');
  }
+
+ public function uploadImage(){
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $this->load->library('upload', $config);
+        $filename="image";
+        $image="";
+        if (  $this->upload->do_upload($filename))
+        {
+            $uploaddata = $this->upload->data();
+            $image=$uploaddata['file_name'];
+            $imagename=$image;
+
+        }
+         $data["message"] = $imagename;
+        $this->load->view("json", $data);
+
+    }
     
+
 }
