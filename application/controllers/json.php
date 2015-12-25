@@ -2607,8 +2607,9 @@ public function getsinglesize()
         $color = "1";
       }
       $query = new stdClass();
-      $query->image = $this->db->query("SELECT `image1`,`image2`,`image3`,`image4`,`image5` FROM `fynx_product` WHERE `type`=1 AND `color`=1")->row();
-      $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.* FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`=1 AND `color`=1");
+      $query->image = $this->db->query("SELECT `image1`,`image2`,`image3`,`image4`,`image5` FROM `fynx_product` WHERE `type`='$type' AND `color`='$color'")->row();
+      $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.* FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color'");
+      $query->size = $this->db->query("SELECT DISTINCT `fynx_color`.* FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' ");
       $data['message'] = $query;
       $this->load->view('json', $data);
     }
