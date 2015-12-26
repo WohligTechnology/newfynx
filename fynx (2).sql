@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2015 at 06:36 AM
+-- Generation Time: Dec 26, 2015 at 09:07 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `fynx_category` (
 --
 
 INSERT INTO `fynx_category` (`id`, `order`, `name`, `parent`, `status`, `image1`, `image2`) VALUES
-(1, 0, 'Men', '', '1', '', '');
+(1, 0, 'Men', '', '2', '', '');
 
 -- --------------------------------------------------------
 
@@ -125,8 +125,8 @@ CREATE TABLE IF NOT EXISTS `fynx_color` (
 --
 
 INSERT INTO `fynx_color` (`id`, `name`, `status`, `timestamp`) VALUES
-(1, 'Black', '1', '2015-12-11 06:44:44'),
-(2, 'Blue', '1', '2015-12-11 06:44:45');
+(1, 'Black', '2', '2015-12-11 06:44:44'),
+(2, 'Blue', '2', '2015-12-11 06:44:45');
 
 -- --------------------------------------------------------
 
@@ -311,17 +311,26 @@ CREATE TABLE IF NOT EXISTS `fynx_order` (
   `defaultcurrency` varchar(255) NOT NULL,
   `shippingmethod` varchar(255) NOT NULL,
   `orderstatus` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `billingline1` varchar(255) NOT NULL,
+  `billingline2` varchar(255) NOT NULL,
+  `billingline3` varchar(255) NOT NULL,
+  `shippingline1` varchar(255) NOT NULL,
+  `shippingline2` varchar(255) NOT NULL,
+  `shippingline3` varchar(255) NOT NULL,
+  `transactionid` varchar(255) NOT NULL,
+  `paymentmode` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_order`
 --
 
-INSERT INTO `fynx_order` (`id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcontact`, `billingcity`, `billingstate`, `billingpincode`, `billingcountry`, `shippingcity`, `shippingaddress`, `shippingname`, `shippingcountry`, `shippingcontact`, `shippingstate`, `shippingpincode`, `trackingcode`, `defaultcurrency`, `shippingmethod`, `orderstatus`, `timestamp`) VALUES
-(1, 1, 'Sachin', 'Patil', 'poojathakare55@gmail.com', 'huh', 'yugh', 'u', 'h', 'hu', 'yh', 'y', 'h', 'uh', 'u', 'yu', 'u', 'h', 'yu', 'u', 'u', '1', '2015-12-02 14:19:04'),
-(2, 1, 'Ramesh', 'Pal', 'wohlig@wohlig.com', 'arioli', '987987', 'navimumbai', 'maharashtra', '400708', 'india', 'navimumbai', 'arioli', 'puja', 'india', '987987', 'maharashtra', '400709', '789', '987', 'road', '1', '2015-12-02 14:20:06'),
-(3, 2, 'Pooja', 'Thakare', 'pthakare33@email.com', 'sion', '0221978622', 'mum', 'mah', '400506', 'ind', 'nmum', 'airoli', 'abcxyz', 'india', '02214668', 'maharashra', '400708', '', '', 'gjgj', '1', '2015-12-08 06:44:22');
+INSERT INTO `fynx_order` (`id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcontact`, `billingcity`, `billingstate`, `billingpincode`, `billingcountry`, `shippingcity`, `shippingaddress`, `shippingname`, `shippingcountry`, `shippingcontact`, `shippingstate`, `shippingpincode`, `trackingcode`, `defaultcurrency`, `shippingmethod`, `orderstatus`, `timestamp`, `billingline1`, `billingline2`, `billingline3`, `shippingline1`, `shippingline2`, `shippingline3`, `transactionid`, `paymentmode`) VALUES
+(1, 1, 'Sachin', 'Patil', 'poojathakare55@gmail.com', 'huh', 'yugh', 'u', 'h', 'hu', 'yh', 'y', 'h', 'uh', 'u', 'yu', 'u', 'h', 'yu', 'u', 'u', '2', '2015-12-24 11:52:58', '', '', '', '', '', '', '1234', NULL),
+(2, 1, 'Ramesh', 'Pal', 'wohlig@wohlig.com', 'arioli', '987987', 'navimumbai', 'maharashtra', '400708', 'india', 'navimumbai', 'arioli', 'puja', 'india', '987987', 'maharashtra', '400709', '789', '987', 'road', '1', '2015-12-02 14:20:06', '', '', '', '', '', '', '', NULL),
+(20, 1, 'puja', 'thakare', 'puja@wohlig.com', '', '9870969411', 'bcity', 'bstate', 'bpincode', 'bcountry', 'scity', '', '', 'scountry', '9870969411', 'sstate', 'spincode', '', '', '', '1', '2015-12-22 12:44:03', 'b1', 'b2', 'b3', 's1', 's2', 's3', '', NULL),
+(21, 6, 'puja', 'thakare', 'puja@wohlig.com', '', '9870969411', 'bcity', 'bstate', 'bpincode', 'bcountry', 'scity', '', '', 'scountry', '9870969411', 'sstate', 'spincode', '', '', '', '1', '2015-12-24 09:33:31', 'b1', 'b2', 'b3', 's1', 's2', 's3', '', '');
 
 -- --------------------------------------------------------
 
@@ -333,19 +342,20 @@ CREATE TABLE IF NOT EXISTS `fynx_orderitem` (
   `id` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `order` int(11) NOT NULL,
-  `product` varchar(255) NOT NULL,
-  `quantity` varchar(255) NOT NULL,
-  `price` varchar(255) NOT NULL,
-  `finalprice` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `product` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `finalprice` int(11) NOT NULL,
+  `design` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_orderitem`
 --
 
-INSERT INTO `fynx_orderitem` (`id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`) VALUES
-(1, 79, 1, '2', '1', '500', '700'),
-(3, 200, 2, '2', '1', '500', '750');
+INSERT INTO `fynx_orderitem` (`id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`, `design`) VALUES
+(25, 0, 20, 1, 1, 800, 800, 6),
+(26, 0, 21, 1, 1, 800, 800, 6);
 
 -- --------------------------------------------------------
 
@@ -375,17 +385,20 @@ CREATE TABLE IF NOT EXISTS `fynx_product` (
   `image4` varchar(255) NOT NULL,
   `image5` varchar(255) NOT NULL,
   `baseproduct` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_product`
 --
 
 INSERT INTO `fynx_product` (`id`, `subcategory`, `quantity`, `name`, `type`, `description`, `visibility`, `price`, `relatedproduct`, `category`, `color`, `size`, `sizechart`, `status`, `sku`, `image1`, `image2`, `image3`, `image4`, `image5`, `baseproduct`) VALUES
-(1, 1, '1', 'Polo', '1', 'Polo Tshirt', '1', '800', '', '1', '1', '1', '1', '2', 'A110', 't1.jpg', 't2.jpg', 't3.jpg', 't4.jpg', 't5.jpg', ''),
-(2, 2, '1', 'Graphics', '2', 'Round Graphics shirt', '1', '750', '', '1', '2', '2', '2', '2', 'Z123', 't11.jpg', 't21.jpg', 't31.jpg', 't41.jpg', 't51.jpg', 'polo'),
-(3, 3, '1', 'Adidas', '3', '<p>Good quality Chain</p>', '1', '680', '', '', '1', '1', '3', '2', 'G12d', 't21.jpg', 't31.jpg', 't41.jpg', 't53.jpg', 'tee2.jpg', 'graphics'),
-(4, 2, '1211', 'prod name11111', '2', '<p>nie1111</p>', '0', '50011', '', '1', '2', '2', '2', '1', 'abc111', 't43.jpg', 't55.jpg', 'tee3.jpg', 't56.jpg', 'tee4.jpg', 'Tanks');
+(4, 1, '10', 'T1', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '850', '', '1', '1', '2', '1', '2', 'FT1', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', ''),
+(5, 1, '10', 'T2', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '485', '', '1', '2', '1', '1', '2', 'FT2', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', ''),
+(6, 1, '10', 'T3', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '940', '', '1', '1', '2', '1', '2', 'FT3', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', ''),
+(7, 1, '10', 'T4', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '689', '', '1', '2', '1', '1', '2', 'FT4', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', ''),
+(8, 1, '10', 'T5', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '1025', '', '1', '1', '2', '1', '2', 'FT5', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', ''),
+(9, 1, '10', 'T6', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '785', '', '1', '1', '2', '1', '2', 'FT6', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', ''),
+(11, 1, '100', 'Awesome', '3', '<p>ladies crop top</p>', '1', '799', '', '1', '1', '2', '1', '2', '1', 'Timeline-dark.jpg', 'images2.jpg', 'MyFynx_Logo-01.jpg', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -463,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `fynx_subcategory` (
 --
 
 INSERT INTO `fynx_subcategory` (`id`, `category`, `name`, `order`, `status`, `image1`, `image2`) VALUES
-(1, 1, 'T-shirt', '', '1', '', ''),
+(1, 1, 'T-shirt', '', '2', '', ''),
 (2, 1, 'Caps', '', '1', '', ''),
 (3, 1, 'Shoes', '', '1', '', '');
 
@@ -479,17 +492,16 @@ CREATE TABLE IF NOT EXISTS `fynx_type` (
   `status` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `subcategory` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_type`
 --
 
 INSERT INTO `fynx_type` (`id`, `name`, `status`, `timestamp`, `subcategory`) VALUES
-(1, 'Polo Shirts', '1', '2015-12-14 07:17:07', 1),
+(1, 'Round Neck', '2', '2015-12-14 07:17:07', 1),
 (2, 'Graphic T-Shirts', '1', '2015-12-14 07:17:09', 1),
-(3, 'Tanks', '1', '2015-12-14 07:17:10', 1),
-(4, 'pooja', '2', '2015-12-15 11:09:16', 2);
+(3, 'Tanks', '1', '2015-12-14 07:17:10', 1);
 
 -- --------------------------------------------------------
 
@@ -594,7 +606,7 @@ INSERT INTO `menu` (`id`, `name`, `description`, `keyword`, `url`, `linktype`, `
 (15, 'Size Chart\r\n\r\n', '', '', 'site/viewsizechart\r\n\r\n\r\n', 1, 0, 1, 4, 'icon-dashboard'),
 (16, 'Config\r\n\r\n', '', '', 'site/viewconfig\r\n\r\n\r\n', 1, 0, 1, 4, 'icon-dashboard'),
 (17, 'Contact us\n\n', '', '', 'site/viewcontact\r\n\r\n', 1, 0, 1, 4, 'icon-dashboard'),
-(18, 'Subscribe\r\n\r\n', '', '', 'site/viewsubscribe\r\n\r\n', 1, 0, 1, 4, 'icon-dashboard');
+(18, 'Subscribe\r\n', '', '', 'site/viewsubscribe\r\n\r\n', 1, 0, 1, 4, 'icon-dashboard');
 
 -- --------------------------------------------------------
 
@@ -665,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `relatedproduct` (
   `product` int(11) NOT NULL,
   `relatedproduct` int(11) NOT NULL,
   `design` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `relatedproduct`
@@ -674,7 +686,10 @@ CREATE TABLE IF NOT EXISTS `relatedproduct` (
 INSERT INTO `relatedproduct` (`id`, `product`, `relatedproduct`, `design`) VALUES
 (1, 2, 1, '4'),
 (2, 3, 1, '6'),
-(3, 3, 2, '');
+(3, 3, 2, ''),
+(4, 4, 5, ''),
+(5, 4, 6, ''),
+(6, 4, 7, '');
 
 -- --------------------------------------------------------
 
@@ -705,16 +720,24 @@ CREATE TABLE IF NOT EXISTS `subscribe` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subscribe`
 --
 
 INSERT INTO `subscribe` (`id`, `email`, `timestamp`) VALUES
-(1, 'wohlig@wohlig.com', '2015-12-16 13:16:17'),
-(2, '', '2015-12-17 05:18:03'),
-(3, 'abc@email.com', '2015-12-17 05:18:43');
+(1, 'nikhilnand@hotmail.com', '2015-12-17 11:13:35'),
+(2, 'manan@ting.in', '2015-12-17 11:25:39'),
+(3, 'prachi27094@gmail.com', '2015-12-18 07:44:06'),
+(4, 'rahulstubbornrajput@gmail.com', '2015-12-18 07:45:16'),
+(5, 'aroraindu5555@gmail.c', '2015-12-18 08:26:43'),
+(6, 'kartik0072@gmail.com', '2015-12-18 09:47:30'),
+(7, 'niko_coco29@hotmail.com', '2015-12-18 12:41:38'),
+(8, 'undefined', '2015-12-18 14:52:15'),
+(9, 'ghadge.jeevan@gmail.com', '2015-12-19 08:59:11'),
+(10, 'vinay.vijaykumar@gmail.com', '2015-12-19 16:29:06'),
+(11, 'loveena.chopra@gmail.com', '2015-12-22 23:43:04');
 
 -- --------------------------------------------------------
 
@@ -770,19 +793,23 @@ CREATE TABLE IF NOT EXISTS `user` (
   `city` varchar(255) NOT NULL,
   `billingline1` varchar(255) DEFAULT NULL,
   `billingline2` varchar(255) DEFAULT NULL,
+  `billingline3` varchar(255) DEFAULT NULL,
   `shippingline1` varchar(255) DEFAULT NULL,
   `shippingline2` varchar(255) DEFAULT NULL,
-  `billingline3` varchar(255) NOT NULL,
-  `shippingline3` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  `shippingline3` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`, `facebook`, `google`, `twitter`, `street`, `address`, `pincode`, `state`, `dob`, `city`, `billingline1`, `billingline2`, `shippingline1`, `shippingline2`, `billingline3`, `shippingline3`) VALUES
-(1, 'wohlig', 'a63526467438df9566c508027d9cb06b', 'wohlig@wohlig.com', 1, '0000-00-00 00:00:00', 1, 'images_(2)1.jpg', '', '', 'Facebook', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, '', ''),
-(7, 'Pooja', '4bcc674371a91bf32377cd878d754527', 'pooja.wohlig@gmail.com', 1, '2015-12-18 05:35:16', 2, '3Q9Q5331.JPG', '', 'dbaehsf', 'Email', '0', 'Pooja', 'Thakare', '987878', '0', 'navimumbai', 'maharashtra', 'india', '98798798765', '400708', '0', 'navimumbai', 'india', 'maharashtra', '400709', 'puja', '987987', 'Rupee', '500', 'wohlig', '8798', '3254', 'india', '132132', 2, '', '', '', '', '', '', '', '0000-00-00', '', '1', '2', 's1', 's2', '3', 's3');
+INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`, `facebook`, `google`, `twitter`, `street`, `address`, `pincode`, `state`, `dob`, `city`, `billingline1`, `billingline2`, `billingline3`, `shippingline1`, `shippingline2`, `shippingline3`) VALUES
+(1, 'wohlig', 'a63526467438df9566c508027d9cb06b', 'wohlig@wohlig.com', 1, '0000-00-00 00:00:00', 1, 'images_(2)1.jpg', '', '', 'Facebook', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'Pooja Thakare', '', 'pooja.wohlig@gmail.com', 3, '2015-12-09 06:02:37', 2, 'https://lh5.googleusercontent.com/-5B1PwZZrwdI/AAAAAAAAAAI/AAAAAAAAABw/J3Hf871N8IE/photo.jpg', '', '103402210128529539675', 'Google', '', 'puja', 'thakare', '9870969411', '', 'bcity', 'bstate', 'bcountry', '', 'bpincode', '', 'scity', 'scountry', 'sstate', 'spincode', '', '', '', '', '', '', '', '', '', 0, '', '103402210128529539675', '', '', '', '', '', '0000-00-00', '', 'b1', 'b2', 'b3', 's1', 's2', 's3'),
+(7, NULL, 'd41d8cd98f00b204e9800998ecf8427e', '', NULL, '2015-12-16 06:23:23', NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(8, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'tushar@gmail.com', NULL, '2015-12-16 06:23:23', NULL, NULL, '', '', '', '', 'Tushar', 'Sachde', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(9, NULL, 'c96d1a174e9bdb6d4c9da3a7fdc1701c', 'jagrtui@wohlig.com', NULL, '2015-12-18 04:56:21', NULL, NULL, '', '', '', '', 'jagruti', 'patil', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(10, NULL, '3677b23baa08f74c28aba07f0cb6554e', 'jagruti@wohlig.com', NULL, '2015-12-18 05:07:59', NULL, NULL, '', '', '', '', 'jagruti', 'patil', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1099,17 +1126,17 @@ ALTER TABLE `fynx_offerproduct`
 -- AUTO_INCREMENT for table `fynx_order`
 --
 ALTER TABLE `fynx_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `fynx_orderitem`
 --
 ALTER TABLE `fynx_orderitem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `fynx_product`
 --
 ALTER TABLE `fynx_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `fynx_productimage`
 --
@@ -1134,7 +1161,7 @@ ALTER TABLE `fynx_subcategory`
 -- AUTO_INCREMENT for table `fynx_type`
 --
 ALTER TABLE `fynx_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_useraddress`
 --
@@ -1159,7 +1186,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `relatedproduct`
 --
 ALTER TABLE `relatedproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `statuses`
 --
@@ -1169,12 +1196,12 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `subscribe`
 --
 ALTER TABLE `subscribe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `userlog`
 --
