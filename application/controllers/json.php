@@ -1621,7 +1621,8 @@ public function getsinglesize()
         $product = $this->input->get_post('product');
         $quantity = $this->input->get_post('quantity');
         $design = $this->input->get_post('design');
-        $data['message'] = $this->user_model->addToCart($product, $quantity, $design);
+        $json = $this->input->get_post('json');
+        $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json);
         $this->load->view('json', $data);
     }
     public function destroycart()
@@ -2599,19 +2600,18 @@ public function getsinglesize()
         $this->load->view('json', $data);
     }
 
-    public function getImageForCustomize() {
-      $type = $this->input->get("type");
-      $color = $this->input->get("color");
-      if($color == "")
-      {
-        $color = "1";
-      }
-      $query = new stdClass();
-      $query->image = $this->db->query("SELECT `image1`,`image2`,`image3`,`image4`,`image5` FROM `fynx_product` WHERE `type`='$type' AND `color`='$color'")->row();
-      $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.* FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color'")->result();
-      $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.* FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' ")->result();
-      $data['message'] = $query;
-      $this->load->view('json', $data);
+    public function getImageForCustomize()
+    {
+        $type = $this->input->get('type');
+        $color = $this->input->get('color');
+        if ($color == '') {
+            $color = '1';
+        }
+        $query = new stdClass();
+        $query->image = $this->db->query("SELECT `image1`,`image2`,`image3`,`image4`,`image5` FROM `fynx_product` WHERE `type`='$type' AND `color`='$color'")->row();
+        $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.* FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color'")->result();
+        $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.* FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' ")->result();
+        $data['message'] = $query;
+        $this->load->view('json', $data);
     }
-
 }

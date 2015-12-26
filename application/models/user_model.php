@@ -635,11 +635,11 @@ class User_model extends CI_Model
         else
         return false;
     }
-        function addToCart($product, $quantity, $design)
+    function addToCart($product, $quantity, $design,$json)
     {
         //$data=$this->cart->contents();
 
-                 $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+        $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
 
         $size=$getexactproduct->size;
         $productname=$getexactproduct->name;
@@ -664,7 +664,8 @@ class User_model extends CI_Model
                'price'   => $price,
 							 'design'   => $design,
                'image'   => $image,
-                'options' =>array(
+							 'json' => $json,
+              	'options' =>array(
                     'realname' => $productname,
                     'sizeid' => $sizeid,
                     'colorid' => $colorid,
@@ -696,7 +697,7 @@ class User_model extends CI_Model
                     }
                     else
                     {
-                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`design`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$design')");
+                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`design`,`json`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$design','$json')");
                         $this->cart->insert($data);
                         if($query)
                         return true;
@@ -720,11 +721,11 @@ class User_model extends CI_Model
             $uploaddata = $this->upload->data();
             $image=$uploaddata['file_name'];
             $imagename=$image;
-           
+
         }
          $image = $imagename;
         return $image;
-        
+
     }
 }
 ?>
