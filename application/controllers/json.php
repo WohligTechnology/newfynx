@@ -2609,8 +2609,8 @@ public function getsinglesize()
         }
         $query = new stdClass();
         $query->image = $this->db->query("SELECT `fynx_product`.* FROM `fynx_product` WHERE `type`='$type' AND `color`='$color'")->row();
-        $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color'")->result();
-        $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.*,`fynx_product`.`id` as `product` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' ")->result();
+        $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` ,`fynx_product`.`price` as `price`  FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color'")->result();
+        $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.*,`fynx_product`.`id` as `product`,`fynx_product`.`price` as `price` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' ")->result();
         $data['message'] = $query;
         $this->load->view('json', $data);
     }
