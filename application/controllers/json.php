@@ -2596,7 +2596,9 @@ public function getsinglesize()
             $image = $uploaddata['file_name'];
             $imagename = $image;
         }
-        $data['message'] = $imagename;
+        $obj = new stdClass();
+        $obj->value = $imagename;
+        $data['message'] = $obj;
         $this->load->view('json', $data);
     }
 
