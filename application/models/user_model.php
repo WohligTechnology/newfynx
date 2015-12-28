@@ -653,11 +653,12 @@ class User_model extends CI_Model
         $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
         $colorid=$getcolor->id;
         $colorname=$getcolor->name;
+				if($design!=''){
         $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
         $designid=$getdesign->id;
         $designer=$getdesign->designer;
         $designimage=$getdesign->image;
-        $data = array(
+				$data = array(
                'id'      => $exactproduct,
                'name'      => '1',
                'qty'     => $quantity,
@@ -676,13 +677,35 @@ class User_model extends CI_Model
                     'designimage' => $designimage
                 )
         );
+			}else{
+
+        $data = array(
+               'id'      => $exactproduct,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+							 'design'   => $design,
+               'image'   => $image,
+							 'json' => $json,
+              	'options' =>array(
+                    'realname' => $productname,
+                    'sizeid' => $sizeid,
+                    'colorid' => $colorid,
+                    'sizename' => $sizename,
+                    'colorname' => $colorname,
+                    'designid' => "",
+                    'designer' => "",
+                    'designimage' => ""
+                )
+        );
+			}
         $userid=$this->session->userdata('id');
             //CHECK IF PRODUCT ALREADY THERE IN CART
-            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `product`='$exactproduct'");
+            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `product`='$exactproduct' AND `design` = '$design' AND `json` = '$json'");
          if ( $checkcart->num_rows() > 0 )
          {
-             return 0;
-         }
+             $checkcart=$this->db->query("UPDATE `fynx_cart` SET `quantity` = `quantity`+ $quantity WHERE `user`='$userid' AND `product`='$exactproduct'  AND `design` = '$design' AND `json` = '$json' ");
+         }else
             {
                     if($userid=="")
                     {
@@ -708,6 +731,7 @@ class User_model extends CI_Model
 
     }
     function deletecartfromdb($id,$user,$design){
+		//	echo "DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'";
     $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
     }
      public function uploadImage(){

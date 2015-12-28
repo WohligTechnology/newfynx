@@ -1839,6 +1839,10 @@ public function getsinglesize()
     {
         $id = intval($this->input->get_post('id'));
         $design = intval($this->input->get_post('design'));
+        if($design == 0)
+        {
+          $design = "";
+        }
         $user = $this->session->userdata('id');
         $this->user_model->deletecartfromdb($id, $user, $design);
         $cart = $this->cart->contents();
