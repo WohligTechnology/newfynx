@@ -31,19 +31,19 @@ $config =
 
 			"Google" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "603941428173-cdtk9skg8f2e4cjh88gf4prg4e6h4lb9.apps.googleusercontent.com", "secret" => "UqGRdZJO9Dv2MGLHYPZqE0rF" )
+				"keys"    => array ( "id" => "603941428173-saou47b7r4vcn5khshd6pv53iop7tv06.apps.googleusercontent.com", "secret" => "fQnCsdYKalPXtXXesV9FFvqF" )
 				
 			),
 
 			"Facebook" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "194741327531742", "secret" => "fbcb9844464ef62fb08791927faef866" ),
+				"keys"    => array ( "id" => "1646374065619853", "secret" => "03bfb028612640c209a0747eaea5f0cc" ),
                 "scope"   => "email, user_about_me, user_birthday, user_hometown, user_website,publish_actions"
 			),
 
 			"Twitter" => array (
 				"enabled" => true,
-				"keys"    => array ( "key" => "	mz8UAV1DgkNmWPBQpbnmh7ekf", "secret" => "BNi1P2sDckM8L9Y1oIREgD8frtyXSW8OHoWIBjClqHuiFZUS6M" )
+				"keys"    => array ( "key" => "mKuSDE0ffjaUMSHi9eSVwpVaj", "secret" => "gwqEY8S0KodDorNHY2vksg41jlm5rdJwvjXCW3IQJpSZaLwHZY" )
 			),
 
 			// windows live
