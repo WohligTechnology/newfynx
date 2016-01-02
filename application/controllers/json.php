@@ -2501,14 +2501,16 @@ public function getsinglesize()
     {
         $userid = $this->session->userdata('id');
         if ($userid != '') {
-            $cart = $this->cart->contents();
-            $newcart = array();
-            foreach ($cart as $item) {
-                array_push($newcart, $item);
-            }
-            $data['message'] = $newcart;
+//            $cart = $this->cart->contents();
+//            $newcart = array();
+//            foreach ($cart as $item) {
+//                array_push($newcart, $item);
+//            }
+            $data['message'] = $this->user_model->showCart($userid);
             $this->load->view('json', $data);
-        } else {
+        }
+        else 
+        {
             $cart = $this->cart->contents();
             $newcart = array();
             foreach ($cart as $item) {

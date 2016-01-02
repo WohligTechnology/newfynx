@@ -734,6 +734,22 @@ class User_model extends CI_Model
             }
 
     }
+    public function showCart($user){
+        $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`fynx_product`.`image1` as `image`,`fynx_product`.`price` FROM `fynx_cart`
+LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
+WHERE `fynx_cart`.`user`='$user'")->result();
+        foreach($query as $row){
+            $productid=$row->id;
+            $designid=$row->design;
+            $row->options=$this->db->query("SELECT `fynx_product`.`name` as `realname`,`fynx_product`.`size` as `sizeid`,`fynx_product`.`color` as `colorid`,`fynx_size`.`name` as `sizename`,`fynx_color`.`name` as `colorname`,`fynx_cart`.`design` as `designid`,`fynx_designs`.`designer` as `designer`,`fynx_designs`.`image` as `designimage`,`fynx_cart`.`json` as `json` FROM `fynx_product`
+LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
+LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
+LEFT OUTER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id`
+LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_cart`.`design`
+WHERE `fynx_product`.`id`='$productid'")->result();
+        }
+        return $query;
+    }
     function deletecartfromdb($id,$user,$design){
 		//	echo "DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'";
     $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
