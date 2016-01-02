@@ -746,7 +746,7 @@ LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
 LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
 LEFT OUTER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id`
 LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_cart`.`design`
-WHERE `fynx_product`.`id`='$productid'")->result();
+WHERE `fynx_product`.`id`='$productid'")->row();
         }
         return $query;
     }
