@@ -2509,7 +2509,7 @@ public function getsinglesize()
             $data['message'] = $this->user_model->showCart($userid);
             $this->load->view('json', $data);
         }
-        else 
+        else
         {
             $cart = $this->cart->contents();
             $newcart = array();
@@ -2583,11 +2583,10 @@ public function getsinglesize()
     }
     public function payumoneysuccess()
     {
-        $orderid = $this->input->get('orderid');
-        $transactionid = $this->input->get_post('transactionid');
-        $returnurl = $this->input->get_post('returnurl');
-        $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid);
-        redirect($returnurl, 'refresh');
+      $orderid = $this->input->post('MerchantRefNo');
+      $transactionid = $this->input->post('TransactionID');
+      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid);
+      redirect('http://www.myfyx.com/testing', 'refresh');
     }
 
     public function uploadImage()
