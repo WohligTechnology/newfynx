@@ -1622,6 +1622,11 @@ public function getsinglesize()
         $quantity = $this->input->get_post('quantity');
         $design = $this->input->get_post('design');
         $json = $this->input->get_post('json');
+        echo addToCart;
+        echo $quantity;
+        echo $design;
+        echo $json;
+        print_r($json);
         $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json);
         $this->load->view('json', $data);
     }

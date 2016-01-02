@@ -665,7 +665,7 @@ class User_model extends CI_Model
                'price'   => $price,
 							 'design'   => $design,
                'image'   => $image,
-							 'json' => $json,
+							 
               	'options' =>array(
                     'realname' => $productname,
                     'sizeid' => $sizeid,
@@ -674,7 +674,8 @@ class User_model extends CI_Model
                     'colorname' => $colorname,
                     'designid' => $designid,
                     'designer' => $designer,
-                    'designimage' => $designimage
+                    'designimage' => $designimage,
+                    'json' => $json
                 )
         );
 			}else{
@@ -686,7 +687,7 @@ class User_model extends CI_Model
                'price'   => $price,
 							 'design'   => $design,
                'image'   => $image,
-							 'json' => $json,
+							
               	'options' =>array(
                     'realname' => $productname,
                     'sizeid' => $sizeid,
@@ -695,7 +696,8 @@ class User_model extends CI_Model
                     'colorname' => $colorname,
                     'designid' => "",
                     'designer' => "",
-                    'designimage' => ""
+                    'designimage' => "",
+                     'json' => $json
                 )
         );
 			}
