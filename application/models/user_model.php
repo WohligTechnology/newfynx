@@ -707,6 +707,7 @@ class User_model extends CI_Model
          if ( $checkcart->num_rows() > 0 )
          {
              $checkcart=$this->db->query("UPDATE `fynx_cart` SET `quantity` = `quantity`+ $quantity WHERE `user`='$userid' AND `product`='$exactproduct'  AND `design` = '$design' AND `json` = '$json' ");
+             return true;
          }else
             {
                     if($userid=="")
