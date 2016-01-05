@@ -38,7 +38,7 @@ return $query;
 }
      public function getcolordropdown()
     {
-        $query = $this->db->query('SELECT * FROM `fynx_color`  ORDER BY `id` ASC')->result();
+        $query = $this->db->query('SELECT * FROM `fynx_color` WHERE `status`=2 ORDER BY `id` ASC')->result();
         $return=array(
 		"" => "Choose color"
 		);

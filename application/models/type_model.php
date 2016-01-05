@@ -38,7 +38,7 @@ return $query;
 }
     public function gettypedropdown()
 	{
-		$query=$this->db->query("SELECT * FROM `fynx_type`  ORDER BY `id` ASC")->result();
+		$query=$this->db->query("SELECT * FROM `fynx_type` WHERE `status`=2  ORDER BY `id` ASC")->result();
 		$return=array(
             "" => "Choose an option"
 		);

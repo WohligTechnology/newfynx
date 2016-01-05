@@ -38,7 +38,7 @@ return $query;
 }
      public function getsubcategorydropdown()
 	{
-		$query=$this->db->query("SELECT * FROM `fynx_subcategory`  ORDER BY `id` ASC")->result();
+		$query=$this->db->query("SELECT * FROM `fynx_subcategory` WHERE `status`=2  ORDER BY `id` ASC")->result();
 		$return=array(
 		"" => "Choose an option"
 		);
