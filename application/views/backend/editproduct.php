@@ -60,7 +60,12 @@
                 <input type="text" id="Price" name="price" value='<?php echo set_value(' price ',$before->price);?>'>
             </div>
         </div>
-
+         <div class="row">
+            <div class="input-field col s6">
+                <label for="discountprice">Discount Price</label>
+                <input type="text" id="discountprice" name="discountprice" value='<?php echo set_value('discountprice',$before->discountprice);?>'>
+            </div>
+        </div>
         <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('category', $category, set_value('category',$before->category)); ?>

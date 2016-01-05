@@ -1238,6 +1238,7 @@ $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
 $baseproduct=$this->input->get_post("baseproduct");
     $sku=$this->input->get_post("sku");
+    $discountprice=$this->input->get_post("discountprice");
      $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$this->load->library('upload', $config);
@@ -1276,7 +1277,7 @@ $baseproduct=$this->input->get_post("baseproduct");
 				$uploaddata = $this->upload->data();
 				$image5=$uploaddata['file_name'];
 			}
-if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct)==0)
+if($this->product_model->create($subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct,$discountprice)==0)
 $data["alerterror"]="New product could not be created.";
 else
 $data["alertsuccess"]="product created Successfully.";
@@ -1359,6 +1360,7 @@ $sizechart=$this->input->get_post("sizechart");
 $status=$this->input->get_post("status");
 $sku=$this->input->get_post("sku");
 $baseproduct=$this->input->get_post("baseproduct");
+$discountprice=$this->input->get_post("discountprice");
      $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$this->load->library('upload', $config);
@@ -1427,7 +1429,7 @@ $baseproduct=$this->input->get_post("baseproduct");
                // print_r($image);
                 $image5=$image5->image5;
             }
-if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct)==0)
+if($this->product_model->edit($id,$subcategory,$quantity,$name,$type,$description,$visibility,$price,$relatedproduct,$category,$color,$size,$sizechart,$status,$sku,$image1,$image2,$image3,$image4,$image5,$baseproduct,$discountprice)==0)
 $data["alerterror"]="New product could not be Updated.";
 else
 $data["alertsuccess"]="product Updated Successfully.";

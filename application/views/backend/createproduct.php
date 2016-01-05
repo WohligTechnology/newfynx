@@ -56,6 +56,12 @@
                 <label for="Price">Price</label>
                 <input type="text" id="Price" name="price" value='<?php echo set_value(' price ');?>'>
             </div>
+        </div> 
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="discountprice">Discount Price</label>
+                <input type="text" id="discountprice" name="discountprice" value='<?php echo set_value('discountprice');?>'>
+            </div>
         </div>
 
         <div class="row">
@@ -167,7 +173,7 @@
         <div class="row">
             <div class="col s12 m6">
                 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>
-                <a href="<?php echo site_url(" site/viewproduct "); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>
+                <a href="<?php echo site_url("site/viewproduct"); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>
             </div>
         </div>
     </form>
