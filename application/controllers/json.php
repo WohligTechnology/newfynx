@@ -2589,10 +2589,10 @@ public function getsinglesize()
     }
     public function payumoneysuccess()
     {
+$responsecode =$this->input->post('ResponseCode');
       $orderid = $this->input->post('MerchantRefNo');
       $transactionid = $this->input->post('TransactionID');
-      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid);
-      redirect('http://www.myfyx.com/testing', 'refresh');
+      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode);
     }
 
     public function uploadImage()
