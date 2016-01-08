@@ -27,6 +27,11 @@ class restapi_model extends CI_Model
      public function gethomecontent(){
     $query=$this->db->query("SELECT `id`, `name`, `link` as `url`, `target`, `status`, `image` as `src`, `template`, `class`, `text`, `centeralign` as `centerAlign` FROM `fynx_homeslide` WHERE `status`=1")->result();
         return $query;
+    }
+    public function getorderbyorderid($id){
+    $query=$this->db->query("SELECT `transactionid` FROM `fynx_order` WHERE `id`='$id'")->row();
+    $query->amount=$this->db->query("SELECT SUM(`finalprice`) as `amount` FROM `fynx_orderitem` WHERE `order`='$id'")->row();
+        return $query;
     } 
     public function getUserDetails($user){
     $query=$this->db->query("SELECT `id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `firstname`, `lastname`, `phone`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingcontact`, `billingpincode`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `shippingname`, `shippingcontact`, `currency`, `credit`, `companyname`, `registrationno`, `vatnumber`, `country`, `fax`, `gender`, `facebook`, `google`, `twitter`, `street`, `address`, `pincode`, `state`, `dob`, `city`, `billingline1`, `billingline2`, `shippingline1`, `shippingline2`, `billingline3`, `shippingline3` FROM `user` WHERE `id`=$user")->row();
@@ -165,7 +170,15 @@ class restapi_model extends CI_Model
     }
      public function updateorderstatusafterpayment($orderid,$transactionid){
           $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-        return 1;
+        if($query)
+        {
+            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);  
+            
+        }
+         else{ 
+             redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);  
+             
+         }
     
     }
 }

@@ -2581,6 +2581,12 @@ public function getsinglesize()
         $data['message'] = $this->restapi_model->checkstatus($orderid);
         $this->load->view('json', $data);
     }
+    public function getorderbyorderid()
+    {
+        $orderid = $this->input->get('id');
+        $data['message'] = $this->restapi_model->getorderbyorderid($orderid);
+        $this->load->view('json', $data);
+    }
     public function payumoneysuccess()
     {
       $orderid = $this->input->post('MerchantRefNo');
