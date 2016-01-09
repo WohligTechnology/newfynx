@@ -39,6 +39,15 @@ return 1;
         }
 
         return $designer;
+    } 
+    public function getdesigndropdown()
+    {
+        $query = $this->db->query('SELECT * FROM `fynx_design`  ORDER BY `id` ASC')->result();
+        foreach ($query as $row) {
+            $designer[$row->id] = $row->name;
+        }
+
+        return $designer;
     }
 public function delete($id)
 {
