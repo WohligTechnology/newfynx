@@ -4680,8 +4680,9 @@ public function deleteproductdesignimage()
 $access=array("1");
 $this->checkaccess($access);
 $this->productdesignimage_model->delete($this->input->get("id"));
-$data["redirect"]="site/viewproductdesignimage";
-$this->load->view("redirect",$data);
+    $product=$this->input->get("productid");
+$data["redirect"]="site/viewproductdesignimage?id=".$product;
+$this->load->view("redirect2",$data);
 }
 }
 ?>

@@ -2453,10 +2453,10 @@ public function getsinglesize()
         $this->chintantable->createelement('`fynx_product`.`id`', '1', 'ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
         $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
-        $this->chintantable->createelement('`fynx_product`.`image1`', '1', 'image', 'image');
+//        $this->chintantable->createelement('`fynx_product`.`image1`', '1', 'image', 'image');
         $this->chintantable->createelement('`fynx_designs`.`id`', '1', 'designId', 'designId');
         $this->chintantable->createelement('`fynx_designs`.`image`', '1', 'designImage', 'designImage');
-        $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'productDesignImage', 'productDesignImage');
+        $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'image', 'image');
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
