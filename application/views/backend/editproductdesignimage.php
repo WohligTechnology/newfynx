@@ -8,7 +8,7 @@
 <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
  <div class=" row">
 <div class=" input-field col s6">
-<?php echo form_dropdown("design",$design,set_value('design'$before->design));?>
+<?php echo form_dropdown("design",$design,set_value('design',$before->design));?>
 <label>Design</label>
 </div>
 </div>
@@ -42,7 +42,7 @@
 <div class="row">
 <div class="col s6">
 <button type="submit" class="btn btn-primary waves-effect waves-light  blue darken-4">Save</button>
-<a href='<?php echo site_url("site/viewproductdesignimage"); ?>' class='btn btn-secondary waves-effect waves-light red'>Cancel</a>
+<a href='<?php echo site_url("site/viewproductdesignimage?id=".$this->input->get('product')); ?>' class='btn btn-secondary waves-effect waves-light red'>Cancel</a>
 </div>
 </div>
 </form>

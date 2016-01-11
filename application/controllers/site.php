@@ -4488,12 +4488,13 @@ $this->load->view("redirect",$data);
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewproductdesignimage";
-$data["base_url"]=site_url("site/viewproductdesignimagejson");
+$data["base_url"]=site_url("site/viewproductdesignimagejson?id=".$this->input->get('id'));
 $data["title"]="View productdesignimage";
 $this->load->view("template",$data);
 }
 function viewproductdesignimagejson()
 {
+$id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`productdesignimage`.`id`";
@@ -4503,8 +4504,8 @@ $elements[0]->alias="id";
 $elements[1]=new stdClass();
 $elements[1]->field="`productdesignimage`.`product`";
 $elements[1]->sort="1";
-$elements[1]->header="Name";
-$elements[1]->alias="name";
+$elements[1]->header="product";
+$elements[1]->alias="product";
 $elements[2]=new stdClass();
 $elements[2]->field="`productdesignimage`.`image`";
 $elements[2]->sort="1";
@@ -4515,6 +4516,18 @@ $elements[3]->field="`productdesignimage`.`design`";
 $elements[3]->sort="1";
 $elements[3]->header="design";
 $elements[3]->alias="design";
+    
+$elements[4]=new stdClass();
+$elements[4]->field="`fynx_product`.`name`";
+$elements[4]->sort="1";
+$elements[4]->header="Product";
+$elements[4]->alias="productname";
+    
+$elements[5]=new stdClass();
+$elements[5]->field="`fynx_designs`.`name`";
+$elements[5]->sort="1";
+$elements[5]->header="Design";
+$elements[5]->alias="designname";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -4529,7 +4542,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `productdesignimage`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `productdesignimage` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product` LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`productdesignimage`.`design`","WHERE `productdesignimage`.`product`='$id'");
 $this->load->view("json",$data);
 }
 
@@ -4600,8 +4613,8 @@ if($this->productdesignimage_model->create($product,$design,$image)==0)
 $data["alerterror"]="New productdesignimage could not be created.";
 else
 $data["alertsuccess"]="productdesignimage created Successfully.";
-$data["redirect"]="site/viewproductdesignimage";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproductdesignimage?id=".$product;
+$this->load->view("redirect2",$data);
 }
 }
 public function editproductdesignimage()
@@ -4658,8 +4671,8 @@ if($this->productdesignimage_model->edit($id,$product,$design,$image)==0)
 $data["alerterror"]="New productdesignimage could not be Updated.";
 else
 $data["alertsuccess"]="productdesignimage Updated Successfully.";
-$data["redirect"]="site/viewproductdesignimage";
-$this->load->view("redirect",$data);
+$data["redirect"]="site/viewproductdesignimage?id=".$product;
+$this->load->view("redirect2",$data);
 }
 }
 public function deleteproductdesignimage()
