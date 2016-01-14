@@ -199,5 +199,10 @@ echo "ty 1";
 //            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
             }
 }
+      public function checkproductquantity($prodid){
+         $query=$this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$prodid'")->row();
+         $quantity=$query->quantity;
+        return $quantity;
+    }
 }
 ?>
