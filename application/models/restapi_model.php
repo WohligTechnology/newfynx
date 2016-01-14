@@ -172,7 +172,10 @@ class restapi_model extends CI_Model
         {
             if($responsecode==0)
             {
-            $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+             $checkamt=$this->db->query("SELECT IFNULL(SUM(`price`),0) as `totalamount` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
+                $totalamount=$checkamt->totalamount;
+                if($totalamount==$amount){
+                    $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
              // DESTROY CART
                     $getuser=$this->db->query("SELECT `user` FROM `fynx_order` WHERE `id`='$orderid'")->row();
                     $user=$getuser->user;
@@ -180,6 +183,13 @@ class restapi_model extends CI_Model
                     $deletecart=$this->db->query("DELETE FROM `fynx_cart` WHERE `user`='$user'");
 
             redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
+                }
+                else{
+                      $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+                }
+                
+            
             }
             else
             {
