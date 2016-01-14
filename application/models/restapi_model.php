@@ -175,18 +175,19 @@ class restapi_model extends CI_Model
              $checkamt=$this->db->query("SELECT IFNULL(SUM(`price`),0) as `totalamount` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
                 $totalamount=$checkamt->totalamount;
                 if($totalamount==$amount){
-                    $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+                    $query1=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
              // DESTROY CART
                     $getuser=$this->db->query("SELECT `user` FROM `fynx_order` WHERE `id`='$orderid'")->row();
                     $user=$getuser->user;
                     $this->cart->destroy();
                     $deletecart=$this->db->query("DELETE FROM `fynx_cart` WHERE `user`='$user'");
-
-            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
+echo "ty 1";
+//            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
                 }
                 else{
                       $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+                    echo "sry 1";
+//            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
                 }
                 
             
@@ -194,7 +195,8 @@ class restapi_model extends CI_Model
             else
             {
             $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+                echo "sry";
+//            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
             }
 }
 }

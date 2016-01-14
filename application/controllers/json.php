@@ -2590,11 +2590,11 @@ public function getsinglesize()
     }
     public function payumoneysuccess()
     {
-      $amount = $this->input->post('Amount');
-$responsecode =$this->input->post('ResponseCode');
-      $orderid = $this->input->post('MerchantRefNo');
-      $transactionid = $this->input->post('TransactionID');
-      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode);
+      $amount = $this->input->get_post('Amount');
+$responsecode =$this->input->get_post('ResponseCode');
+      $orderid = $this->input->get_post('MerchantRefNo');
+      $transactionid = $this->input->get_post('TransactionID');
+      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode,$amount);
     }
 
     public function uploadImage()
