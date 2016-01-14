@@ -200,7 +200,7 @@ echo "ty 1";
             }
 }
       public function checkproductquantity($prodid){
-         $query=$this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$prodid'")->row();
+         $query=$this->db->query("SELECT `quantity` FROM `fynx_product` WHERE `id`='$prodid'")->row();
          $quantity=$query->quantity;
         return $quantity;
     }

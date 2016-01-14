@@ -1625,6 +1625,7 @@ public function getsinglesize()
         $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json);
         $this->load->view('json', $data);
     }
+    
     public function destroycart()
     {
         $data['message'] = $this->user_model->destroycart();
@@ -2533,6 +2534,45 @@ public function getsinglesize()
         }
             $this->load->view('json', $data);
         }
+    }
+     function checkoutCheck() {
+        $userid=$this->session->userdata("id");
+        $newcart=array();
+        if($userid!="")
+        {
+            $cart = $this->cart->contents();
+            foreach ($cart as $item) {
+                array_push($newcart, $item);
+            }
+        }
+        else
+        {
+            $cart = $this->cart->contents();
+            foreach ($cart as $item) {
+                $quantity=$item->options->productquantity;
+                $productid=$item->id;
+                array_push($newcart, $item);
+            }
+        }
+        $returnWhat=new stdClass();
+        $returnWhat->value=true;
+        $data["message"]=array();
+        foreach($newcart as $element)
+        {
+            $proid=$element["id"];
+            $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
+            $maxQuantity = intval($element["maxQuantity"]);
+            $cartQuantity = intval($element["qty"]);
+            if($cartQuantity <= $maxQuantity) {
+                //Enjoy
+            }
+            else
+            {
+                 $returnWhat->value=false;
+            }
+        }
+        $data["message"]=$returnWhat;
+        $this->load->view("json", $data);
     }
     public function removeFromWishlist()
     {
