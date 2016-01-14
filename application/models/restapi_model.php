@@ -168,7 +168,7 @@ class restapi_model extends CI_Model
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$responsecode)
+		public function updateorderstatusafterpayment($orderid,$transactionid,$responsecode,$amount)
         {
             if($responsecode==0)
             {

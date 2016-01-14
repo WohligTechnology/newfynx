@@ -2590,6 +2590,7 @@ public function getsinglesize()
     }
     public function payumoneysuccess()
     {
+      $amount = $this->input->post('Amount');
 $responsecode =$this->input->post('ResponseCode');
       $orderid = $this->input->post('MerchantRefNo');
       $transactionid = $this->input->post('TransactionID');
