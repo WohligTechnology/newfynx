@@ -2512,8 +2512,8 @@ public function getsinglesize()
        
                   foreach($data['message'] as $element)
         {
-            $proid=$element["id"];
-            $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
+            $proid=$element->id;
+            $element->maxQuantity=$this->restapi_model->checkproductquantity($proid);
             array_push($data["message"], $element);
         }
             $this->load->view('json', $data);
@@ -2540,19 +2540,18 @@ public function getsinglesize()
         $newcart=array();
         if($userid!="")
         {
-            $cart = $this->cart->contents();
-            foreach ($cart as $item) {
-                array_push($newcart, $item);
-            }
+           $data['message'] = $this->user_model->showCart($userid);
+//            print_r($data['message']);
         }
         else
         {
-            $cart = $this->cart->contents();
+              $cart = $this->cart->contents();
+            $newcart = array();
             foreach ($cart as $item) {
-                $quantity=$item->options->productquantity;
-                $productid=$item->id;
                 array_push($newcart, $item);
             }
+            $data['message'] = $newcart;
+             print_r($data['message']);
         }
         $returnWhat=new stdClass();
         $returnWhat->value=true;
