@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2016 at 05:58 AM
+-- Generation Time: Jan 15, 2016 at 05:50 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -76,14 +76,15 @@ CREATE TABLE IF NOT EXISTS `fynx_cart` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `design` varchar(255) NOT NULL,
   `json` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_cart`
 --
 
 INSERT INTO `fynx_cart` (`id`, `user`, `quantity`, `product`, `timestamp`, `design`, `json`) VALUES
-(4, 1, 1, '3', '2016-01-02 08:33:24', '', '');
+(1, 7, 1, '7', '2016-01-14 15:17:24', '7', ''),
+(2, 7, 1, '3', '2016-01-14 15:18:27', '6', '');
 
 -- --------------------------------------------------------
 
@@ -332,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `fynx_order` (
 INSERT INTO `fynx_order` (`id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcontact`, `billingcity`, `billingstate`, `billingpincode`, `billingcountry`, `shippingcity`, `shippingaddress`, `shippingname`, `shippingcountry`, `shippingcontact`, `shippingstate`, `shippingpincode`, `trackingcode`, `defaultcurrency`, `shippingmethod`, `orderstatus`, `timestamp`, `billingline1`, `billingline2`, `billingline3`, `shippingline1`, `shippingline2`, `shippingline3`, `transactionid`, `paymentmode`) VALUES
 (1, 1, 'Sachin', 'Patil', 'poojathakare55@gmail.com', 'huh', 'yugh', 'u', 'h', 'hu', 'yh', 'y', 'h', 'uh', 'u', 'yu', 'u', 'h', 'yu', 'u', 'u', '2', '2015-12-24 11:52:58', '', '', '', '', '', '', '1234', NULL),
 (2, 1, 'Ramesh', 'Pal', 'wohlig@wohlig.com', 'arioli', '987987', 'navimumbai', 'maharashtra', '400708', 'india', 'navimumbai', 'arioli', 'puja', 'india', '987987', 'maharashtra', '400709', '789', '987', 'road', '1', '2015-12-02 14:20:06', '', '', '', '', '', '', '', NULL),
-(20, 1, 'puja', 'thakare', 'puja@wohlig.com', '', '9870969411', 'bcity', 'bstate', 'bpincode', 'bcountry', 'scity', '', '', 'scountry', '9870969411', 'sstate', 'spincode', '', '', '', '1', '2015-12-22 12:44:03', 'b1', 'b2', 'b3', 's1', 's2', 's3', '', NULL),
+(20, 1, 'puja', 'thakare', 'puja@wohlig.com', '', '9870969411', 'bcity', 'bstate', 'bpincode', 'bcountry', 'scity', '', '', 'scountry', '9870969411', 'sstate', 'spincode', '', '', '', '5', '2016-01-14 07:54:07', 'b1', 'b2', 'b3', 's1', 's2', 's3', '567', NULL),
 (21, 6, 'puja', 'thakare', 'puja@wohlig.com', '', '9870969411', 'bcity', 'bstate', 'bpincode', 'bcountry', 'scity', '', '', 'scountry', '9870969411', 'sstate', 'spincode', '', '', '', '1', '2015-12-24 09:33:31', 'b1', 'b2', 'b3', 's1', 's2', 's3', '', '');
 
 -- --------------------------------------------------------
@@ -358,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `fynx_orderitem` (
 
 INSERT INTO `fynx_orderitem` (`id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`, `design`) VALUES
 (25, 0, 20, 1, 1, 800, 800, 6),
-(26, 0, 21, 1, 1, 800, 800, 6);
+(26, 0, 20, 1, 1, 800, 800, 6);
 
 -- --------------------------------------------------------
 
@@ -683,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `productdesignimage` (
   `product` int(11) NOT NULL,
   `design` int(11) NOT NULL,
   `image` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `productdesignimage`
@@ -1105,7 +1106,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `fynx_cart`
 --
 ALTER TABLE `fynx_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `fynx_category`
 --
@@ -1220,7 +1221,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `productdesignimage`
 --
 ALTER TABLE `productdesignimage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `relatedproduct`
 --
