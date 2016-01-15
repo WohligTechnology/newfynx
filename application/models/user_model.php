@@ -713,7 +713,6 @@ class User_model extends CI_Model
             {
                     if($userid=="")
                     {
-                        $this->cart->insert($data);
                         $returnval=$this->cart->insert($data);
                         if(!empty($returnval)){
                         return true;
@@ -736,7 +735,7 @@ class User_model extends CI_Model
     }
     public function showCart($user){
         $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`fynx_product`.`image1` as `image`,`fynx_product`.`price` FROM `fynx_cart`
-LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
+INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
 WHERE `fynx_cart`.`user`='$user'")->result();
         foreach($query as $row){
             $productid=$row->id;
