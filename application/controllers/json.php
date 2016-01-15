@@ -2503,19 +2503,13 @@ public function getsinglesize()
     {
         $userid = $this->session->userdata('id');
         if ($userid != '') {
-//            $cart = $this->cart->contents();
-//            $newcart = array();
-//            foreach ($cart as $item) {
-//                array_push($newcart, $item);
-//            }
             $data['message'] = $this->user_model->showCart($userid);
-       
-                  foreach($data['message'] as $element)
-        {
-            $proid=$element->id;
-            $element->maxQuantity=$this->restapi_model->checkproductquantity($proid);
-            array_push($data["message"], $element);
-        }
+            foreach($data['message'] as $element)
+            {
+                $proid=$element->id;
+                $element->maxQuantity=$this->restapi_model->checkproductquantity($proid);
+
+            }
             $this->load->view('json', $data);
         }
         else
@@ -2526,12 +2520,11 @@ public function getsinglesize()
                 array_push($newcart, $item);
             }
             $data['message'] = $newcart;
-                  foreach($data['message'] as $element)
-        {
-            $proid=$element["id"];
-            $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
-            array_push($data["message"], $element);
-        }
+            foreach($data['message'] as $element)
+            {
+                $proid=$element["id"];
+                $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
+            }
             $this->load->view('json', $data);
         }
     }
