@@ -665,7 +665,7 @@ class User_model extends CI_Model
                'price'   => $price,
 							 'design'   => $design,
                'image'   => $image,
-							 
+
               	'options' =>array(
                     'realname' => $productname,
                     'sizeid' => $sizeid,
@@ -687,7 +687,7 @@ class User_model extends CI_Model
                'price'   => $price,
 							 'design'   => $design,
                'image'   => $image,
-							
+
               	'options' =>array(
                     'realname' => $productname,
                     'sizeid' => $sizeid,
@@ -736,11 +736,11 @@ class User_model extends CI_Model
     public function showCart($user){
         $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`fynx_product`.`image1` as `image`,`fynx_product`.`price` FROM `fynx_cart`
 INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
-WHERE `fynx_cart`.`user`='$user'")->result();
-        foreach($query as $row){
-            $productid=$row->id;
-            $designid=$row->design;
-            $row->options=$this->db->query("SELECT `fynx_product`.`name` as `realname`,`fynx_product`.`size` as `sizeid`,`fynx_product`.`color` as `colorid`,`fynx_size`.`name` as `sizename`,`fynx_color`.`name` as `colorname`,`fynx_cart`.`design` as `designid`,`fynx_designs`.`designer` as `designer`,`fynx_designs`.`image` as `designimage`,`fynx_cart`.`json` as `json` FROM `fynx_product`
+WHERE `fynx_cart`.`user`='$user'")->result_array();
+        foreach($query as $key => $row){
+            $productid= $row["id"] ;
+            $designid = $row["design"];
+            $query[$key]["options"]=$this->db->query("SELECT `fynx_product`.`name` as `realname`,`fynx_product`.`size` as `sizeid`,`fynx_product`.`color` as `colorid`,`fynx_size`.`name` as `sizename`,`fynx_color`.`name` as `colorname`,`fynx_cart`.`design` as `designid`,`fynx_designs`.`designer` as `designer`,`fynx_designs`.`image` as `designimage`,`fynx_cart`.`json` as `json` FROM `fynx_product`
 LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
 LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
 LEFT OUTER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id`

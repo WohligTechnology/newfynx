@@ -181,13 +181,11 @@ class restapi_model extends CI_Model
                     $user=$getuser->user;
                     $this->cart->destroy();
                     $deletecart=$this->db->query("DELETE FROM `fynx_cart` WHERE `user`='$user'");
-echo "ty 1";
-//            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
+            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
                 }
                 else{
                       $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-                    echo "sry 1";
-//            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
                 }
                 
             
@@ -195,8 +193,7 @@ echo "ty 1";
             else
             {
             $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-                echo "sry";
-//            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
             }
 }
       public function checkproductquantity($prodid){
