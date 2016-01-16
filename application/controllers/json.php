@@ -2451,12 +2451,10 @@ public function getsinglesize()
             $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
         }
 
-        $this->chintantable->createelement('`fynx_product`.`id`', '1', 'ID', 'id');
+        $this->chintantable->createelement('`productdesignimage`.`product`', '1', 'ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
         $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
-//        $this->chintantable->createelement('`fynx_product`.`image1`', '1', 'image', 'image');
-        $this->chintantable->createelement('`fynx_designs`.`id`', '1', 'designId', 'designId');
-        $this->chintantable->createelement('`fynx_designs`.`image`', '1', 'designImage', 'designImage');
+        $this->chintantable->createelement('`productdesignimage`.`design`', '1', 'design', 'design');
         $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'image', 'image');
 
         $search = $this->input->get_post('search');
@@ -2470,7 +2468,9 @@ public function getsinglesize()
 
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
-        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `fynx_designs`,`fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` INNER JOIN `productdesignimage` ON `productdesignimage`.`product`  = `fynx_product`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `fynx_product`.`size`,`fynx_product`.`id`,`fynx_designs`.`id`');
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
+INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` 
+INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `productdesignimage`.`product`,`productdesignimage`.`design`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
