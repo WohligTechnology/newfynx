@@ -166,6 +166,7 @@ echo set_value('image2', $before->image2);
         </div>
 
         <!--    // IMAGE 3-->
+<!--
 
         <div class="row">
             <div class="file-field input-field col m6 s12">
@@ -192,9 +193,11 @@ echo set_value('image3', $before->image3);
             </div>
 
         </div>
+-->
 
         <!--    // IMAGE 4-->
 
+<!--
         <div class="row">
             <div class="file-field input-field col m6 s12">
                 <span class="img-center big image1">
@@ -220,6 +223,7 @@ echo set_value('image4', $before->image4);
             </div>
 
         </div>
+-->
 
         <!--    // IMAGE 5-->
 
