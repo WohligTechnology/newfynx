@@ -4498,28 +4498,28 @@ $id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`productdesignimage`.`id`";
-$elements[0]->sort="1";
+$elements[0]->sort="0";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 $elements[1]=new stdClass();
 $elements[1]->field="`productdesignimage`.`product`";
-$elements[1]->sort="1";
+$elements[1]->sort="0";
 $elements[1]->header="product";
 $elements[1]->alias="product";
 $elements[2]=new stdClass();
 $elements[2]->field="`productdesignimage`.`image`";
-$elements[2]->sort="1";
+$elements[2]->sort="0";
 $elements[2]->header="Image";
 $elements[2]->alias="image";
 $elements[3]=new stdClass();
 $elements[3]->field="`productdesignimage`.`design`";
-$elements[3]->sort="1";
+$elements[3]->sort="0";
 $elements[3]->header="design";
 $elements[3]->alias="design";
     
 $elements[4]=new stdClass();
 $elements[4]->field="`fynx_product`.`name`";
-$elements[4]->sort="1";
+$elements[4]->sort="0";
 $elements[4]->header="Product";
 $elements[4]->alias="productname";
     
@@ -4537,12 +4537,7 @@ if($maxrow=="")
 {
 $maxrow=20;
 }
-if($orderby=="")
-{
-$orderby="id";
-$orderorder="ASC";
-}
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `productdesignimage` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product` LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`productdesignimage`.`design`","WHERE `productdesignimage`.`product`='$id'");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,' `productdesignimage`.`product` ASC,`productdesignimage`.`design ASC` ','',$search,$elements,"FROM `productdesignimage` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product` LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`productdesignimage`.`design`","WHERE `productdesignimage`.`product`='$id'");
 $this->load->view("json",$data);
 }
 
