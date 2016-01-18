@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2016 at 05:50 AM
+-- Generation Time: Jan 18, 2016 at 07:01 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -76,15 +76,14 @@ CREATE TABLE IF NOT EXISTS `fynx_cart` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `design` varchar(255) NOT NULL,
   `json` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_cart`
 --
 
 INSERT INTO `fynx_cart` (`id`, `user`, `quantity`, `product`, `timestamp`, `design`, `json`) VALUES
-(1, 7, 1, '7', '2016-01-14 15:17:24', '7', ''),
-(2, 7, 1, '3', '2016-01-14 15:18:27', '6', '');
+(3, 1, 27, '2', '2016-01-15 10:30:52', '1', '');
 
 -- --------------------------------------------------------
 
@@ -199,16 +198,16 @@ CREATE TABLE IF NOT EXISTS `fynx_designs` (
   `status` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_designs`
 --
 
 INSERT INTO `fynx_designs` (`id`, `designer`, `image`, `status`, `timestamp`, `name`) VALUES
-(4, 2, '3Q9Q53316.JPG', '2', '2015-12-02 05:31:50', ''),
-(6, 1, '61fWioKx9aL._SX522__1.jpg', '1', '2015-12-02 14:21:15', 'Batman'),
-(7, 1, 'b12.jpg', '1', '2016-01-11 05:19:00', 'Spider Man');
+(1, 2, '3Q9Q53316.JPG', '2', '2016-01-15 05:00:29', ''),
+(2, 1, '61fWioKx9aL._SX522__1.jpg', '1', '2016-01-15 05:00:33', 'Batman'),
+(3, 1, 'b12.jpg', '1', '2016-01-15 05:00:35', 'Spider Man');
 
 -- --------------------------------------------------------
 
@@ -390,22 +389,22 @@ CREATE TABLE IF NOT EXISTS `fynx_product` (
   `image5` varchar(255) NOT NULL,
   `baseproduct` varchar(255) NOT NULL,
   `discountprice` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `fynx_product`
 --
 
 INSERT INTO `fynx_product` (`id`, `subcategory`, `quantity`, `name`, `type`, `description`, `visibility`, `price`, `relatedproduct`, `category`, `color`, `size`, `sizechart`, `status`, `sku`, `image1`, `image2`, `image3`, `image4`, `image5`, `baseproduct`, `discountprice`) VALUES
-(3, 1, '10', 'T1', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '850', '', '1', '1', '2', '1', '2', 'FT1', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
-(5, 1, '10', 'T2', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '485', '', '1', '2', '1', '1', '2', 'FT2', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', '', ''),
-(6, 1, '10', 'T3', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '940', '', '1', '1', '2', '1', '2', 'FT3', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
-(7, 1, '10', 'T4', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '689', '', '1', '2', '1', '1', '2', 'FT4', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', '', ''),
-(8, 1, '10', 'T5', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '1025', '', '1', '1', '2', '1', '2', 'FT5', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
-(9, 1, '10', 'T6', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '785', '', '1', '1', '2', '1', '2', 'FT6', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
-(11, 1, '100', 'Awesome', '3', '<p>ladies crop top</p>', '1', '799', '', '1', '1', '2', '1', '2', '1', 'Timeline-dark.jpg', 'images2.jpg', 'MyFynx_Logo-01.jpg', '', '', '', ''),
-(12, 1, '12', 'grdrt', '1', '<p>fgfsgfs</p>', '1', '54235', '', '1', '1', '2', '1', '2', 'A11', 'b1.jpg', '61fWioKx9aL._SX522__.jpg', 'SFA-Web-Banners-a.jpg', 'SFA-Web-Banners.jpg-1_.jpg', 'tee2.jpg', '5425425', '3452435245'),
-(13, 1, '1', 'ghghgj', '1', '<p>dkflshredy</p>', '1', '850', '', '1', '2', '1', '2', '2', 'jdhfjsf', '', '', '', '', '', 'agfdas', '750');
+(1, 1, '10', 'T1', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '850', '', '1', '1', '2', '1', '2', 'FT1', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
+(2, 1, '10', 'T2', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '485', '', '1', '2', '1', '1', '2', 'FT2', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', '', ''),
+(3, 1, '10', 'T3', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '940', '', '1', '1', '2', '1', '2', 'FT3', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
+(4, 1, '10', 'T4', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '689', '', '1', '2', '1', '1', '2', 'FT4', 't63.jpg', 't42.jpg', 't24.jpg', 't64.jpg', 'tee3.jpg', '', ''),
+(5, 1, '10', 'T5', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '1025', '', '1', '1', '2', '1', '2', 'FT5', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
+(6, 1, '10', 'T6', '1', '<p>An everyday essential, this simple round-neck <em>t</em>-<em>shirt</em> is cut from pima cotton with an extra-soft feel.</p>', '1', '785', '', '1', '1', '2', '1', '2', 'FT6', 't53.jpg', 't22.jpg', 't23.jpg', 't32.jpg', 't62.jpg', '', ''),
+(7, 1, '100', 'Awesome', '3', '<p>ladies crop top</p>', '1', '799', '', '1', '1', '2', '1', '2', '1', 'Timeline-dark.jpg', 'images2.jpg', 'MyFynx_Logo-01.jpg', '', '', '', ''),
+(8, 1, '12', 'grdrt', '1', '<p>fgfsgfs</p>', '1', '54235', '', '1', '1', '2', '1', '2', 'A11', 'b1.jpg', '61fWioKx9aL._SX522__.jpg', 'SFA-Web-Banners-a.jpg', 'SFA-Web-Banners.jpg-1_.jpg', 'tee2.jpg', '5425425', '3452435245'),
+(9, 1, '1', 'ghghgj', '1', '<p>dkflshredy</p>', '1', '850', '', '1', '2', '1', '2', '2', 'jdhfjsf', '', '', '', '', '', 'agfdas', '750');
 
 -- --------------------------------------------------------
 
@@ -684,7 +683,7 @@ CREATE TABLE IF NOT EXISTS `productdesignimage` (
   `product` int(11) NOT NULL,
   `design` int(11) NOT NULL,
   `image` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `productdesignimage`
@@ -693,7 +692,12 @@ CREATE TABLE IF NOT EXISTS `productdesignimage` (
 INSERT INTO `productdesignimage` (`id`, `product`, `design`, `image`) VALUES
 (1, 5, 6, '61fWioKx9aL._SX522__5.jpg'),
 (2, 3, 6, 'Apparels_banners.jpg'),
-(3, 3, 4, 'b11.jpg');
+(3, 3, 4, 'b11.jpg'),
+(4, 1, 2, 'images_(1)1.jpg'),
+(5, 1, 3, 'sunspel-charcoal-melange-short-sleeve-crew-neck-tshirt-product-1-14847455-259387527.jpeg'),
+(6, 1, 2, 'whitetshirt.png'),
+(7, 1, 3, 'images.jpg'),
+(8, 1, 3, 'red.jpg');
 
 -- --------------------------------------------------------
 
@@ -1106,7 +1110,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `fynx_cart`
 --
 ALTER TABLE `fynx_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_category`
 --
@@ -1136,7 +1140,7 @@ ALTER TABLE `fynx_designer`
 -- AUTO_INCREMENT for table `fynx_designs`
 --
 ALTER TABLE `fynx_designs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `fynx_homeslide`
 --
@@ -1171,7 +1175,7 @@ ALTER TABLE `fynx_orderitem`
 -- AUTO_INCREMENT for table `fynx_product`
 --
 ALTER TABLE `fynx_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `fynx_productimage`
 --
@@ -1221,7 +1225,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `productdesignimage`
 --
 ALTER TABLE `productdesignimage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `relatedproduct`
 --
