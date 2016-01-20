@@ -654,10 +654,11 @@ class User_model extends CI_Model
         $colorid=$getcolor->id;
         $colorname=$getcolor->name;
 				if($design!=''){
-        $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
+        $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`,`name`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
         $designid=$getdesign->id;
         $designer=$getdesign->designer;
         $designimage=$getdesign->image;
+        $designname=$getdesign->name;
 				$data = array(
                'id'      => $exactproduct,
                'name'      => '1',
@@ -667,7 +668,7 @@ class User_model extends CI_Model
                'image'   => $image,
 
               	'options' =>array(
-                    'realname' => $productname,
+                    'realname' => $designname,
                     'sizeid' => $sizeid,
                     'colorid' => $colorid,
                     'sizename' => $sizename,
@@ -689,7 +690,7 @@ class User_model extends CI_Model
                'image'   => $image,
 
               	'options' =>array(
-                    'realname' => $productname,
+                    'realname' => $designname,
                     'sizeid' => $sizeid,
                     'colorid' => $colorid,
                     'sizename' => $sizename,
@@ -740,7 +741,7 @@ WHERE `fynx_cart`.`user`='$user'")->result_array();
         foreach($query as $key => $row){
             $productid= $row["id"] ;
             $designid = $row["design"];
-            $query[$key]["options"]=$this->db->query("SELECT `fynx_product`.`name` as `realname`,`fynx_product`.`size` as `sizeid`,`fynx_product`.`color` as `colorid`,`fynx_size`.`name` as `sizename`,`fynx_color`.`name` as `colorname`,`fynx_cart`.`design` as `designid`,`fynx_designs`.`designer` as `designer`,`fynx_designs`.`image` as `designimage`,`fynx_cart`.`json` as `json` FROM `fynx_product`
+            $query[$key]["options"]=$this->db->query("SELECT `fynx_designs`.`name` as `realname`,`fynx_product`.`size` as `sizeid`,`fynx_product`.`color` as `colorid`,`fynx_size`.`name` as `sizename`,`fynx_color`.`name` as `colorname`,`fynx_cart`.`design` as `designid`,`fynx_designs`.`designer` as `designer`,`fynx_designs`.`image` as `designimage`,`fynx_cart`.`json` as `json` FROM `fynx_product`
 LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
 LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
 LEFT OUTER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id`

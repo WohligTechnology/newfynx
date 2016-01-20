@@ -2452,7 +2452,7 @@ public function getsinglesize()
         }
 
         $this->chintantable->createelement('`productdesignimage`.`product`', '1', 'ID', 'id');
-        $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
+        $this->chintantable->createelement('`fynx_designs`.`name`', '1', 'name', 'name');
         $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
         $this->chintantable->createelement('`productdesignimage`.`design`', '1', 'design', 'design');
         $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'image', 'image');
@@ -2462,14 +2462,16 @@ public function getsinglesize()
         $orderby = 'price';
         if ($price == '2') {
             $orderorder = 'DESC';
-        } else {
+        }
+        else if($price == '1') {
             $orderorder = 'ASC';
         }
    
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
-        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $neworderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` 
+INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` 
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `productdesignimage`.`product`,`productdesignimage`.`design`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
@@ -2495,8 +2497,9 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $id = $this->input->get_post('id');
         $size = $this->input->get_post('size');
         $color = $this->input->get_post('color');
+        $design = $this->input->get_post('design');
         $user = $this->session->userdata('id');
-        $data['message'] = $this->product_model->getProductDetails($id, $user, $size, $color);
+        $data['message'] = $this->product_model->getProductDetails($id, $user, $size, $color,$design);
         $this->load->view('json', $data);
     }
     public function showCart()
