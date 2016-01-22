@@ -23,16 +23,18 @@ class restapi_model extends CI_Model
     public function getallcategory(){
     $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
         return $query;
-    }
-    public function totalcart($user){
-    $query=$this->db->query("SELECT SUM(`price`) FROM `product` WHERE `id` IN (SELECT `product` FROM `fynx_cart WHERE `user`='$user')")->row();
-        return $query;
     } 
     public function totalitemsincart($user){
     $query=$this->db->query("SELECT COUNT(*) as `cartcount` FROM `fynx_cart` WHERE `user`='$user'")->row();
     $cartcount=$query->cartcount;
         $cartcount=intval($cartcount);
         return $cartcount;
+    }
+    public function totalcart($user){
+    $query=$this->db->query("SELECT SUM(`price`) as `amount` FROM `fynx_product` WHERE `id` IN (SELECT `product` FROM `fynx_cart` WHERE `user`='$user')")->row();
+        $amount=$query->amount;
+        $amount=intval($amount);
+        return $amount;
     }
      public function gethomecontent(){
     $query=$this->db->query("SELECT `id`, `name`, `link` as `url`, `target`, `status`, `image` as `src`, `template`, `class`, `text`, `centeralign` as `centerAlign` FROM `fynx_homeslide` WHERE `status`=1")->result();
