@@ -2616,11 +2616,11 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     public function changepassword()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'];
+        $user = $this->session->userdata('id');
         $oldpassword = $data['oldpassword'];
         $newpassword = $data['newpassword'];
         $confirmpassword = $data['confirmpassword'];
-        $data['message'] = $this->restapi_model->changepassword($id, $oldpassword, $newpassword, $confirmpassword);
+        $data['message'] = $this->restapi_model->changepassword($user, $oldpassword, $newpassword, $confirmpassword);
         $this->load->view('json', $data);
     }
     public function checkstatus()
