@@ -1634,7 +1634,14 @@ public function getsinglesize()
 
     public function totalcart()
     {
-        $data['message'] = $this->cart->total();
+            $user = $this->session->userdata('id');
+        if($user==''){
+             $data['message'] = $this->cart->total();
+        }
+        else if($user!=''){
+             $data['message'] = $this->restapi_model->totalcart($user);
+        }
+       
         $this->load->view('json', $data);
     }
     public function totalitemcart()
@@ -2455,7 +2462,7 @@ public function getsinglesize()
             $where .= " AND `fynx_product`.`size` IN ($size) ";
         }
         if ($name != '') {
-            $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
+            $where .= " AND `fynx_designs`.`name` LIKE '%$name%' ";
         }
 
         $this->chintantable->createelement('`productdesignimage`.`product`', '1', 'ID', 'id');

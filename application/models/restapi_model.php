@@ -23,6 +23,10 @@ class restapi_model extends CI_Model
     public function getallcategory(){
     $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
         return $query;
+    }
+    public function totalcart($user){
+    $query=$this->db->query("SELECT SUM(`price`) FROM `product` WHERE `id` IN (SELECT `product` FROM `fynx_cart WHERE `user`='$user')")->row();
+        return $query;
     } 
     public function totalitemsincart($user){
     $query=$this->db->query("SELECT COUNT(*) as `cartcount` FROM `fynx_cart` WHERE `user`='$user'")->row();
