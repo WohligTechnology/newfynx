@@ -1639,7 +1639,14 @@ public function getsinglesize()
     }
     public function totalitemcart()
     {
-        $data['message'] = $this->cart->total_items();
+        $user = $this->session->userdata('id');
+        if($user==''){
+             $data['message'] = $this->cart->total_items();
+        }
+        else if($user!=''){
+             $data['message'] = $this->restapi_model->totalitemsincart($user);
+        }
+       
         $this->load->view('json', $data);
     }
     public function searchbyname()
