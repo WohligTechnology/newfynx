@@ -581,7 +581,8 @@ class User_model extends CI_Model
 
         if($num == 0)
         {
-             $this->db->query("INSERT INTO `user`(`firstname`, `lastname`, `email`, `password`) VALUE('$firstname','$lastname','$email','$password')");
+					$name = $firstname . " " . $lastname;
+             $this->db->query("INSERT INTO `user`(`name`,`firstname`, `lastname`, `email`, `password`) VALUE('$name','$firstname','$lastname','$email','$password')");
             $user=$this->db->insert_id();
 
             $newdata = array(
