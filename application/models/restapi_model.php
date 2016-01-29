@@ -23,7 +23,7 @@ class restapi_model extends CI_Model
     public function getallcategory(){
     $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
         return $query;
-    } 
+    }
     public function totalitemsincart($user){
     $query=$this->db->query("SELECT COUNT(*) as `cartcount` FROM `fynx_cart` WHERE `user`='$user'")->row();
     $cartcount=$query->cartcount;
@@ -180,13 +180,9 @@ class restapi_model extends CI_Model
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$responsecode,$amount)
+		public function updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount)
         {
-            if($responsecode==0)
-            {
-             $checkamt=$this->db->query("SELECT IFNULL(SUM(`price`),0) as `totalamount` FROM `fynx_orderitem` WHERE `order`='$orderid'")->row();
-                $totalamount=$checkamt->totalamount;
-                if($totalamount==$amount){
+                if($orderstatus==2){
                     $query1=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
              // DESTROY CART
                     $getuser=$this->db->query("SELECT `user` FROM `fynx_order` WHERE `id`='$orderid'")->row();
@@ -199,15 +195,8 @@ class restapi_model extends CI_Model
                       $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
             redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
                 }
-                
-            
             }
-            else
-            {
-            $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
-            }
-}
+
       public function checkproductquantity($prodid){
          $query=$this->db->query("SELECT `quantity` FROM `fynx_product` WHERE `id`='$prodid'")->row();
          $quantity=$query->quantity;

@@ -1641,7 +1641,7 @@ public function getsinglesize()
         else if($user!=''){
              $data['message'] = $this->restapi_model->totalcart($user);
         }
-       
+
         $this->load->view('json', $data);
     }
     public function totalitemcart()
@@ -1653,7 +1653,7 @@ public function getsinglesize()
         else if($user!=''){
              $data['message'] = $this->restapi_model->totalitemsincart($user);
         }
-       
+
         $this->load->view('json', $data);
     }
     public function searchbyname()
@@ -2480,12 +2480,12 @@ public function getsinglesize()
         else if($price == '1') {
             $orderorder = 'ASC';
         }
-   
+
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
-INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id` 
-INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` 
+INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
+INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `productdesignimage`.`product`,`productdesignimage`.`design`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
@@ -2554,7 +2554,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         }
         foreach($data["message"] as $key=>$element)
         {
-           
+
             $proid=$element["id"];
             $maxQuantity=$this->restapi_model->checkproductquantity($proid);
             $cartQuantity = intval($element["qty"]);
@@ -2637,11 +2637,28 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     }
     public function payumoneysuccess()
     {
-      $amount = $this->input->get_post('Amount');
-$responsecode =$this->input->get_post('ResponseCode');
-      $orderid = $this->input->get_post('MerchantRefNo');
-      $transactionid = $this->input->get_post('TransactionID');
-      $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode,$amount);
+//       $amount = $this->input->get_post('Amount');
+// $responsecode =$this->input->get_post('ResponseCode');
+//       $orderid = $this->input->get_post('MerchantRefNo');
+//       $transactionid = $this->input->get_post('TransactionID');
+//       $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode,$amount);
+        $workingKey='D0DEE833B66E09521E980B82028E3119';
+        $encResponse=$this->input->post("encResp");
+        $rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
+        $decryptValues=explode('&', $rcvdString);
+        $json = json_encode($decryptValues);
+        $transactionid = explode('=',$decryptValues[1])[1];
+        $amount = explode('=',$decryptValues[10])[1];
+        $couponcode = explode('=',$decryptValues[26])[1];
+        $status = explode('=',$decryptValues[3])[1];
+        if ($status=='Success') {
+          $orderstatus = 2;
+        }else {
+          $orderstatus = 5;
+        }
+        $orderid = $this->input->post("orderNo");
+        $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount);
+        $this->load->view('json',$data);
     }
 
     public function uploadImage()
