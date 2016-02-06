@@ -1648,6 +1648,7 @@ public function getsinglesize()
     {
         $user = $this->session->userdata('id');
         if($user==''){
+            
              $data['message'] = $this->cart->total_items();
         }
         else if($user!=''){

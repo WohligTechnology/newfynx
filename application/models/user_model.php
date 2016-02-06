@@ -636,7 +636,107 @@ class User_model extends CI_Model
         else
         return false;
     }
-    function addToCart($product, $quantity, $design,$json)
+     function addToCart($product, $quantity, $design,$json)
+    {
+        //$data=$this->cart->contents();
+
+        $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+        $getexactproductimage=$this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product'")->row();
+
+        $size=$getexactproduct->size;
+        $productname=$getexactproduct->name;
+        $price=$getexactproduct->price;
+        $color=$getexactproduct->color;
+        $image=$getexactproductimage->image;
+        $exactproduct=$getexactproduct->id;
+        $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
+        $sizeid=$getsize->id;
+        $sizename=$getsize->name;
+        $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
+        $colorid=$getcolor->id;
+        $colorname=$getcolor->name;
+				if($design!=''){
+        $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`,`name`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
+        $designid=$getdesign->id;
+        $designer=$getdesign->designer;
+        $designimage=$getdesign->image;
+        $designname=$getdesign->name;
+				$data = array(
+               'id'      => $exactproduct,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+							 'design'   => $design,
+               'image'   => $image,
+
+              	'options' =>array(
+                    'realname' => $designname,
+                    'sizeid' => $sizeid,
+                    'colorid' => $colorid,
+                    'sizename' => $sizename,
+                    'colorname' => $colorname,
+                    'designid' => $designid,
+                    'designer' => $designer,
+                    'designimage' => $designimage,
+                    'json' => $json
+                )
+        );
+			}else{
+
+        $data = array(
+               'id'      => $exactproduct,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+							 'design'   => $design,
+               'image'   => $image,
+
+              	'options' =>array(
+                    'realname' => $designname,
+                    'sizeid' => $sizeid,
+                    'colorid' => $colorid,
+                    'sizename' => $sizename,
+                    'colorname' => $colorname,
+                    'designid' => "",
+                    'designer' => "",
+                    'designimage' => "",
+                     'json' => $json
+                )
+        );
+			}
+        $userid=$this->session->userdata('id');
+            //CHECK IF PRODUCT ALREADY THERE IN CART
+            $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `product`='$exactproduct' AND `design` = '$design' AND `json` = '$json'");
+         if ( $checkcart->num_rows() > 0 )
+         {
+             $checkcart=$this->db->query("UPDATE `fynx_cart` SET `quantity` = `quantity`+ $quantity WHERE `user`='$userid' AND `product`='$exactproduct'  AND `design` = '$design' AND `json` = '$json' ");
+              $returnval=$this->cart->insert($data);
+             return true;
+         }else
+            {
+                    if($userid=="")
+                    {
+                        $returnval=$this->cart->insert($data);
+                        if(!empty($returnval)){
+                        return true;
+                        }
+                        else{
+                        return false;
+                        }
+                    }
+                    else
+                    {
+                        $query=$this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`,`design`,`json`) VALUES ('$userid','$exactproduct','$quantity',NULL,'$design','$json')");
+                        $this->cart->insert($data);
+                        if($query)
+                        return true;
+                        else
+                        return false;
+                    }
+            }
+
+    }
+    function addToCartold($product, $quantity, $design,$json)
     {
         //$data=$this->cart->contents();
 
@@ -736,8 +836,9 @@ class User_model extends CI_Model
 
     }
     public function showCart($user){
-        $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`fynx_product`.`image1` as `image`,`fynx_product`.`price` FROM `fynx_cart`
+        $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`productdesignimage`.`image` as `image`,`fynx_product`.`price`, `fynx_cart`.`quantity` * `fynx_product`.`price` as 'subtotal'  FROM `fynx_cart`
 INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
+INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
 WHERE `fynx_cart`.`user`='$user'")->result_array();
         foreach($query as $key => $row){
             $productid= $row["id"] ;
