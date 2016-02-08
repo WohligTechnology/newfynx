@@ -31,8 +31,13 @@ class restapi_model extends CI_Model
         return $cartcount;
     }
     public function totalcart($user){
-    $query=$this->db->query("SELECT SUM(`price`) as `amount` FROM `fynx_product` WHERE `id` IN (SELECT `product` FROM `fynx_cart` WHERE `user`='$user')")->row();
-        $amount=$query->amount;
+    $query=$this->db->query("SELECT (`fynx_product`.`price`*`fynx_cart`.`quantity`) as `totalprice` FROM `fynx_product` INNER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id` GROUP BY `fynx_cart`.`product` HAVING `fynx_cart`.`product` IN (SELECT `product` FROM `fynx_cart` WHERE `user`='$user')")->result();
+        $tot=0;
+        foreach($query as $row){
+            $price=$row->totalprice;
+            $tot+=$price;
+        }
+        $amount=$tot;
         $amount=intval($amount);
         return $amount;
     }
