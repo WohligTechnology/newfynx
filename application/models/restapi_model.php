@@ -25,7 +25,7 @@ class restapi_model extends CI_Model
         return $query;
     }
     public function totalitemsincart($user){
-    $query=$this->db->query("SELECT COUNT(*) as `cartcount` FROM `fynx_cart` WHERE `user`='$user'")->row();
+    $query=$this->db->query("SELECT SUM(`quantity`) as `cartcount` FROM `fynx_cart` WHERE `user`='$user'")->row();
     $cartcount=$query->cartcount;
         $cartcount=intval($cartcount);
         return $cartcount;
