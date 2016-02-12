@@ -1770,7 +1770,7 @@ public function getsinglesize()
         $elements[16]->alias = 'designId';
 
         $elements[17] = new stdClass();
-        $elements[17]->field = '`fynx_designs`.`image`';
+        $elements[17]->field = '`productdesignimage`.`image`';
         $elements[17]->sort = '1';
         $elements[17]->header = 'designImage';
         $elements[17]->alias = 'designImage';
@@ -1791,6 +1791,7 @@ public function getsinglesize()
         FROM `fynx_product`
         LEFT OUTER JOIN `fynx_size` ON `fynx_size`.`id`=`fynx_product`.`size`
         LEFT OUTER JOIN `fynx_color` ON `fynx_color`.`id`=`fynx_product`.`color`
+        LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
         LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id`
         LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_wishlist`.`design`
 
