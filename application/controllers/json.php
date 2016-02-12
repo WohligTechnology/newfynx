@@ -1832,7 +1832,7 @@ public function getsinglesize()
     public function addtowishlist()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $user = $this->session->userdata('id');
+        $user = $data['user'];
         $product = $data['product'];
         $quantity = $data['quantity'];
         $design = $data['design'];
