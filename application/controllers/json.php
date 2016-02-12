@@ -2560,14 +2560,22 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $maxQuantity=$this->restapi_model->checkproductquantity($proid);
             $cartQuantity = intval($element["qty"]);
             if($cartQuantity <= $maxQuantity) {
-             $data['message'] = true;
+                $val1=1;
             }
             else
             {
+                $val2=2;
+            }
+           
+        }
+          $valarray=array($val1,$val2);
+            if (in_array(2, $valarray)){
                 $data['message'] = false;
             }
-             $this->load->view('json', $data);
-        }
+            else if(!in_array(2, $valarray)){
+                $data['message'] = true;
+            }
+           $this->load->view('json', $data);
     }
     public function removeFromWishlist()
     {
