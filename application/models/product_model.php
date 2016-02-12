@@ -193,7 +193,7 @@ return $query;
         }
         else
         {
-            return 0;
+            return false;
         }
 
 
