@@ -1943,7 +1943,7 @@ public function getsinglesize()
         $message->order = $order;
 //        $data["message"]=$message;
 //        $this->load->view("json", $data);
-        echo 'Done';
+//        echo 'Done';
     }
     public function addproductcsv()
     {
@@ -1986,9 +1986,8 @@ public function getsinglesize()
     public function getfile()
     {
         $filepath = 'http://magicmirror.in/servepublicother?name=product (11).csv';
-        echo $filepath;
         $file = $this->csvreader->parse_file($filepath);
-        print_r($file);
+//        print_r($file);
     }
     public function nextproduct()
     {
@@ -2196,11 +2195,11 @@ public function getsinglesize()
             }
             $query2 = $this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$displayName', '', '$email', '3', CURRENT_TIMESTAMP, '1', '$photoURL', '', '$identifier', '$provider', '', '$birthYear-$birthMonth-$birthDay', '', '$address,$region', '$city', '', '$country', '', '$facebookid', '$googleid', '$twitterid')");
             $id = $this->db->insert_id();
-            echo $id;
+//            echo $id;
         } else {
             $query = $query->row();
             $id = $query->id;
-            echo $id;
+//            echo $id;
         }
     }
     public function reminderemail()
@@ -2294,7 +2293,7 @@ public function getsinglesize()
 </html>";
             $this->email->message($message);
             $this->email->send();
-            echo $this->email->print_debugger();
+//            echo $this->email->print_debugger();
 //        $data["message"] = $this->email->print_debugger();
 //        $data["message"] = 'true';
 //        $this->load->view("json", $data);
