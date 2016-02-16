@@ -2702,4 +2702,44 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $data['message'] = $query;
         $this->load->view('json', $data);
     }
+    
+         public function viewmergeimage() {
+             $gotimages=$this->input->get_post("json");
+             
+             // Get images from database
+             
+             $gotimages = json_decode($gotimages, TRUE);
+             $frontfeatures=array();
+             $backfeatures=array();
+             
+             //frontend img specifications
+             
+             $frontfeatures=$gotimages['custom']['4'];
+             $backfeatures=$gotimages['custom']['5'];
+             
+             $allimg=array_values($gotimages['image']);
+             $frontimg=$allimg[0];
+             $backimg=$allimg[1];
+             
+             // jag's image
+             $dbfrontimg=imagecreatefrompng("./uploads/".$frontimg);
+             $dbbackimg=imagecreatefrompng("./uploads/".$backimg);
+             
+             imagepng($dbfrontimg);
+             imagepng($dbbackimg);
+             
+             // CANVAS
+             $frontimgheight=$frontfeatures['height'];
+             $frontimgwidth=$frontfeatures['width'];
+             $frontimgheight=$frontimgheight*5;
+             $frontimgwidth=$frontimgwidth*5;
+             
+             
+             $img = imagecreate($frontimgheight, $frontimgwidth);
+             $color = imagecolorallocatealpha($img, 0, 0, 0, 127);
+             imagefill($img, 0, 0, $color);
+             
+
+    }
+    
 }
