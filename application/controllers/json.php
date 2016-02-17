@@ -2716,30 +2716,44 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
              
              $frontfeatures=$gotimages['custom']['4'];
              $backfeatures=$gotimages['custom']['5'];
+            
+             $newImagewidth = $frontfeatures['width']*5;
+             $newImageheight = $frontfeatures['height']*5;
+             $demofronttransparent = imagecreatetruecolor($newImagewidth, $newImageheight);
+             imagesavealpha($demofronttransparent, true);
+             $color = imagecolorallocatealpha($demofronttransparent, 0, 0, 0, 127);
+             imagefill($demofronttransparent, 0, 0, $color);
              
-             $allimg=array_values($gotimages['image']);
-             $frontimg=$allimg[0];
-             $backimg=$allimg[1];
-             
-             // jag's image
-             $dbfrontimg=imagecreatefrompng("./uploads/".$frontimg);
-             $dbbackimg=imagecreatefrompng("./uploads/".$backimg);
-             
-             imagepng($dbfrontimg);
-             imagepng($dbbackimg);
-             
-             // CANVAS
-             $frontimgheight=$frontfeatures['height'];
-             $frontimgwidth=$frontfeatures['width'];
-             $frontimgheight=$frontimgheight*5;
-             $frontimgwidth=$frontimgwidth*5;
-             
-             
-             $img = imagecreate($frontimgheight, $frontimgwidth);
-             $color = imagecolorallocatealpha($img, 0, 0, 0, 127);
-             imagefill($img, 0, 0, $color);
+             $phpfrontimg=imagecreatefrompng("./uploads/".$gotimages['image']['image']);
+             imagecopyresized ( $demofronttransparent , $phpfrontimg , 0 , 0 , 0 , 0 , $newImagewidth ,  $newImageheight , imagesx($phpfrontimg) , imagesy($phpfrontimg) );
              
 
+             
+//             ROTATE IMAGE
+             $rotate = imagerotate($demofronttransparent, 180, imageColorAllocateAlpha($demofronttransparent, 0, 0, 0, 127));
+imagesavealpha($rotate, true);
+             
+//                create transparent layout
+             $thumbfront = imagecreatetruecolor(194*5, 308*5);
+             imagesavealpha($thumbfront, true);
+             $color = imagecolorallocatealpha($thumbfront, 0, 0, 0, 127);
+             imagefill($thumbfront, 0, 0, $color);
+             
+             //             MERGE IMAGE
+             
+             imagecopyresized ( $thumbfront , $rotate , 10 , 10 , 0 , 0 , imagesx($rotate) ,  imagesy($rotate), imagesx($rotate) , imagesy($rotate) );
+             imagesavealpha($thumbfront, true);
+             header('Content-Type: image/png');
+             imagepng($thumbfront);
+            
+       
     }
+    
+    
+    
+    
+//    function resizeImage($image) {
+//    imagecopyresized ( $thumbfront , $dbfrontimg , 0 , 0 , 0 , 0 , jagz width size * 5 ,  jagz height size * 5 , $frontwidth , $frontheight );
+//    }
     
 }
