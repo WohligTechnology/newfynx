@@ -40,6 +40,10 @@ class restapi_model extends CI_Model
     $query=$this->db->query("SELECT `id`, `name`, `link` as `url`, `target`, `status`, `image` as `src`, `template`, `class`, `text`, `centeralign` as `centerAlign` FROM `fynx_homeslide` WHERE `status`=1")->result();
         return $query;
     }
+    public function getBackDesignPrice(){
+    $query=$this->db->query("SELECT * FROM `fynx_config` WHERE 1")->result();
+        return $query;
+    }
     public function getorderbyorderid($id){
     $query=$this->db->query("SELECT `transactionid` FROM `fynx_order` WHERE `id`='$id'")->row();
     $query->amount=$this->db->query("SELECT SUM(`finalprice`) as `amount` FROM `fynx_orderitem` WHERE `order`='$id'")->row();

@@ -2637,6 +2637,11 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $orderid = $this->input->get('orderid');
         $data['message'] = $this->restapi_model->checkstatus($orderid);
         $this->load->view('json', $data);
+    } 
+    public function getBackDesignPrice()
+    {
+        $data['message'] = $this->restapi_model->getBackDesignPrice();
+        $this->load->view('json', $data);
     }
     public function getorderbyorderid()
     {
