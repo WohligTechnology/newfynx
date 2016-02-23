@@ -216,10 +216,12 @@ return $query;
             $sku=$row['sku'];
             $image1=$row['image1'];
             $image2=$row['image2'];
-            $image3=$row['image3'];
-            $image4=$row['image4'];
-            $image5=$row['image5'];
             $baseproduct=$row['baseproduct'];
+            $designname=$row['designname'];
+            $designs=$row['designs'];
+            $alldesignname=explode(",",$designname);
+            $alldesigns=explode(",",$designs);
+            
             if($relatedproduct){
              $allrelatedproduct=explode(",",$relatedproduct);
                 }
@@ -235,14 +237,41 @@ return $query;
             "sku" => $sku,
             "image1" => $image1,
             "image2" => $image2,
-            "image3" => $image3,
-            "image4" => $image4,
-            "image5" => $image5,
             "baseproduct" => $baseproduct
 		);
 		$query=$this->db->insert( 'fynx_product', $data );
 		$productid=$this->db->insert_id();
 
+//            insert designs
+            
+           foreach($alldesignname as $key => $designname)
+			{
+                $designname=trim($designname);
+                $designnamequery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$designname'")->row();
+                if(empty($designnamequery))
+                {
+                    // create new design and check design image
+                 
+                    
+                    
+                }
+                else
+                {
+                    // get design id
+                    
+                    $designid=$designnamequery->id;
+                }
+
+				$data2  = array(
+					'product' => $productid,
+					'relatedproduct' => $relatedproduct,
+				);
+				$queryproductrelatedproduct=$this->db->insert( 'productdesignimage', $data2 );
+			}
+            
+            
+            //            insert designs ends
+            
             //INSERT CATEGORY
              $query1=$this->db->query("SELECT `id` FROM `fynx_category` WHERE `name` = '$category'")->row();
 
