@@ -40,12 +40,12 @@
 			<?php   $menus = $this->menu_model->viewmenus(); 	  ?>
 				<ul id="slide-out" class="side-nav fixed">
 					<li class="sub-menu logo">
-
-						<div class="logo">
-							<img src="<?php echo base_url('uploads/logo.png'); ?>" width="40" style="margin-top: 15px;
-    margin-left: 15px; margin-right: 5px;"> My Fynx
-						</div>
-					</li>
+					
+                    <div class="logo text-center">
+                    <img src="<?php echo base_url('uploads/logo.png'); ?>" width="80" style="    padding-top: 0px;
+    margin-bottom: -21px;">
+                </div>
+                    </li>
 					<?php
 				foreach($menus as $row)
 				{
