@@ -201,6 +201,7 @@ return $query;
 
     public function createbycsv($file)
 	{
+        print_r($file);
         foreach ($file as $row)
         {
             $subcategory=$row['subcategory'];
@@ -218,7 +219,7 @@ return $query;
             $image2=$row['image2'];
             $baseproduct=$row['baseproduct'];
             $designname=$row['designname'];
-            $designs=$row['designs'];
+            $designs=$row['designimage'];
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
             
@@ -250,25 +251,53 @@ return $query;
                 $designnamequery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$designname'")->row();
                 if(empty($designnamequery))
                 {
-                    // create new design and check design image
-                 
+                    // create new design and get design id
+                    $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$designname','2')");
+                    $designid=$this->db->insert_id();
                     
+                    foreach($alldesigns as $key => $designimage)
+			         {
+                          $designimage=trim($designimage);
+                          $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND `design`='$designid' AND `image`='$designimage'")->row();
+                          if(empty($designimagequery))
+                          {
+                              // create new product design image
+                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$designimage')");
+                              $productdesigndesignid=$this->db->insert_id();
+                          }
+                        else{
+                            //already product design image is there
+                            
+                        }
                     
+                     }
                 }
                 else
                 {
                     // get design id
-                    
                     $designid=$designnamequery->id;
+                    
+                    //now directly insert design
+                    
+                     foreach($alldesigns as $key => $designimage)
+			         {
+                          $designimage=trim($designimage);
+                          $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND `design`='$designid' AND `image`='$designimage'")->row();
+                          if(empty($designimagequery))
+                          {
+                              // create new product design image
+                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$designimage')");
+                              $productdesigndesignid=$this->db->insert_id();
+                          }
+                        else{
+                            //already product design image is there
+                            }
+                    
+                     }
+                    
                 }
 
-				$data2  = array(
-					'product' => $productid,
-					'relatedproduct' => $relatedproduct,
-				);
-				$queryproductrelatedproduct=$this->db->insert( 'productdesignimage', $data2 );
-			}
-            
+           }
             
             //            insert designs ends
             
