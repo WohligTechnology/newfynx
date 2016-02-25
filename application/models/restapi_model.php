@@ -31,7 +31,7 @@ class restapi_model extends CI_Model
         return $cartcount;
     }
     public function totalcart($user){
-        
+
            $query=$this->db->query("SELECT SUM(`fynx_cart`.`quantity` * `fynx_product`.`price`) as 'subtotal' FROM `fynx_cart` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product` WHERE `fynx_cart`.`user`='$user'")->row();
         $subtotal=intval($query->subtotal);
         return $subtotal;
@@ -205,6 +205,10 @@ class restapi_model extends CI_Model
          $query=$this->db->query("SELECT `quantity` FROM `fynx_product` WHERE `id`='$prodid'")->row();
          $quantity=$query->quantity;
         return $quantity;
+    }
+		public function getOneCart($id,$user){
+    $query=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$user' AND `id`='$id'")->row();
+        return $query;
     }
 }
 ?>

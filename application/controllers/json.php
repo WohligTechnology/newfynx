@@ -1648,7 +1648,7 @@ public function getsinglesize()
     {
         $user = $this->session->userdata('id');
         if($user==''){
-            
+
              $data['message'] = $this->cart->total_items();
         }
         else if($user!=''){
@@ -2566,7 +2566,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             {
                 $val2=2;
             }
-           
+
         }
           $valarray=array($val1,$val2);
             if (in_array(2, $valarray)){
@@ -2637,7 +2637,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $orderid = $this->input->get('orderid');
         $data['message'] = $this->restapi_model->checkstatus($orderid);
         $this->load->view('json', $data);
-    } 
+    }
     public function getBackDesignPrice()
     {
         $data['message'] = $this->restapi_model->getBackDesignPrice();
@@ -2707,58 +2707,65 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $data['message'] = $query;
         $this->load->view('json', $data);
     }
-    
+
          public function viewmergeimage() {
              $gotimages=$this->input->get_post("json");
-             
+
              // Get images from database
-             
+
              $gotimages = json_decode($gotimages, TRUE);
              $frontfeatures=array();
              $backfeatures=array();
-             
+
              //frontend img specifications
-             
+
              $frontfeatures=$gotimages['custom']['4'];
              $backfeatures=$gotimages['custom']['5'];
-            
+
              $newImagewidth = $frontfeatures['width']*5;
              $newImageheight = $frontfeatures['height']*5;
              $demofronttransparent = imagecreatetruecolor($newImagewidth, $newImageheight);
              imagesavealpha($demofronttransparent, true);
              $color = imagecolorallocatealpha($demofronttransparent, 0, 0, 0, 127);
              imagefill($demofronttransparent, 0, 0, $color);
-             
+
              $phpfrontimg=imagecreatefrompng("./uploads/".$gotimages['image']['image']);
              imagecopyresized ( $demofronttransparent , $phpfrontimg , 0 , 0 , 0 , 0 , $newImagewidth ,  $newImageheight , imagesx($phpfrontimg) , imagesy($phpfrontimg) );
-             
 
-             
+
+
 //             ROTATE IMAGE
              $rotate = imagerotate($demofronttransparent, 180, imageColorAllocateAlpha($demofronttransparent, 0, 0, 0, 127));
 imagesavealpha($rotate, true);
-             
+
 //                create transparent layout
              $thumbfront = imagecreatetruecolor(194*5, 308*5);
              imagesavealpha($thumbfront, true);
              $color = imagecolorallocatealpha($thumbfront, 0, 0, 0, 127);
              imagefill($thumbfront, 0, 0, $color);
-             
+
              //             MERGE IMAGE
-             
+
              imagecopyresized ( $thumbfront , $rotate , 10 , 10 , 0 , 0 , imagesx($rotate) ,  imagesy($rotate), imagesx($rotate) , imagesy($rotate) );
              imagesavealpha($thumbfront, true);
              header('Content-Type: image/png');
              imagepng($thumbfront);
-            
-       
+
+
     }
-    
-    
-    
-    
+    public function getOneCart()
+    {
+        $id = $this->input->get_post('id');
+        $user = $this->input->get_post('user');
+        $data['message'] = $this->restapi_model->getOneCart($id,$user);
+        $this->load->view('json', $data);
+    }
+
+
+
+
 //    function resizeImage($image) {
 //    imagecopyresized ( $thumbfront , $dbfrontimg , 0 , 0 , 0 , 0 , jagz width size * 5 ,  jagz height size * 5 , $frontwidth , $frontheight );
 //    }
-    
+
 }

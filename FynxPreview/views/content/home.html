@@ -1,0 +1,12 @@
+
+        <div>
+          <div class="on-img shirtcanvas" style="top:0px;width:195px;zoom:5;">
+            <div class="canvasitem movesecondimage" ng-if="customjson.image.image1!=''" ng-style="customjson.custom[5].containercss">
+              <img class="auto-dim m-center" ng-style="customjson.custom[5].css" ng-src="{{customjson.image.image1 | serverimage}}">
+
+            </div>
+            <div class="canvasitem movetext" ng-repeat="txt in customjson.custom track by $index" ng-style="txt.containercss">
+              <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" ng-if="$index==2 || $index==3"></div>
+            </div>
+          </div>
+        </div>
