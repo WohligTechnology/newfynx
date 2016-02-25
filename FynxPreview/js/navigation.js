@@ -16,7 +16,7 @@ var adminurl = mainurl + "index.php/json/";
 
 var navigationservice = angular.module('navigationservice', [])
 
-.factory('NavigationService', function() {
+.factory('NavigationService', function($http) {
   var navigation = [{
     name: "Home",
     classis: "active",
@@ -42,6 +42,11 @@ var navigationservice = angular.module('navigationservice', [])
       }
       return menuname;
     },
+    getOneCart: function (id,user,callback) {
+			return $http.get(adminurl + 'getOneCart?id='+id+'&user='+user, {}, {
+				withCredentials: true
+			}).success(callback);
+		},
 
   };
 });

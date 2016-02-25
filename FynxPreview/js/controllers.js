@@ -1,6 +1,6 @@
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngSanitize'])
 
-.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout,$stateParams) {
 
   //Used to name the .html file
   $scope.custom = {
@@ -138,74 +138,78 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     "designname": "fdgsd"
   };
   $scope.doIt = function() {
-    NavigationService.getOneCart($stateP)
-    _.each($scope.customjson.custom, function(key, key1) {
+    NavigationService.getOneCart($stateParams.id,$stateParams.user, function(data){
+      $scope.customjson.custom = JSON.parse(data.json);
+      console.log($scope.customjson.custom.custom);
+      _.each($scope.customjson.custom.custom, function(key, key1) {
 
-      $scope.$on('$viewContentLoaded', function(event) {
-        key.containercss = {};
-        if (key.top !== undefined || key.top !== null) {
-          key.containercss.top = key.top + "px";
-        }
-        if (key.left !== undefined || key.left !== null) {
-          key.containercss.left = key.left + "px";
-        }
-        if (key.height !== undefined || key.height !== null) {
-          key.css.height = key.height + "px";
-          key.containercss.height = key.height + "px";
-        }
-        if (key.width !== undefined || key.width !== null) {
-          key.css.width = key.width + "px";
-          key.containercss.width = key.width + "px";
-        }
-        $timeout(function() {
-
-
-          if (key.arc) {
-            switch (key1) {
-              case 0:
-                {
-                  var $exp1 = $('#example1').hide();
-                }
-                break;
-              case 1:
-                {
-                  var $exp1 = $('#example2').hide();
-                }
-                break;
-              case 2:
-                {
-                  var $exp1 = $('#example3').hide();
-                }
-                break;
-              case 3:
-                {
-                  var $exp1 = $('#example4').hide();
-                }
-                break;
-              default:
-            }
-            console.log(key.arc);
-            console.log(key1);
-            $exp1.show().arctext({
-              radius: Math.abs(key.arc),
-              dir: 1
-            });
-            arcText = $exp1;
-            $exp1.arctext('set', {
-              radius: Math.abs(key.arc),
-              dir: 1,
-              animation: {
-                speed: 300,
-                easing: 'ease-out'
-              }
-            });
+        $scope.$on('$viewContentLoaded', function(event) {
+          key.containercss = {};
+          if (key.top !== undefined || key.top !== null) {
+            key.containercss.top = key.top + "px";
           }
+          if (key.left !== undefined || key.left !== null) {
+            key.containercss.left = key.left + "px";
+          }
+          if (key.height !== undefined || key.height !== null) {
+            key.css.height = key.height + "px";
+            key.containercss.height = key.height + "px";
+          }
+          if (key.width !== undefined || key.width !== null) {
+            key.css.width = key.width + "px";
+            key.containercss.width = key.width + "px";
+          }
+          $timeout(function() {
 
 
-        }, 1000);
-      });
+            if (key.arc) {
+              switch (key1) {
+                case 0:
+                  {
+                    var $exp1 = $('#example1');
+                  }
+                  break;
+                case 1:
+                  {
+                    var $exp1 = $('#example2');
+                  }
+                  break;
+                case 2:
+                  {
+                    var $exp1 = $('#example3');
+                  }
+                  break;
+                case 3:
+                  {
+                    var $exp1 = $('#example4');
+                  }
+                  break;
+                default:
+              }
+              console.log(key.arc);
+              console.log(key1);
+              $exp1.show().arctext({
+                radius: Math.abs(key.arc),
+                dir: 1
+              });
+              arcText = $exp1;
+              $exp1.arctext('set', {
+                radius: Math.abs(key.arc),
+                dir: 1,
+                animation: {
+                  speed: 300,
+                  easing: 'ease-out'
+                }
+              });
+            }
 
-    })
+
+          }, 1000);
+        });
+
+      })
+    });
+
   };
   $scope.doIt();
 
