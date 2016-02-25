@@ -844,7 +844,8 @@ class User_model extends CI_Model
                   $query=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`, `fynx_cart`.`design`,`productdesignimage`.`image` as `image`,`fynx_product`.`price`, `fynx_cart`.`quantity` * `fynx_product`.`price` as 'subtotal'  FROM `fynx_cart`
 INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product`
 INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
-WHERE `fynx_cart`.`user`='$user' AND `fynx_cart`.`json`=''")->result_array();
+WHERE `fynx_cart`.`user`='$user' AND `fynx_cart`.`json`=''
+GROUP BY `fynx_product`.`id`")->result_array();
         foreach($query as $key => $row){
             $productid= $row["id"] ;
             $designid = $row["design"];
@@ -858,7 +859,7 @@ WHERE `fynx_product`.`id`='$productid'")->row();
             
 //            THIS PART IS FOR CUSTOM
             
-                   $query1=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`,`fynx_product`.`image1` as `image`,`fynx_product`.`price`, `fynx_cart`.`quantity` * `fynx_product`.`price` as 'subtotal' FROM `fynx_cart` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product` WHERE `fynx_cart`.`user`='1' AND `fynx_cart`.`design`=''")->result_array();
+                   $query1=$this->db->query("SELECT `fynx_cart`.`user`, `fynx_cart`.`quantity` as `qty`, `fynx_cart`.`product` as `id`,`fynx_product`.`image1` as `image`,`fynx_product`.`price`, `fynx_cart`.`quantity` * `fynx_product`.`price` as 'subtotal' FROM `fynx_cart` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_cart`.`product` WHERE `fynx_cart`.`user`='$user' AND `fynx_cart`.`design`=''")->result_array();
         foreach($query1 as $key => $row){
             $productid= $row["id"] ;
             $designid = $row["design"];
@@ -869,10 +870,18 @@ LEFT OUTER JOIN `fynx_cart` ON `fynx_cart`.`product`=`fynx_product`.`id`
 LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_cart`.`design`
 WHERE `fynx_product`.`id`='$productid'")->row();
             }
-                
-            $arr=array_merge($query,$query1);
+                if(!empty($query1))
+                {
+                     $arr=array_merge($query,$query1);
+                     return $arr;
+                }
+                else
+                {
+                     return $query;
+                }
+           
         
-        return $arr;
+       
     }
     function deletecartfromdb($id,$user,$design){
 		//	echo "DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'";
