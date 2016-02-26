@@ -10,11 +10,16 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
   // for http request with session
   $httpProvider.defaults.withCredentials = true;
   $stateProvider
-    .state('home', {
-    url: "/home/:id/:user",
+    .state('homefront', {
+    url: "/homefront/:id/:user",
     templateUrl: "views/template.html",
     controller: 'HomeCtrl'
-  });
+  })
+  .state('homeback', {
+  url: "/homeback/:id/:user",
+  templateUrl: "views/template.html",
+  controller: 'HomeCtrl'
+});
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);
 });
