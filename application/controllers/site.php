@@ -3366,8 +3366,9 @@ $queryarray = $data["message"]->queryresult;
     foreach($queryarray as $row)
     {
         $row->orderproduct = $this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order` = '$row->id'")->result(); 
-        $row->orderproduct = $this->db->query("SELECT `fynx_orderitem`.`id`, `fynx_orderitem`.`discount`, `fynx_orderitem`.`order`, `fynx_orderitem`.`product`,`fynx_product`.`name` as `productname`, `fynx_orderitem`.`quantity`, `fynx_orderitem`.`price`, `fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+        $row->orderproduct = $this->db->query("SELECT `fynx_orderitem`.`id`, `fynx_orderitem`.`discount`, `fynx_orderitem`.`order`, `fynx_orderitem`.`product`,`fynx_product`.`name` as `productname`, `fynx_orderitem`.`quantity`, `fynx_orderitem`.`price`, `fynx_orderitem`.`finalprice`,`fynx_orderitem`.`checkcustom`,`fynx_order`.`user` FROM `fynx_orderitem`
 LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product`
+INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
 WHERE `fynx_orderitem`.`order`=$row->id")->result(); 
     }
     

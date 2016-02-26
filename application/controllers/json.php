@@ -2755,9 +2755,10 @@ imagesavealpha($rotate, true);
     }
     public function getOneCart()
     {
-        $id = $this->input->get_post('id');
+        $orderid = $this->input->get_post('id');
+        //now orderid
         $user = $this->input->get_post('user');
-        $data['message'] = $this->restapi_model->getOneCart($id,$user);
+        $data['message'] = $this->restapi_model->getOneCart($orderid,$user);
         $this->load->view('json', $data);
     }
 

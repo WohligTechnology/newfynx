@@ -107,7 +107,7 @@ class order_model extends CI_Model
 //        $cartcount=count($carts);
 //        echo "    cart count    ".$cartcount."      "."end";
         foreach ($carts as $cart) {
-            $querycart = $this->db->query("INSERT INTO `fynx_orderitem`(`order`, `product`, `quantity`, `price`, `finalprice`,`design`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."','".$cart['design']."')");
+              $querycart = $this->db->query("INSERT INTO `fynx_orderitem`(`order`, `product`, `quantity`, `price`, `finalprice`,`design`,`checkcustom`,`cartid`,`userid`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."','".$cart['design']."','".$cart['options']['json']."')");
             $quantity = intval($cart['qty']);
             $productid = $cart['id'];
             $this->db->query("UPDATE `fynx_product` SET `fynx_product`.`quantity`=`fynx_product`.`quantity`-$quantity WHERE `fynx_product`.`id`='$productid'");
