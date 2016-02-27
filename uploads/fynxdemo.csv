@@ -1,0 +1,4 @@
+name,subcategory,quantity,type,description,price,relatedproduct,category,color,size,sizechart,sku,image1,image2,baseproduct,sizechartimage,designname,designimage
+demo Polo,T-shirt,1,V-neck,Polo Tshirt,800,,demo Men,demo Black,demo xxl,demo For Shirt,A110,,,,sizec1.jpeg,"batman,deadpool","abc.png,xyz.png"
+demo Graphics,Shirt,1,Round Neck,Round Graphics shirt,750,polo,demo Men,demo Blue, demo xxl,demo For Graphics,Z123,,,polo,sizec1.jpeg,"superman,he-man,ironman","asd.png,jkl.jpg,bnc.jpeg"
+demo Adidas,Hoodies,1,Chain,Good quality Chain ,680,"polo,graphics",demo Men,demo Blue,demo xl,demo For Hoodies,G12d,,,adidas,sizec1.jpeg,spiderman,
