@@ -698,14 +698,14 @@ class User_model extends CI_Model
         $getexactproductimage=$this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product'")->row();
         $size=$getexactproduct->size;
         $productname=$getexactproduct->name;
-				if($backprice == 200)
+				if($backprice != "0")
 				{
-
+					  $price=$getexactproduct->price + $backprice;
 				}
 				else {
-				
+				  $price=$getexactproduct->price;
 				}
-        $price=$getexactproduct->price;
+
         $color=$getexactproduct->color;
         $image=$getexactproductimage->image;
         $exactproduct=$getexactproduct->id;
@@ -772,7 +772,7 @@ class User_model extends CI_Model
             $checkcart=$this->db->query("SELECT * FROM `fynx_cart` WHERE `user`='$userid' AND `product`='$exactproduct' AND `design` = '$design' AND `json` = '$json'");
          if ( $checkcart->num_rows() > 0 )
          {
-             $checkcart=$this->db->query("UPDATE `fynx_cart` SET `quantity` = `quantity`+ $quantity WHERE `user`='$userid' AND `product`='$exactproduct'  AND `design` = '$design' AND `json` = '$json' ");
+             $checkcart=$this->db->query("UPDATE `fynx_cart` SET `quantity` = '$quantity' WHERE `user`='$userid' AND `product`='$exactproduct'  AND `design` = '$design' AND `json` = '$json' ");
               $returnval=$this->cart->insert($data);
              return true;
          }else

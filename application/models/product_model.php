@@ -222,7 +222,7 @@ return $query;
             $designs=$row['designimage'];
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
-            
+
             if($relatedproduct){
              $allrelatedproduct=explode(",",$relatedproduct);
                 }
@@ -244,7 +244,7 @@ return $query;
 		$productid=$this->db->insert_id();
 
 //            insert designs
-            
+
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -254,7 +254,7 @@ return $query;
                     // create new design and get design id
                     $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$designname','2')");
                     $designid=$this->db->insert_id();
-                    
+
                     foreach($alldesigns as $key => $designimage)
 			         {
                           $designimage=trim($designimage);
@@ -267,18 +267,18 @@ return $query;
                           }
                         else{
                             //already product design image is there
-                            
+
                         }
-                    
+
                      }
                 }
                 else
                 {
                     // get design id
                     $designid=$designnamequery->id;
-                    
+
                     //now directly insert design
-                    
+
                      foreach($alldesigns as $key => $designimage)
 			         {
                           $designimage=trim($designimage);
@@ -292,15 +292,15 @@ return $query;
                         else{
                             //already product design image is there
                             }
-                    
+
                      }
-                    
+
                 }
 
            }
-            
+
             //            insert designs ends
-            
+
             //INSERT CATEGORY
              $query1=$this->db->query("SELECT `id` FROM `fynx_category` WHERE `name` = '$category'")->row();
 
