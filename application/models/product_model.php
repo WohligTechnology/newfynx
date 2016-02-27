@@ -214,6 +214,7 @@ return $query;
             $color=$row['color'];
             $size=$row['size'];
             $sizechart=$row['sizechart'];
+            $sizechartimage=$row['sizechartimage'];
             $sku=$row['sku'];
             $image1=$row['image1'];
             $image2=$row['image2'];
@@ -438,7 +439,7 @@ return $query;
 
             if(empty($query5))
             {
-                $data=array("name" => $sizechart);
+                $data=array("name" => $sizechart,"image"=> $sizechartimage);
                 $query=$this->db->insert( "fynx_sizechart", $data );
                 $sizechartid=$this->db->insert_id();
 
