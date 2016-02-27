@@ -143,7 +143,7 @@ return $query;
         $where=" ";
         if($size && $color){
             $query1=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
-            $baseproduct=$query1->baseproduct;
+            $baseproduct=$query1->name;
             $productid=$query1->id;
             $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' AND `fynx_product`.`baseproduct` LIKE '$baseproduct'";
         }
