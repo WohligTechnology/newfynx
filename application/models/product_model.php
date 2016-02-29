@@ -246,6 +246,13 @@ return $query;
 
 //            insert designs
             
+//            for($alldesign as $key=>designname) {
+//                $designname = $designname;
+//                $designimage = $alldesignimage[$key];
+//                unsert wuqeyr
+//            }
+            
+            
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -255,23 +262,12 @@ return $query;
                     // create new design and get design id
                     $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$designname','2')");
                     $designid=$this->db->insert_id();
-                    
-                    foreach($alldesigns as $key => $designimage)
-			         {
-                          $designimage=trim($designimage);
-                          $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND `design`='$designid' AND `image`='$designimage'")->row();
-                          if(empty($designimagequery))
-                          {
-                              // create new product design image
-                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$designimage')");
+            
+                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
-                          }
-                        else{
-                            //already product design image is there
-                            
-                        }
+
                     
-                     }
+                     
                 }
                 else
                 {
@@ -280,21 +276,8 @@ return $query;
                     
                     //now directly insert design
                     
-                     foreach($alldesigns as $key => $designimage)
-			         {
-                          $designimage=trim($designimage);
-                          $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND `design`='$designid' AND `image`='$designimage'")->row();
-                          if(empty($designimagequery))
-                          {
-                              // create new product design image
-                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$designimage')");
+                  $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
-                          }
-                        else{
-                            //already product design image is there
-                            }
-                    
-                     }
                     
                 }
 

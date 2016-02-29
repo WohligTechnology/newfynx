@@ -1,0 +1,4 @@
+name,subcategory,quantity,type,description,price,relatedproduct,category,color,size,sizechart,sku,image1,image2,baseproduct,sizechartimage,designname,designimage
+Polo,T-shirt,1,V-neck,Polo Tshirt,800,,Men,Black,xxl,For Shirt,A110,,,,sizec1.jpeg,"batman,deadpool","abc.png,xyz.png"
+Graphics,Shirt,1,Round Neck,Round Graphics shirt,750,polo,Men,Blue,xxl,For Graphics,Z123,,,polo,sizec1.jpeg,"superman,he-man,ironman","asd.png,jkl.jpg,bnc.jpeg"
+Adidas,Hoodies,1,Chain,Good quality Chain ,680,"polo,graphics",Men,Blue,xl,For Hoodies,G12d,,,adidas,sizec1.jpeg,deadpool,bgf.png

@@ -6,10 +6,10 @@
 <div class="row">
 <form class='col s12' method='post' action='<?php echo site_url("site/editdesignssubmit");?>' enctype= 'multipart/form-data'>
 <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
-<div class="row">
-<div class="input-field col s6">
-<label for="Name">Name</label>
-<input type="text" id="Name" name="name" value='<?php echo set_value('name',$before->name);?>'>
+ <div class=" row">
+<div class=" input-field col s12 m6">
+<?php echo form_dropdown("name",$name,set_value('name',$before->name));?>
+<label for="name">Name</label>
 </div>
 </div>
     <div class=" row">

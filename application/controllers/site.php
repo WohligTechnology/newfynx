@@ -1833,6 +1833,7 @@ public function createdesigns()
 $access=array("1");
 $this->checkaccess($access);
        $data['status']=$this->user_model->getstatusdropdown();
+       $data['name']=$this->designs_model->getdesignsdropdown();
 $data["page"]="createdesigns";
 $data["page2"]="block/designblock";
 $data["before1"]=$this->input->get("id");
@@ -1853,6 +1854,7 @@ $this->form_validation->set_rules("timestamp","Timestamp","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
+     $data['name']=$this->designs_model->getdesignsdropdown();
     $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data["page"]="createdesigns";
        $data['status']=$this->user_model->getstatusdropdown();
@@ -1915,6 +1917,7 @@ $this->checkaccess($access);
 $data["page"]="editdesigns";
 $data["page2"]="block/designblock";
 $data["before1"]=$this->input->get("id");
+ $data['name']=$this->designs_model->getdesignsdropdown();
     $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data["before2"]=$this->input->get("id");
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
@@ -1936,6 +1939,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
     $data[ 'status' ] =$this->designs_model->getstatusdropdown();
 $data["page"]="editdesigns";
+ $data['name']=$this->designs_model->getdesignsdropdown();
 $data[ 'designer' ] =$this->designer_model->getdesignerdropdown();
 $data["title"]="Edit designs";
 $data["before"]=$this->designs_model->beforeedit($this->input->get("id"));

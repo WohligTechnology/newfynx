@@ -3,10 +3,10 @@
 <h4 class="pad-left-15">Create Designs</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createdesignssubmit");?>' enctype= 'multipart/form-data'>
-<div class="row">
-<div class="input-field col s6">
-<label for="Name">Name</label>
-<input type="text" id="Name" name="name" value='<?php echo set_value('name');?>'>
+  <div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("name",$name,set_value('name'));?>
+<label>Name</label>
 </div>
 </div>
     <div class=" row">
