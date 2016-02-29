@@ -1622,7 +1622,8 @@ public function getsinglesize()
         $quantity = $this->input->get_post('quantity');
         $design = $this->input->get_post('design');
         $json = $this->input->get_post('json');
-        $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json);
+        $backprice = $this->input->get_post('backprice');
+        $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json,$backprice);
         $this->load->view('json', $data);
     }
 
@@ -2701,6 +2702,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $color = '1';
         }
         $query = new stdClass();
+        $query->backprice = $this->db->query("SELECT `price` FROM `backprice` ORDER BY `id` DESC")->row();
         $query->image = $this->db->query("SELECT `id`, `subcategory`, `quantity`, `name`, `type`, `description`, `visibility`, `price`, `relatedproduct`, `category`, `color`, `size`, `sizechart`, `status`, `sku`, `image1`, `image2`, `baseproduct`, `discountprice` FROM `fynx_product` WHERE `type`='$type' AND `color`='$color'")->row();
         $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` ,`fynx_product`.`price` as `price`  FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color' GROUP BY `fynx_size`.`id`")->result();
         $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.*,`fynx_product`.`id` as `product`,`fynx_product`.`price` as `price` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' GROUP BY `fynx_color`.`id`")->result();
