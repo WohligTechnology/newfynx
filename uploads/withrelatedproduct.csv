@@ -1,0 +1,10 @@
+name,subcategory,quantity,type,description,price,relatedproduct,relateddesign,category,color,size,sizechart,sku,image1,image2,baseproduct,sizechartimage,designname,designimage
+Demo s,T-shirt,12,Graphic T-Shirts,Designed ,799,,,Men,Black,s,For Graphics,WTM01S,,,,,"Flash,Flash,Flash,Banana Power,Banana Power,Banana Power,Pilot Six Pack,Pilot Six Pack,Pilot Six Pack
+
+","BES02MAIN.JPG,BES02OTHER1.JPG,BES02OTHER2.JPG,BES03MAIN.JPG,BES03OTHER1.JPG,BES03OTHER2.JPG,BES04MAIN.JPG,BES04OTHER1.JPG,BES04OTHER2.JPG"
+demo m,T-shirt,15,Graphic T-Shirts,Designed ,799,Demo s,Flash,Men,Black,m,For Graphics,WTM01M,,,Demo s,,"Flash,Flash,Flash,Banana Power,Banana Power,Banana Power,Pilot Six Pack,Pilot Six Pack,Pilot Six Pack
+
+","BES02MAIN.JPG,BES02OTHER1.JPG,BES02OTHER2.JPG,BES03MAIN.JPG,BES03OTHER1.JPG,BES03OTHER2.JPG,BES04MAIN.JPG,BES04OTHER1.JPG,BES04OTHER2.JPG"
+demo l,T-shirt,12,Graphic T-Shirts,Designed ,799,"demo m,Demo s","Banana,Flash",Men,Black,l,For Graphics,WTM01L,,,Demo s,,"Flash,Flash,Flash,Banana Power,Banana Power,Banana Power,Pilot Six Pack,Pilot Six Pack,Pilot Six Pack
+
+","BES02MAIN.JPG,BES02OTHER1.JPG,BES02OTHER2.JPG,BES03MAIN.JPG,BES03OTHER1.JPG,BES03OTHER2.JPG,BES04MAIN.JPG,BES04OTHER1.JPG,BES04OTHER2.JPG"
