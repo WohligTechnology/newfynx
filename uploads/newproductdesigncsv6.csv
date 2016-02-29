@@ -1,0 +1,23 @@
+name,subcategory,quantity,type,description,price,relatedproduct,relateddesign,category,color,size,sizechart,sku,image1,image2,baseproduct,sizechartimage,designname,designimage
+Polo,T-shirt,1,V-neck,Polo Tshirt,800,,,Men,Black,xxl,For Shirt,A110,,,,sizec1.jpeg,"batman,deadpool","abc.png,xyz.png"
+Graphics,Shirt,1,Round Neck,Round Graphics shirt,750,,,Men,Blue,xxl,For Graphics,Z123,,,polo,sizec1.jpeg,"superman,he-man,ironman","asd.png,jkl.jpg,bnc.jpeg"
+Adidas,Hoodies,1,Chain,Good quality Chain ,680,"Polo,Graphics","batman,deadpool",Men,Blue,xl,For Hoodies,G12d,,,adidas,sizec1.jpeg,spiderman,
+,,,,,,,,,,,,,,,,,,
+White T-Shirt Men S,T-shirt,12,Graphic T-Shirts,Designed ,799,,,Men,Black,s,For Graphics,WTM01S,,,,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
+White T-Shirt Men M,T-shirt,15,Graphic T-Shirts,Designed ,799,,,Men,Black,m,For Graphics,WTM01M,,,White T-Shirt Men S,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
+White T-Shirt Men L,T-shirt,12,Graphic T-Shirts,Designed ,799,,,Men,Black,l,For Graphics,WTM01L,,,White T-Shirt Men S,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
+White T-Shirt Men XL,T-shirt,15,Graphic T-Shirts,Designed ,799,,,Men,Black,xl,For Graphics,WTM01XL,,,White T-Shirt Men S,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
+White T-Shirt Men XXL,T-shirt,12,Graphic T-Shirts,Designed ,799,,,Men,Black,xxl,For Graphics,WTM01XXL,,,White T-Shirt Men S,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
+White T-Shirt Men XXXL,T-shirt,15,Graphic T-Shirts,Designed ,799,,,Men,Black,xxxl,For Graphics,WTM01XXXL,,,White T-Shirt Men S,,"Flash,Banana Power,Pilot Six Pack,Wake & Bake,Friendly Deed
+
+",
