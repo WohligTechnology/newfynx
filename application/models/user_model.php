@@ -549,7 +549,31 @@ class User_model extends CI_Model
             );
 
             $this->session->set_userdata($newdata);
+            
+                 // CART PART
+            
+            $cartdata=$this->cart->contents();
+            if($cartdata)
+            {
+               
+                $newcart = array();
+                foreach ($cartdata as $item) 
+                {
+                array_push($newcart, $item);
+                    
+                }
+                    foreach($newcart as $cart)
+                    {
+                         print_r($cart);
+                          $querycart = $this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')");
+                        echo "INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')";
+                    }
+                
 
+            }
+            
+            // cart ends
+            
             return $newdata;
 
         }
@@ -567,7 +591,31 @@ class User_model extends CI_Model
             );
 
             $this->session->set_userdata($newdata);
+            
+                 // CART PART
+            
+            $cartdata=$this->cart->contents();
+            if($cartdata)
+            {
+               
+                $newcart = array();
+                foreach ($cartdata as $item) 
+                {
+                array_push($newcart, $item);
+                    
+                }
+                    foreach($newcart as $cart)
+                    {
+                         print_r($cart);
+                          $querycart = $this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')");
+                        echo "INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')";
+                    }
+                
 
+            }
+            
+            // cart ends
+            
             return $newdata;
         }
     }
@@ -648,7 +696,30 @@ class User_model extends CI_Model
             );
 
             $this->session->set_userdata($newdata);
+            
+                 // CART PART
+            
+            $cartdata=$this->cart->contents();
+            if($cartdata)
+            {
+               
+                $newcart = array();
+                foreach ($cartdata as $item) 
+                {
+                array_push($newcart, $item);
+                    
+                }
+                    foreach($newcart as $cart)
+                    {
+                         print_r($cart);
+                          $querycart = $this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')");
+                        echo "INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')";
+                    }
+                
 
+            }
+            
+            // cart ends
 
         }
         else
@@ -684,11 +755,36 @@ class User_model extends CI_Model
             );
 
             $this->session->set_userdata($newdata);
+            
+            // CART PART
+            
+            $cartdata=$this->cart->contents();
+            if($cartdata)
+            {
+               
+                $newcart = array();
+                foreach ($cartdata as $item) 
+                {
+                array_push($newcart, $item);
+                    
+                }
+                    foreach($newcart as $cart)
+                    {
+                         print_r($cart);
+                          $querycart = $this->db->query("INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')");
+                        echo "INSERT INTO `fynx_cart`(`user`, `product`, `quantity`, `timestamp`, `json`,`design`) VALUES ('$userid','".$cart['id']."','".$cart['qty']."',NULL,'".$cart['options']['json']."','".$cart['design']."')";
+                    }
+                
 
-            return $newdata;
+            }
+            
+            // cart ends
+          return $newdata;
         }
-        else
-        return false;
+        else{
+            return false;
+        }
+        
     }
      function addToCart($product, $quantity, $design,$json,$backprice)
     {

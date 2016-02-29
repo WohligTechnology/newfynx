@@ -1471,17 +1471,24 @@ $elements[1]->field="`fynx_product`.`name`";
 $elements[1]->sort="1";
 $elements[1]->header="Related Product";
 $elements[1]->alias="relatedproduct";
-$elements[2]=new stdClass();
-$elements[2]->field="`fynx_designs`.`image`";
-$elements[2]->sort="1";
-$elements[2]->header="Design";
-$elements[2]->alias="image";
+//$elements[2]=new stdClass();
+//$elements[2]->field="`fynx_designs`.`image`";
+//$elements[2]->sort="1";
+//$elements[2]->header="Design";
+//$elements[2]->alias="image";
 
 $elements[3]=new stdClass();
 $elements[3]->field="`relatedproduct`.`product`";
 $elements[3]->sort="1";
 $elements[3]->header="productid";
 $elements[3]->alias="productid";
+    
+$elements[4]=new stdClass();
+$elements[4]->field="`fynx_designs`.`name`";
+$elements[4]->sort="1";
+$elements[4]->header="Design";
+$elements[4]->alias="name";
+
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");

@@ -161,10 +161,10 @@ return $query;
 
         $baseproduct=$query['product']->productname;
 //        $product=$query['product']->id;
-//          $query['relatedproduct'] = $this->db->query("SELECT `fynx_designs`.`id` as `designid`, `fynx_designs`.`designer`, `fynx_designs`.`image` as `designimage`, `fynx_designs`.`status` as `designstatus`, `fynx_designs`.`timestamp`,`relatedproduct`.`relatedproduct`,`relatedproduct`.`design`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`
-//LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id`
-//LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`relatedproduct`.`design`
-//WHERE `relatedproduct`.`product`='$product'")->result();
+          $query['relatedproduct'] = $this->db->query("SELECT `fynx_designs`.`id` as `designid`, `fynx_designs`.`designer`, `fynx_designs`.`image` as `designimage`, `fynx_designs`.`status` as `designstatus`, `fynx_designs`.`timestamp`,`relatedproduct`.`relatedproduct`,`relatedproduct`.`design`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`
+LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id`
+LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`relatedproduct`.`design`
+WHERE `relatedproduct`.`product`='$product'")->result();
 //        $designquery=$this->db->query("SELECT * FROM `productdesignimage` WHERE `product`='$product'")->result();
 //
 //        foreach($designquery as $getimgbydesign)
@@ -201,26 +201,27 @@ return $query;
 
     public function createbycsv($file)
 	{
-    print_r($file);
         foreach ($file as $row)
         {
-            $subcategory=$row['subcategory'];
-            $quantity=$row['quantity'];
-            $name=$row['name'];
-            $type=$row['type'];
-            $description=$row['description'];
-            $price=$row['price'];
-            $category=$row['category'];
-            $color=$row['color'];
-            $size=$row['size'];
-            $sizechart=$row['sizechart'];
-            $sizechartimage=$row['sizechartimage'];
-            $sku=$row['sku'];
-            $image1=$row['image1'];
-            $image2=$row['image2'];
-            $baseproduct=$row['baseproduct'];
-            $designname=$row['designname'];
+            $subcategory=trim($row['subcategory']);
+            $quantity=trim($row['quantity']);
+            $name=trim($row['name']);
+            $type=trim($row['type']);
+            $description=trim($row['description']);
+            $price=trim($row['price']);
+            $category=trim($row['category']);
+            $color=trim($row['color']);
+            $size=trim($row['size']);
+            $sizechart=trim($row['sizechart']);
+            $sizechartimage=trim($row['sizechartimage']);
+            $sku=trim($row['sku']);
+            $image1=trim($row['image1']);
+            $image2=trim($row['image2']);
+            $baseproduct=trim($row['baseproduct']);
+            $designname=trim($row['designname']);
             $designs=$row['designimage'];
+            $relatedproduct=trim($row['relatedproduct']);
+            $relateddesign=trim($row['relateddesign']);
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
             if($relatedproduct !=''){
@@ -301,7 +302,7 @@ return $query;
                     $designid=$this->db->insert_id();
 
 
-                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
+                              $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
                 }
                 else
@@ -311,7 +312,7 @@ return $query;
 
                     //now directly insert design
 
-                  $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
+                  $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
 
 
