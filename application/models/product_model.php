@@ -201,7 +201,6 @@ return $query;
 
     public function createbycsv($file)
 	{
-        print_r($file);
         foreach ($file as $row)
         {
             $subcategory=$row['subcategory'];
@@ -223,7 +222,7 @@ return $query;
             $designs=$row['designimage'];
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
-            
+
             if($relatedproduct){
              $allrelatedproduct=explode(",",$relatedproduct);
                 }
@@ -244,13 +243,6 @@ return $query;
 		$query=$this->db->insert( 'fynx_product', $data );
 		$productid=$this->db->insert_id();
 
-//            insert designs
-            
-//            for($alldesign as $key=>designname) {
-//                $designname = $designname;
-//                $designimage = $alldesignimage[$key];
-//                unsert wuqeyr
-//            }
             
             
            foreach($alldesignname as $key => $designname)
@@ -262,29 +254,28 @@ return $query;
                     // create new design and get design id
                     $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$designname','2')");
                     $designid=$this->db->insert_id();
+
             
                               $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
-
-                    
-                     
                 }
                 else
                 {
                     // get design id
                     $designid=$designnamequery->id;
-                    
+
                     //now directly insert design
                     
                   $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid',' $alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
-                    
+              
+
                 }
 
            }
-            
+
             //            insert designs ends
-            
+
             //INSERT CATEGORY
              $query1=$this->db->query("SELECT `id` FROM `fynx_category` WHERE `name` = '$category'")->row();
 
