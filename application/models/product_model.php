@@ -142,10 +142,7 @@ return $query;
 	{
         $where=" ";
         if($size && $color){
-            $query1=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
-            $baseproduct=$query1->name;
-            $productid=$query1->id;
-            $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' AND `fynx_product`.`baseproduct` LIKE '$baseproduct'";
+            $where .=" `fynx_product`.`id`='$product' AND `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
         }
         else{
               $where .="`fynx_product`.`id`='$product'";
@@ -166,9 +163,9 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `size` FROM `fynx_product` WHERE `baseproduct` LIKE '$baseproduct' OR `name` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
-        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `color` FROM `fynx_product` WHERE `baseproduct` LIKE '$baseproduct' OR `name` LIKE '$baseproduct')")->result();
+        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
 
 
 		return $query;

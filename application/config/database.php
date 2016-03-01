@@ -51,9 +51,8 @@ $active_record = TRUE;
 
 
 $myserver=$_SERVER['SERVER_NAME'];
-//$ip = substr($myserver,0,7);
-if($myserver != "localhost")
-//if($myserver != "localhost"  && $ip != "192.168")
+$ip = substr($myserver,0,7);
+if($myserver != "localhost"  && $ip != "192.168")
 {
   $db['default']['hostname'] = 'localhost';
   $db['default']['username'] = 'wohligco_fynx';

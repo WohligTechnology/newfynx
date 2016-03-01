@@ -1622,7 +1622,8 @@ public function getsinglesize()
         $design = $this->input->get_post('design');
         $json = $this->input->get_post('json');
         $backprice = $this->input->get_post('backprice');
-        $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json,$backprice);
+        $size = $this->input->get_post('size');
+        $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json,$backprice,$size);
         $this->load->view('json', $data);
     }
 
@@ -2750,10 +2751,10 @@ imagesavealpha($rotate, true);
     }
     public function getOneCart()
     {
-        $orderid = $this->input->get_post('id');
+        $orderitemid = $this->input->get_post('id');
         //now orderid
         $user = $this->input->get_post('user');
-        $data['message'] = $this->restapi_model->getOneCart($orderid,$user);
+        $data['message'] = $this->restapi_model->getOneCart($orderitemid,$user);
         $this->load->view('json', $data);
     }
 
