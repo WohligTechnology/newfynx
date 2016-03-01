@@ -698,7 +698,6 @@ class User_model extends CI_Model
             $cartdata=$this->cart->contents();
             if($cartdata)
             {
-                print_r($cartdata);
                 $newcart = array();
                 foreach ($cartdata as $item) 
                 {
