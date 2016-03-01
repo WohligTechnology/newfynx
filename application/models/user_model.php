@@ -779,11 +779,11 @@ class User_model extends CI_Model
     {
         //$data=$this->cart->contents();
 
-        $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
-        $getexactproductimage=$this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product'")->row();
-        $size=$getexactproduct->size;
-        $baseproduct=$getexactproduct->baseproduct;
-        $productname=$getexactproduct->name;
+                $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+                $getexactproductimage=$this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product'")->row();
+                $size=$getexactproduct->size;
+                $baseproduct=$getexactproduct->baseproduct;
+                $productname=$getexactproduct->name;
 				if($backprice != "0")
 				{
 					  $price=$getexactproduct->price + $backprice;
@@ -792,42 +792,45 @@ class User_model extends CI_Model
 				  $price=$getexactproduct->price;
 				}
 
-        $color=$getexactproduct->color;
-        $image=$getexactproductimage->image;
-        $exactproduct=$getexactproduct->id;
-        $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
-        $sizeid=$getsize->id;
-        $sizename=$getsize->name;
-        $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
-        $colorid=$getcolor->id;
-        $colorname=$getcolor->name;
-				if($design!=''){
-        $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`,`name`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
-        $designid=$getdesign->id;
-        $designer=$getdesign->designer;
-        $designimage=$getdesign->image;
-        $designname=$getdesign->name;
-				$data = array(
-               'id'      => $exactproduct,
-               'name'      => '1',
-               'qty'     => $quantity,
-               'price'   => $price,
-							 'design'   => $design,
-               'image'   => $image,
+                $color=$getexactproduct->color;
+                $image=$getexactproductimage->image;
+                $exactproduct=$getexactproduct->id;
+                $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
+                $sizeid=$getsize->id;
+                $sizename=$getsize->name;
+                $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
+                $colorid=$getcolor->id;
+                $colorname=$getcolor->name;
+				if($design!='')
+                {   
+                    $getdesign=$this->db->query("SELECT `id`, `designer`, `image`, `status`,`name`, `timestamp` FROM `fynx_designs` WHERE `id`='$design'")->row();
+                    $designid=$getdesign->id;
+                    $designer=$getdesign->designer;
+                    $designimage=$getdesign->image;
+                    $designname=$getdesign->name;
+                    $data = array(
+                   'id'      => $exactproduct,
+                   'name'      => '1',
+                   'qty'     => $quantity,
+                   'price'   => $price,
+                                 'design'   => $design,
+                   'image'   => $image,
 
-              	'options' =>array(
-                    'realname' => $designname,
-                    'sizeid' => $sizeid,
-                    'colorid' => $colorid,
-                    'sizename' => $sizename,
-                    'colorname' => $colorname,
-                    'designid' => $designid,
-                    'designer' => $designer,
-                    'designimage' => $designimage,
-                    'json' => $json
-                )
-        );
-			}else{
+                    'options' =>array(
+                        'realname' => $designname,
+                        'sizeid' => $sizeid,
+                        'colorid' => $colorid,
+                        'sizename' => $sizename,
+                        'colorname' => $colorname,
+                        'designid' => $designid,
+                        'designer' => $designer,
+                        'designimage' => $designimage,
+                        'json' => $json
+                    )
+            );
+                }
+                else
+                {
                     $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `baseproduct`='$baseproduct' AND `size`='$sizeidcust'")->row();
                     $exactproduct=$getexactproduct->id;
                     $imagefront=$getexactproduct->image1;
@@ -848,25 +851,24 @@ class User_model extends CI_Model
                       $price=$getexactproduct->price;
                     }
 
-        $data = array(
-               'id'      => $exactproduct,
-               'name'      => '1',
-               'qty'     => $quantity,
-               'price'   => $price,
-							 'design'   => $design,
-               'image'   => $imagefront,
-
-              	'options' =>array(
-                    'realname' => $designname,
-                    'sizeid' => $sizeid,
-                    'colorid' => $colorid,
-                    'sizename' => $sizename,
-                    'colorname' => $colorname,
-                    'designid' => "",
-                    'designer' => "",
-                    'designimage' => "",
-                     'json' => $json,
-                    'imageback' => $imageback
+                    $data = array(
+                        'id'      => $exactproduct,
+                        'name'      => '1',
+                        'qty'     => $quantity,
+                        'price'   => $price,
+                        'design'   => $design,
+                        'image'   => $imagefront,
+              	        'options' =>array(
+                        'realname' => $designname,
+                        'sizeid' => $sizeid,
+                        'colorid' => $colorid,
+                        'sizename' => $sizename,
+                        'colorname' => $colorname,
+                        'designid' => "",
+                        'designer' => "",
+                        'designimage' => "",
+                        'json' => $json,
+                        'imageback' => $imageback
                 )
         );
                  
@@ -884,6 +886,7 @@ class User_model extends CI_Model
                     if($userid=="")
                     {
                         $returnval=$this->cart->insert($data);
+                        print_r($returnval);
                         if(!empty($returnval)){
                         return true;
                         }

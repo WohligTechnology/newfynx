@@ -1617,12 +1617,19 @@ public function getsinglesize()
     }
     public function addToCart()
     {
-        $product = $this->input->get_post('product');
-        $quantity = $this->input->get_post('quantity');
-        $design = $this->input->get_post('design');
-        $json = $this->input->get_post('json');
-        $backprice = $this->input->get_post('backprice');
-        $size = $this->input->get_post('size');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $product = $data['product'];
+        $quantity = $data['quantity'];
+        $design = $data['design'];
+        $json = $data['json'];
+        $backprice = $data['backprice'];
+        $size = $data['size'];
+//        $product = $this->input->get_post('product');
+//        $quantity = $this->input->get_post('quantity');
+//        $design = $this->input->get_post('design');
+//        $json = $this->input->get_post('json');
+//        $backprice = $this->input->get_post('backprice');
+//        $size = $this->input->get_post('size');
         $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json,$backprice,$size);
         $this->load->view('json', $data);
     }
