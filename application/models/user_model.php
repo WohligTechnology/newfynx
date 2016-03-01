@@ -886,7 +886,6 @@ class User_model extends CI_Model
                     if($userid=="")
                     {
                         $returnval=$this->cart->insert($data);
-                        print_r($returnval);
                         if(!empty($returnval)){
                         return true;
                         }
