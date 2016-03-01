@@ -97,7 +97,7 @@ class restapi_model extends CI_Model
       return $query;
     }
     public function removeFromWishlist($user, $product,$design){
-        $query=$this->db->query(" DELETE FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product' AND `design`='$design'");
+        $query=$this->db->query("DELETE FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product' AND `design`='$design'");
         if($query){
         return 1;
         }
@@ -207,7 +207,7 @@ class restapi_model extends CI_Model
         return $quantity;
     }
 		public function getOneCart($orderitemid){
-    $query=$this->db->query("SELECT * FROM `fynx_orderitem` WHERE `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->row();
+    $query=$this->db->query("SELECT `id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`, `design`, `checkcustom` as `custom` FROM `fynx_orderitem` WHERE `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->row();
         return $query;
     }
 }
