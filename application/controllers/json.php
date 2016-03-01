@@ -1599,7 +1599,6 @@ public function getsinglesize()
         $shippingpincode = $data['shippingpincode'];
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
-////        print_r($order);
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
 
         $this->load->view('json', $data);
@@ -1951,7 +1950,6 @@ public function getsinglesize()
         $filepath = $this->input->get_post('filepath');
 //        echo $filepath;
         $file = $this->csvreader->parse_file($filepath);
-//        print_r($file);
         $id1 = $this->product_model->createbycsv($file);
 //        echo "<br>".$id1;
         if ($id1 == 0) {
@@ -1959,7 +1957,6 @@ public function getsinglesize()
         } else {
             $data['alertsuccess'] = 'products Uploaded Successfully.';
         }
-//        print_r($data);
         $data['redirect'] = 'site/viewproduct';
         $this->load->view('redirect', $data);
 
@@ -1973,14 +1970,12 @@ public function getsinglesize()
 //        $filepath="http://magicmirror.in/servepublicother?name=$filename";
 //echo $filepath;
 //        $file = $this->csvreader->parse_file($filepath);
-//        print_r($file);
 //        $id1=$this->product_model->createbycsv($file);
 //        echo "<br>".$id1."<br>";
 //        if($id1==0)
 //        $data['alerterror']="New Products could not be Uploaded.";
 //		else
 //		$data['alertsuccess']="Products Uploaded Successfully.";
-//        print_r($data);
 //        $data['redirect']="site/uploadproductcsv";
 //        $this->load->view("redirect",$data);
     }
@@ -1988,7 +1983,6 @@ public function getsinglesize()
     {
         $filepath = 'http://magicmirror.in/servepublicother?name=product (11).csv';
         $file = $this->csvreader->parse_file($filepath);
-//        print_r($file);
     }
     public function nextproduct()
     {
@@ -2165,7 +2159,6 @@ public function getsinglesize()
     }
     public function socialcheck()
     {
-        //print_r($_POST);
         $displayName = $_POST['displayName'];
         $email = $_POST['email'];
         $photoURL = $_POST['photoURL'];

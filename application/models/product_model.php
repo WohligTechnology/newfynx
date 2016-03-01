@@ -160,11 +160,11 @@ return $query;
         WHERE  $where")->row();
 
         $baseproduct=$query['product']->productname;
-//        $product=$query['product']->id;
-          $query['relatedproduct'] = $this->db->query("SELECT `fynx_designs`.`id` as `designid`, `fynx_designs`.`designer`, `fynx_designs`.`image` as `designimage`, `fynx_designs`.`status` as `designstatus`, `fynx_designs`.`timestamp`,`relatedproduct`.`relatedproduct`,`relatedproduct`.`design`,`fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`image3`, `fynx_product`.`image4`, `fynx_product`.`image5` FROM `fynx_product`
-LEFT OUTER JOIN `relatedproduct` ON `relatedproduct`.`relatedproduct`=`fynx_product`.`id`
-LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`relatedproduct`.`design`
-WHERE `relatedproduct`.`product`='$product'")->result();
+        $product=$query['product']->id;
+          $query['relatedproduct'] = $this->db->query("SELECT  `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct`
+LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` 
+WHERE `relatedproduct`.`product`='$product'
+GROUP BY `relatedproduct`.`relatedproduct`")->result();
 //        $designquery=$this->db->query("SELECT * FROM `productdesignimage` WHERE `product`='$product'")->result();
 //
 //        foreach($designquery as $getimgbydesign)
