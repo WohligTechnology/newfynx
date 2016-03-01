@@ -345,7 +345,6 @@ class User_model extends CI_Model
             );
 
             $this->session->set_userdata($newdata);
-            //print_r($newdata);
             return $user;
         }
         else
@@ -355,8 +354,6 @@ class User_model extends CI_Model
     }
     function authenticate() {
          $is_logged_in = $this->session->userdata( 'logged_in' );
-//        return $is_logged_in;
-        //print_r($this->session->userdata( 'logged_in' ));
         if ( $is_logged_in != true) {
             return false;
         } //$is_logged_in !== 'true' || !isset( $is_logged_in )
@@ -619,7 +616,6 @@ class User_model extends CI_Model
     {
     	$newdata=0;
         $password=md5($password);
-        //echo $email;
         $query=$this->db->query("SELECT `id` FROM `user` WHERE `email`='$email'");
 				$num=$query->num_rows();
 
@@ -1052,7 +1048,6 @@ WHERE `fynx_product`.`id`='$productid'")->row();
 
     }
     function deletecartfromdb($id,$user,$design){
-		//	echo "DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'";
     $query=$this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
     }
      public function uploadImage(){
