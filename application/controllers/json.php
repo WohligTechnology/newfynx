@@ -2752,9 +2752,7 @@ imagesavealpha($rotate, true);
     public function getOneCart()
     {
         $orderitemid = $this->input->get_post('id');
-        //now orderid
-        $user = $this->input->get_post('user');
-        $data['message'] = $this->restapi_model->getOneCart($orderitemid,$user);
+        $data['message'] = $this->restapi_model->getOneCart($orderitemid);
         $this->load->view('json', $data);
     }
 

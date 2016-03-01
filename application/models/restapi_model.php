@@ -206,10 +206,8 @@ class restapi_model extends CI_Model
          $quantity=$query->quantity;
         return $quantity;
     }
-		public function getOneCart($orderitemid,$user){
-    $query=$this->db->query("SELECT `fynx_orderitem`.* FROM `fynx_orderitem`
-INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
-WHERE `fynx_order`.`user`='$user' AND `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->result();
+		public function getOneCart($orderitemid){
+    $query=$this->db->query("SELECT * FROM `fynx_orderitem` WHERE `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->row();
         return $query;
     }
 }
