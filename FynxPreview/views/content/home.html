@@ -11,6 +11,10 @@
           </div>
         </div>
 
+        <div class="" ng-if="currentpage.name=='homefront' && custom.custom[0].text=='' && custom.custom[1].text=='' && custom.image.image==''">
+          No Design for front.
+        </div>
+
         <div ng-if="currentpage.name=='homeback'">
           <div class="on-img shirtcanvas" style="top:0px;width:195px;zoom:5;">
             <div class="canvasitem movesecondimage" ng-if="custom.image.image1!=''" ng-style="custom.custom[5].containercss">
@@ -21,4 +25,8 @@
               <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" ng-if="$index==2 || $index==3"></div>
             </div>
           </div>
+        </div>
+
+        <div class="" ng-if="currentpage.name=='homeback' && custom.custom[2].text=='' && custom.custom[3].text=='' && custom.image.image1==''">
+          No Design for back.
         </div>

@@ -16,7 +16,7 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     controller: 'HomeCtrl'
   })
   .state('homeback', {
-  url: "/homeback/:id/:user",
+  url: "/homeback/:id",
   templateUrl: "views/template.html",
   controller: 'HomeCtrl'
 });
