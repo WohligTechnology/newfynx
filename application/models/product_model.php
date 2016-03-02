@@ -155,10 +155,7 @@ return $query;
 
         $baseproduct=$query['product']->baseproduct;
         $product=$query['product']->id;
-          $query['relatedproduct'] = $this->db->query("SELECT  `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct`
-LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` 
-WHERE `relatedproduct`.`product`='$product'
-GROUP BY `relatedproduct`.`relatedproduct`")->result();
+          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`design`")->result();
         $query['productdesignimage'] = $this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product' AND `design`='$design'")->result();
 
 
@@ -207,16 +204,18 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
             $baseproduct=trim($row['baseproduct']);
             $designname=trim($row['designname']);
             $designs=$row['designimage'];
-            $relatedproduct=trim($row['relatedproduct']);
-            $relateddesign=trim($row['relateddesign']);
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
-            if($relatedproduct !=''){
-              $allrelatedproduct=explode(",",$relatedproduct);
-            }
-            if($relateddesign !=''){
-              $allrelateddesign=explode(",",$relateddesign);
-            }
+            
+//            $relatedproduct=trim($row1['relatedproduct']);
+//            $relateddesign=trim($row1['relateddesign']);
+//            
+//            if($relatedproduct !=''){
+//              $allrelatedproduct=explode(",",$relatedproduct);
+//            }
+//            if($relateddesign !=''){
+//              $allrelateddesign=explode(",",$relateddesign);
+//            }
 
 
 
@@ -236,48 +235,45 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
 		$query=$this->db->insert( 'fynx_product', $data );
 		$productid=$this->db->insert_id();
 
-// related products upload
-
-  if($allrelatedproduct)
-{
-  foreach($allrelatedproduct as $key => $relatedproduct)
-{
-      $relatedproduct=trim($relatedproduct);
-      $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
-      if(empty($relatedproductquery))
-      {
-
-      }
-      else
-      {
-          $relatedproduct=$relatedproductquery->id;
-
-          //check design is there or not
-        $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
-        if(empty($checkdesignquery))
-        {
-            // create new design and get design id
-            $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
-            $designid=$this->db->insert_id();
-        }
-        else{
-          $designid=$checkdesignquery->id;
-        }
-
-        $data2  = array(
-        'product' => $productid,
-        'relatedproduct' => $relatedproduct,
-        'design' => $designid
-        );
-         $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
-       }
-}
-// related products end
-}
-
-
-
-
+            
+//      
+//             // related products upload
+//
+//              if($allrelatedproduct)
+//            {
+//              foreach($allrelatedproduct as $key => $relatedproduct)
+//            {
+//                  $relatedproduct=trim($relatedproduct);
+//                  $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
+//                  if(empty($relatedproductquery))
+//                  {
+//                  }
+//                  else
+//                  {
+//                      $relatedproduct=$relatedproductquery->id;
+//
+//                      //check design is there or not
+//                    $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
+//                    if(empty($checkdesignquery))
+//                    {
+//                        // create new design and get design id
+//                        $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
+//                        $designid=$this->db->insert_id();
+//                    }
+//                    else{
+//                      $designid=$checkdesignquery->id;
+//                    }
+//
+//                    $data2  = array(
+//                    'product' => $productid,
+//                    'relatedproduct' => $relatedproduct,
+//                    'design' => $designid
+//                    );
+//                     $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
+//                   }
+//            }
+//            // related products end
+//            }
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -464,11 +460,72 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                 $query=$this->db->update( "fynx_product", $data );
             }
 
-
-
-
-
         }
+        // for related products only
+        foreach($file as $row1)
+        {
+            
+            $relatedproduct=trim($row1['relatedproduct']);
+            $name=trim($row1['name']);
+            $relateddesign=trim($row1['relateddesign']);
+            
+            if($relatedproduct !=''){
+              $allrelatedproduct=explode(",",$relatedproduct);
+            }
+            if($relateddesign !=''){
+              $allrelateddesign=explode(",",$relateddesign);
+            }
+            
+            $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
+            if(empty($checkproduct))
+            {
+                
+            }
+            else
+            {
+                $productid=$checkproduct->id;
+                 // related products upload
+
+                  if($allrelatedproduct)
+                {
+                      foreach($allrelatedproduct as $key => $relatedproduct)
+                    {
+                          $relatedproduct=trim($relatedproduct);
+                          $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
+                          if(empty($relatedproductquery))
+                          {
+                          }
+                          else
+                          {
+                              $relatedproduct=$relatedproductquery->id;
+
+                              //check design is there or not
+                            $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
+                            if(empty($checkdesignquery))
+                            {
+                                // create new design and get design id
+                                $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
+                                $designid=$this->db->insert_id();
+                            }
+                            else{
+                              $designid=$checkdesignquery->id;
+                            }
+
+                            $data2  = array(
+                            'product' => $productid,
+                            'relatedproduct' => $relatedproduct,
+                            'design' => $designid
+                            );
+                             $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
+                           }
+                    }
+                // related products end
+                }
+            }
+          
+            
+        }
+         
 			return  1;
 	}
 
