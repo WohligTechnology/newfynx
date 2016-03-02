@@ -831,25 +831,26 @@ class User_model extends CI_Model
                 }
                 else
                 {
-                    $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `baseproduct`='$baseproduct' AND `size`='$sizeidcust'")->row();
-                    $exactproduct=$getexactproduct->id;
-                    $imagefront=$getexactproduct->image1;
-                    $imageback=$getexactproduct->image2;
-                    $color=$getexactproduct->color;
-                    $size=$getexactproduct->size;
-                    $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
-                    $sizeid=$getsize->id;
-                    $sizename=$getsize->name;
-                    $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
-                    $colorid=$getcolor->id;
-                    $colorname=$getcolor->name;
-                    if($backprice != "0")
-                    {
-                          $price=$getexactproduct->price + $backprice;
-                    }
-                    else {
-                      $price=$getexactproduct->price;
-                    }
+                      $imagefront=$getexactproduct->image1;
+                      $imageback=$getexactproduct->image2;
+//                    $getexactproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `baseproduct`='$baseproduct' AND `size`='$sizeidcust'")->row();
+//                    $exactproduct=$getexactproduct->id;
+//                 
+//                    $color=$getexactproduct->color;
+//                    $size=$getexactproduct->size;
+//                    $getsize=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `id`='$size'")->row();
+//                    $sizeid=$getsize->id;
+//                    $sizename=$getsize->name;
+//                    $getcolor=$this->db->query("SELECT `id`, `name`, `status`, `timestamp` FROM `fynx_color` WHERE `id`='$color'")->row();
+//                    $colorid=$getcolor->id;
+//                    $colorname=$getcolor->name;
+//                    if($backprice != "0")
+//                    {
+//                          $price=$getexactproduct->price + $backprice;
+//                    }
+//                    else {
+//                      $price=$getexactproduct->price;
+//                    }
 
                     $data = array(
                         'id'      => $exactproduct,
