@@ -206,74 +206,22 @@ return $query;
             $designs=$row['designimage'];
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
-            
-//            $relatedproduct=trim($row1['relatedproduct']);
-//            $relateddesign=trim($row1['relateddesign']);
-//            
-//            if($relatedproduct !=''){
-//              $allrelatedproduct=explode(",",$relatedproduct);
-//            }
-//            if($relateddesign !=''){
-//              $allrelateddesign=explode(",",$relateddesign);
-//            }
+            $data  = array(
+                "quantity" => $quantity,
+                "name" => $name,
+                "description" => $description,
+                "visibility" => 1,
+                "price" => $price,
+                "status" => 2,
+                "sku" => $sku,
+                "image1" => $image1,
+                "image2" => $image2,
+                "baseproduct" => $baseproduct
+            );
+            $query=$this->db->insert( 'fynx_product', $data );
+            $productid=$this->db->insert_id();
 
 
-
-
-		$data  = array(
-            "quantity" => $quantity,
-            "name" => $name,
-            "description" => $description,
-            "visibility" => 1,
-            "price" => $price,
-            "status" => 2,
-            "sku" => $sku,
-            "image1" => $image1,
-            "image2" => $image2,
-            "baseproduct" => $baseproduct
-		);
-		$query=$this->db->insert( 'fynx_product', $data );
-		$productid=$this->db->insert_id();
-
-            
-//      
-//             // related products upload
-//
-//              if($allrelatedproduct)
-//            {
-//              foreach($allrelatedproduct as $key => $relatedproduct)
-//            {
-//                  $relatedproduct=trim($relatedproduct);
-//                  $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
-//                  if(empty($relatedproductquery))
-//                  {
-//                  }
-//                  else
-//                  {
-//                      $relatedproduct=$relatedproductquery->id;
-//
-//                      //check design is there or not
-//                    $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
-//                    if(empty($checkdesignquery))
-//                    {
-//                        // create new design and get design id
-//                        $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
-//                        $designid=$this->db->insert_id();
-//                    }
-//                    else{
-//                      $designid=$checkdesignquery->id;
-//                    }
-//
-//                    $data2  = array(
-//                    'product' => $productid,
-//                    'relatedproduct' => $relatedproduct,
-//                    'design' => $designid
-//                    );
-//                     $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
-//                   }
-//            }
-//            // related products end
-//            }
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -298,7 +246,6 @@ return $query;
                   $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
 
-
                 }
 
            }
@@ -310,7 +257,7 @@ return $query;
 
             if(empty($query1))
             {
-                $data=array("name" => $category,"status" => 1);
+                $data=array("name" => $category,"status" => 2);
                 $query=$this->db->insert( "fynx_category", $data );
                 $categoryid=$this->db->insert_id();
 
@@ -319,7 +266,7 @@ return $query;
                   $querysubcat=$this->db->query("SELECT `id` FROM `fynx_subcategory` WHERE `name` = '$subcategory' AND `category`='$categoryid'")->row();
                 if(empty($querysubcat))
                 {
-                    $data=array("name" => $subcategory,"status" => 1,"category" => $categoryid);
+                    $data=array("name" => $subcategory,"status" => 2,"category" => $categoryid);
                     $query=$this->db->insert( "fynx_subcategory", $data );
                     $subcategoryid=$this->db->insert_id();
 
@@ -349,7 +296,7 @@ return $query;
                   $querysubcat=$this->db->query("SELECT `id` FROM `fynx_subcategory` WHERE `name` = '$subcategory' AND `category`='$categoryid'")->row();
                 if(empty($querysubcat))
                 {
-                    $data=array("name" => $subcategory,"status" => 1,"category" => $categoryid);
+                    $data=array("name" => $subcategory,"status" => 2,"category" => $categoryid);
                     $query=$this->db->insert( "fynx_subcategory", $data );
                     $subcategoryid=$this->db->insert_id();
 
@@ -370,12 +317,14 @@ return $query;
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            //INSERT type
+            
+    //INSERT type
+            $type = trim($type);
              $query2=$this->db->query("SELECT `id` FROM `fynx_type` WHERE `name` = '$type'")->row();
 
             if(empty($query2))
             {
-                $data=array("name" => $type,"status" => 1);
+                $data=array("name" => $type,"status" => 2);
                 $query=$this->db->insert( "fynx_type", $data );
                 $typeid=$this->db->insert_id();
 
@@ -392,12 +341,13 @@ return $query;
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            //INSERT color
+            
+    //INSERT color
              $query3=$this->db->query("SELECT `id` FROM `fynx_color` WHERE `name` = '$color'")->row();
 
             if(empty($query3))
             {
-                $data=array("name" => $color,"status" => 1);
+                $data=array("name" => $color,"status" => 2);
                 $query=$this->db->insert( "fynx_color", $data );
                 $colorid=$this->db->insert_id();
 
@@ -420,7 +370,7 @@ return $query;
 
             if(empty($query4))
             {
-                $data=array("name" => $size,"status" => 1);
+                $data=array("name" => $size,"status" => 2);
                 $query=$this->db->insert( "fynx_size", $data );
                 $sizeid=$this->db->insert_id();
 
