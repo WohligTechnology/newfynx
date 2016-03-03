@@ -154,15 +154,18 @@ return $query;
         WHERE  $where")->row();
 
         $baseproduct=$query['product']->baseproduct;
+        if($baseproduct==''){
+            $baseproduct=$query['product']->productname;
+        }
         $product=$query['product']->id;
           $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` AND `productdesignimage`.`design` = `relatedproduct`.`design` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`relatedproduct` , `relatedproduct`.`design`")->result();
         $query['productdesignimage'] = $this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product' AND `design`='$design'")->result();
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
-        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
+        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
 
 
 		return $query;
