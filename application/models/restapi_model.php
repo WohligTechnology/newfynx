@@ -184,7 +184,7 @@ class restapi_model extends CI_Model
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount)
+		public function updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount,$couponcode)
         {
                 if($orderstatus==2)
                 {
@@ -194,10 +194,10 @@ class restapi_model extends CI_Model
                     $user=$getuser->user;
                     $this->cart->destroy();
                     $deletecart=$this->db->query("DELETE FROM `fynx_cart` WHERE `user`='$user'");
-                    
+
                     // reduce quantity
                     // get product from order items
-                    
+
                     $totalorderitem=$this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order`='$orderid'")->result();
                     foreach($totalorderitem as $item)
                     {
@@ -211,7 +211,7 @@ class restapi_model extends CI_Model
                             $this->load->library('email');
                             $this->email->from('vigwohlig@gmail.com', 'MyFynx');
                             $this->email->to("jagruti@wohlig.com");
-                            $this->email->subject('Inventory');   
+                            $this->email->subject('Inventory');
                             $message = "Product Id : ". $product. "Quantity is ".$updatedquantity;
                             $this->email->message($message);
                             $this->email->send();
@@ -251,7 +251,7 @@ class restapi_model extends CI_Model
         $countrows=$orderquery->num_rows();
         if($countrows > 0 AND $type==1)
         {
-            
+
 //       he is old user
             if($totalamount > $min && $totalamount < $max)
             {
@@ -266,8 +266,8 @@ class restapi_model extends CI_Model
             }
             if($totalamount > $max){
                 return false;
-            }  
-            
+            }
+
         }
         else if($countrows == 0 AND $type==2)
         {
@@ -285,13 +285,13 @@ class restapi_model extends CI_Model
             }
             if($totalamount > $max){
                 return false;
-            }  
+            }
         }
         else{
             return false;
         }
-   
-       
+
+
     }
 }
 ?>

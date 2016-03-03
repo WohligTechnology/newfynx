@@ -2678,7 +2678,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
           $orderstatus = 5;
         }
         $orderid = $this->input->post("orderNo");
-        $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount);
+        $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount,$couponcode);
         $this->load->view('json',$data);
     }
 
@@ -2766,7 +2766,7 @@ imagesavealpha($rotate, true);
         $orderitemid = $this->input->get_post('id');
         $data['message'] = $this->restapi_model->getOneCart($orderitemid);
         $this->load->view('json', $data);
-    }  
+    }
     public function checkCoupon()
     {
         $couponname = $this->input->get_post('couponname');
