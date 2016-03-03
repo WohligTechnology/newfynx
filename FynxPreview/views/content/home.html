@@ -15,7 +15,7 @@
           No Design for front.
         </div>
 
-        <div ng-if="currentpage.name=='homeback' && custom.custom[2].text!='' || custom.custom[3].text!='' || custom.image.image1!=''">
+        <div ng-if="currentpage.name=='homeback' && (custom.custom[2].text!='' || custom.custom[3].text!='' || custom.image.image1!='')">
           <div class="on-img shirtcanvas" style="top:0px;width:195px;zoom:5;">
             <div class="canvasitem movesecondimage" ng-if="custom.image.image1!=''" ng-style="custom.custom[5].containercss">
               <img class="auto-dim m-center" ng-style="custom.custom[5].css" ng-src="{{custom.image.image1 | serverimage}}">
