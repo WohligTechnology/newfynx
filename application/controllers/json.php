@@ -1655,11 +1655,10 @@ public function getsinglesize()
     public function totalitemcart()
     {
         $user = $this->session->userdata('id');
-        if($user==''){
-
+        if($user == '' && $user){
              $data['message'] = $this->cart->total_items();
         }
-        else if($user!=''){
+        else if($user != ''){
              $data['message'] = $this->restapi_model->totalitemsincart($user);
         }
 
@@ -2352,7 +2351,7 @@ public function getsinglesize()
         $elements[5]->sort = '1';
         $elements[5]->header = 'orderstatusname';
         $elements[5]->alias = 'orderstatusname';
-        
+
         $elements[6] = new stdClass();
         $elements[6]->field = '`fynx_order`.`trackingcode`';
         $elements[6]->sort = '1';
