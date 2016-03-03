@@ -2780,5 +2780,8 @@ imagesavealpha($rotate, true);
 //    function resizeImage($image) {
 //    imagecopyresized ( $thumbfront , $dbfrontimg , 0 , 0 , 0 , 0 , jagz width size * 5 ,  jagz height size * 5 , $frontwidth , $frontheight );
 //    }
-
+//  $query=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
+//  $count=$query->count;
+//  $count=$count+1;
+//    $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `name` LIKE '$couponname'");
 }
