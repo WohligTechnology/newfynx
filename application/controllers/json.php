@@ -2766,6 +2766,12 @@ imagesavealpha($rotate, true);
         $orderitemid = $this->input->get_post('id');
         $data['message'] = $this->restapi_model->getOneCart($orderitemid);
         $this->load->view('json', $data);
+    }  
+    public function checkCoupon()
+    {
+        $couponname = $this->input->get_post('couponname');
+        $data['message'] = $this->restapi_model->checkCoupon($couponname);
+        $this->load->view('json', $data);
     }
 
 

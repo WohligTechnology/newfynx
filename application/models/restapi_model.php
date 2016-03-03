@@ -210,5 +210,63 @@ class restapi_model extends CI_Model
     $query=$this->db->query("SELECT `id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`, `design`, `checkcustom` as `custom` FROM `fynx_orderitem` WHERE `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->row();
         return $query;
     }
+    public function checkCoupon($couponname)
+    {
+//      check if old or new user
+        $user = $this->session->userdata('id');
+        $totalamount=$this->restapi_model->totalcart($user);
+        $query=$this->db->query("SELECT `id`, `type`, `min`, `status`, `max`, `discount`, `name` FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
+        $min=$query->min;
+        $id=$query->id;
+        $max=$query->max;
+        $discount=$query->discount;
+        $count=$query->count;
+        $type=$query->type;
+        $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
+        $countrows=$orderquery->num_rows();
+        if($countrows > 0 AND $type==1)
+        {
+            
+//       he is old user
+            if($totalamount > $min && $totalamount < $max)
+            {
+                $substracteddiscountamout=($discount *$totalamount)/100;
+                $calculatedamount=$totalamount-$substracteddiscountamout;
+                $query->calculatedamount=$calculatedamount;
+                // increment count
+                $count=$count+1;
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                return $query;
+
+            }
+            if($totalamount > $max){
+                return false;
+            }  
+            
+        }
+        else if($countrows == 0 AND $type==2)
+        {
+//            he is new user
+            if($totalamount > $min && $totalamount < $max)
+            {
+                $substracteddiscountamout=($discount *$totalamount)/100;
+                $calculatedamount=$totalamount-$substracteddiscountamout;
+                $query->calculatedamount=$calculatedamount;
+                // in crement count
+                $count=$count+1;
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                return $query;
+
+            }
+            if($totalamount > $max){
+                return false;
+            }  
+        }
+        else{
+            return false;
+        }
+   
+       
+    }
 }
 ?>
