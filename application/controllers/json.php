@@ -2352,6 +2352,12 @@ public function getsinglesize()
         $elements[5]->sort = '1';
         $elements[5]->header = 'orderstatusname';
         $elements[5]->alias = 'orderstatusname';
+        
+        $elements[6] = new stdClass();
+        $elements[6]->field = '`fynx_order`.`trackingcode`';
+        $elements[6]->sort = '1';
+        $elements[6]->header = 'trackingcode';
+        $elements[6]->alias = 'trackingcode';
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
