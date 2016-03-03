@@ -2495,7 +2495,7 @@ public function getsinglesize()
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
-INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `productdesignimage`.`product`,`productdesignimage`.`design`');
+INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 

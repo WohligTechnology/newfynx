@@ -155,7 +155,7 @@ return $query;
 
         $baseproduct=$query['product']->baseproduct;
         $product=$query['product']->id;
-          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`design`")->result();
+          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` AND `productdesignimage`.`design` = `relatedproduct`.`design` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`relatedproduct` , `relatedproduct`.`design`")->result();
         $query['productdesignimage'] = $this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product' AND `design`='$design'")->result();
 
 
