@@ -142,16 +142,20 @@ return $query;
 	{
         $where=" ";
         if($size && $color){
-            $where .=" `fynx_product`.`id`='$product' AND `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
+            $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
         }
         else{
               $where .="`fynx_product`.`id`='$product'";
         }
-        $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
-        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user'
+        $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_product`.`baseproduct` FROM `fynx_product`
         LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
         INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
-        WHERE  $where")->row();
+        WHERE  $where  GROUP BY `fynx_product`.`id`")->row();
+//        echo "SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
+//        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user'
+//        LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
+//        INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
+//        WHERE  $where";
 
         $baseproduct=$query['product']->baseproduct;
         if($baseproduct==''){
