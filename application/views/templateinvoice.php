@@ -136,8 +136,8 @@
                         $finalpricetotal=0;
                         foreach($table as $value)
                         {
-                          $ovat = $value->price * 0.05;
-                          $oprice = $value->price - $ovat;
+                          $oprice = $value->price / 1.05;
+                          $ovat = $value->price - $oprice;
 
                     ?>
 
@@ -145,8 +145,8 @@
                             <td><?php echo $counter;?></td>
                             <td><?php echo $value->name;?></td>
                             <td><?php echo $value->quantity;?></td>
-                            <td><?php echo $oprice;?></td>
-                            <td><?php echo $ovat;?></td>
+                            <td><?php echo round($oprice,2);?></td>
+                            <td><?php echo round(($ovat*$value->quantity),2);?></td>
                             <td><?php echo $value->finalprice;?></td>
                         </tr>
                         <?php
