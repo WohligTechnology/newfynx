@@ -1796,7 +1796,7 @@ public function getsinglesize()
         LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id`
         LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_wishlist`.`design`
 
-        ', "WHERE `fynx_product`.`status`=2 AND `fynx_wishlist`.`user`='$user'");
+        ', "WHERE `fynx_product`.`status`=2 AND `fynx_wishlist`.`user`='$user'","GROUP BY `fynx_product`.`id`");
         $this->load->view('json', $data);
     }
     public function newsletter()
@@ -2575,7 +2575,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     public function removeFromWishlist()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $user = $this->session->userdata('id');
+        $user = $data['user'];
         $product = $data['product'];
         $design = $data['design'];
         $data['message'] = $this->restapi_model->removeFromWishlist($user, $product, $design);
