@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class coupon_model extends CI_Model
 {
-public function create($type,$min,$max,$discount,$name,$status)
+public function create($type,$min,$max,$discount,$name,$status,$count)
 {
-$data=array("name" => $name,"status" => $status,"type" => $type,"max" => $max,"min" => $min,"discount" => $discount);
+$data=array("name" => $name,"status" => $status,"type" => $type,"max" => $max,"min" => $min,"discount" => $discount,"count" => $count);
 $query=$this->db->insert( "fynx_coupon", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_coupon")->row();
 return $query;
 }
-public function edit($id,$type,$min,$max,$discount,$name,$status)
+public function edit($id,$type,$min,$max,$discount,$name,$status,$count)
 {
-$data=array("name" => $name,"status" => $status,"type" => $type,"max" => $max,"min" => $min,"discount" => $discount);
+$data=array("name" => $name,"status" => $status,"type" => $type,"max" => $max,"min" => $min,"discount" => $discount,"count" => $count);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_coupon", $data );
 return 1;

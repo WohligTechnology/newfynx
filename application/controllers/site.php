@@ -4766,7 +4766,8 @@ $discount=$this->input->get_post("discount");
 $min=$this->input->get_post("min");
 $max=$this->input->get_post("max");
 $type=$this->input->get_post("type");
-if($this->coupon_model->create($type,$min,$max,$discount,$name,$status)==0)
+$coupon=$this->input->get_post("coupon");
+if($this->coupon_model->create($type,$min,$max,$discount,$name,$status,$coupon)==0)
 $data["alerterror"]="New coupon could not be created.";
 else
 $data["alertsuccess"]="coupon created Successfully.";
@@ -4796,7 +4797,8 @@ $discount=$this->input->get_post("discount");
 $min=$this->input->get_post("min");
 $max=$this->input->get_post("max");
 $type=$this->input->get_post("type");
-if($this->coupon_model->edit($id,$type,$min,$max,$discount,$name,$status)==0)
+$coupon=$this->input->get_post("coupon");
+if($this->coupon_model->edit($id,$type,$min,$max,$discount,$name,$status,$coupon)==0)
 $data["alerterror"]="New coupon could not be Updated.";
 else
 $data["alertsuccess"]="coupon Updated Successfully.";

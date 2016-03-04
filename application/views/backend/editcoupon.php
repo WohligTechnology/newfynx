@@ -40,6 +40,12 @@
                 <input type="text" id="max" name="max" value='<?php echo set_value('max',$before->max);?>'>
             </div>
         </div>
+            <div class="row">
+            <div class="input-field col s6">
+                <label for="count">Count</label>
+                <input type="text" id="count" name="count" value='<?php echo set_value('count',$before->count);?>'>
+            </div>
+        </div> 
         <div class="row">
             <div class="col s12 m6">
                 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>

@@ -188,6 +188,14 @@ class restapi_model extends CI_Model
         {
                 if($orderstatus==2)
                 {
+                    //update coupon
+                    
+                    $couponquery=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `id`='$couponcode'")->row();
+                    $count=$couponquery->count;
+                    $count=$count+1;
+                    $updatecouponquery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$couponcode'");
+                    
+                    
                     $query1=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
                     // DESTROY CART
                     $getuser=$this->db->query("SELECT `user` FROM `fynx_order` WHERE `id`='$orderid'")->row();
