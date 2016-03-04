@@ -33,14 +33,11 @@ function drawtable(resultrow) {
 
     }
 
-<<<<<<< HEAD
-=======
     setTimeout(function() {
       $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
   });
     },100);
->>>>>>> 916bc488deb315bdb93ab548620cdc4f4915f2e3
 
    var strVar="";
 strVar += "<div class=\"ordercard\"> <table  class=\"ordercard-table1\"><thead> <tr> <th>Id </th> <th>Name </th> <th>Email </th> <th>Order Status</th><th>Timestamp</th><th>Action</th> </tr></thead><tr> <td> <span class=\"id\">"+resultrow.id+"<\/span> <\/td><td> <span class=\"name\">"+resultrow.firstname+" " + resultrow.lastname+"<\/span> <\/td><td> <span class=\"email\">"+resultrow.email+"<\/span> <\/td><td> <span class=\"status\">"+resultrow.orderstatusname+"<\/span> <\/td><td> <span class=\"timestamp\">"+resultrow.timestamp+"<\/span><\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/editorder?id=');?>"+resultrow.id+"'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=\"return confirm('Are you sure you want to delete?');\") href='<?php echo site_url('site/deleteorder?id='); ?>"+resultrow.id+"'><i class='material-icons propericon'>delete</i></a><a class='btn btn-danger btn-xs waves-effect waves-light green pad10 z-depth-0 less-pad' target='_blank' href='<?php echo site_url('site/printorderinvoice?id='); ?>"+resultrow.id+"'><i class='material-icons print'>print</i></a></td><\/tr><\/table> <table  class=\"ordercard-table2\"> <thead> <tr> <th>Product <\/th> <th>Amount <\/th> <th>Quantity <\/th> <th>Total Amount <\/th> <\/tr><\/thead> <tbody>"+orderitems+" <\/tbody> <\/table><\/div>";
