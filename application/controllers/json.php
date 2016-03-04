@@ -2254,54 +2254,85 @@ public function getsinglesize()
         }
     }
 
-    public function forgotpassword()
+  public function forgotpassword()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $email = $data['email'];
-        $userid = $this->user_model->getidbyemail($email);
-//        echo "userid=".$userid."end";
+        $userdetail = $this->user_model->getidbyemail($email);
+        $userid = $userdetail->id;
+        $username = $userdetail->firstname.' '.$userdetail->lastname;
+
         if ($userid == '') {
-            $data['message'] = 'Not A Valid Email.';
+            $data['message'] = new stdClass();
+            $data['message']->value = 'noemail';
             $this->load->view('json', $data);
         } else {
             $hashvalue = base64_encode($userid.'&access');
-            $link = "<a href='http://localhost/pav-bhaji/#/resetpassword/$hashvalue'>Click here </a> To Reset Your Password.";
+            $link = "<a href='http://selfcareindia.com/#/forgotpassword/$hashvalue'>Click here </a> To Reset Your Password.";
 
             $this->load->library('email');
-            $this->email->from('pooja.wohlig@gmail.com', 'Access');
+            $this->email->from('info@myfynx.com', 'Selfcare');
             $this->email->to($email);
-            $this->email->subject('Forgot Password');
+            $this->email->subject('MyFynx Password Changed');
 
-            $message = "<html>
+            $message = "<html><body><div id=':1fn' class='a3s adM' style='overflow: hidden;'><div class='HOEnZb'><div class='adm'><div id='q_152da6db6beee01c_0' class='ajR h4' data-tooltip='Hide expanded content' aria-label='Hide expanded content'><div class='ajT'></div></div></div><div class='im'><u></u>
+    						 <div style='margin:0'>
 
-<body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
-    <div style='text-align:center; padding-top: 40px;'>
-        <img src='http://magicmirror.in/emaildata/email.png'>
-    </div>
-    <div style='text-align:center;   width: 50%; margin: 0 auto;'>
-        <h4 style='font-size:1.5em;padding-bottom: 5px;color: #e82a96;'>Forgot Password!</h4>
-        <p style='font-size: 1em;padding-bottom: 10px;'>$link </p>
+    						 <u></u>
+    						 <div style='margin:0 auto;width:90%'>
+    						 <div style='margin:50px auto;width:80%'>
+    						 <div style='text-align:center' align='center'>
+    						  <img src='http://selfcareindia.com/img/logo.png' alt='Selfcare' class='CToWUd'>
+    						 </div>
+    						 <p style='color:#000;font-family:Roboto;font-size:20px'>Dear <span style='color:#000;font-family:Roboto;font-size:20px'>$username</span>,</p>
+    						 <p style='color:#000;font-family:Roboto;font-size:20px'>Kindly click on the link below to reset your SelfCare password.
+</p>
+    						 <p style='color:#000;font-family:Roboto;font-size:20px'>$link</p>
 
-    </div>
-    <div style='text-align:center;position: relative;'>
-        <p style=' position: absolute; top: 8%;left: 50%; transform: translatex(-50%); font-size: 1em;margin: 0; letter-spacing:2px; font-weight: bold;'>
-            Thank You
-        </p>
-        <img src='http://magicmirror.in/emaildata/magicfooter.png '>
-    </div>
-</body>
+    						 <span style='color:#000;font-family:Roboto;font-size:20px'>Thank You,</span>
+    						 <span style='color:#000;display:block;font-family:Roboto;font-size:20px'>Team Selfcare !</span>
+    						 </div>
+    						 </div>
+    						 <u></u>
+    						 <footer style='background:#e96542;padding:10px 0'>
+    						 <div style='margin:0 auto;width:90%'>
+    						 <div>
+    						 <table>
+    						 <tbody><tr>
+    						 <td style='padding:0 15px'><div>
+    						 <span style='color:#ffd8ce;font-family:Roboto;font-size:14px'>COPYRIGHT@SELFCARE2016</span>
+    						 </div></td>
+    						 <td style='padding:0 15px'><div>
+    						  <span style='color:#ffd8ce;font-family:Roboto;font-size:14px'>CONTACT US<a href='tel:+912261312222' style='color:#ffd8ce;font-family:Roboto;font-size:14px;margin:0px 10px;text-decoration:none' target='_blank'>+91 22 6131 2222</a></span>
+    						 </div></td>
+    						 <td style='padding:0 15px;vertical-align:middle' valign='middle'>
+    						  <div>
+    						  <span style='color:#ffd8ce;display:block;font-family:Roboto;font-size:14px'>FOLLOW US ON</span>
+    						  <a href='https://www.facebook.com/selfcarebysuman' style='color:#ffd8ce;display:inline-block;font-family:Roboto;font-size:18px;margin:3px 5px 0 0' target='_blank'><img src='http://selfcareindia.com/img/selfcare-facebook.png' alt='Facebook' width='20' class='CToWUd'></a>
+    						  <a href='https://twitter.com/selfcarebysuman' style='color:#ffd8ce;display:inline-block;font-family:Roboto;font-size:18px;margin:3px 5px 0 0' target='_blank'><img src='http://selfcareindia.com/img/selfcare-twitter.png' alt='Twitter' width='20' class='CToWUd'></a>
+    						  <a href='https://www.instagram.com/selfcarebysuman' style='color:#ffd8ce;display:inline-block;font-family:Roboto;font-size:18px;margin:3px 5px 0 0' target='_blank'><img src='http://selfcareindia.com/img/selfcare-insta.png' alt='Instagram' width='20' class='CToWUd'></a>
+    						  <a href='https://www.youtube.com/channel/UCVqKgmC6eaMrgPyXoOcOz2A' style='color:#ffd8ce;display:inline-block;font-family:Roboto;font-size:18px;margin:3px 5px 0 0' target='_blank'><img src='http://selfcareindia.com/img/selfcare-youtube.png' alt='Youtube' width='20' class='CToWUd'></a>
+    						 </div>
+    						 </td>
+    						 </tr>
+    						 </tbody></table>
+    						 </div>
+    						 </div>
+    						 </footer>
+    						 </div>
 
-</html>";
+
+    						 </div></div></div></body></html>";
             $this->email->message($message);
             $this->email->send();
-//            echo $this->email->print_debugger();
-//        $data["message"] = $this->email->print_debugger();
-//        $data["message"] = 'true';
-//        $this->load->view("json", $data);
+
+            $data['message'] = new stdClass();
+            $data['message']->value = true;
+            $this->load->view('json', $data);
         }
     }
 
-    public function forgotpasswordsubmit()
+  public function forgotpasswordsubmit()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $password = $data['password'];
