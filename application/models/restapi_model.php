@@ -184,20 +184,53 @@ class restapi_model extends CI_Model
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount)
+		public function updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount,$couponcode)
         {
-                if($orderstatus==2){
+                if($orderstatus==2)
+                {
+                    //update coupon
+                    
+                    $couponquery=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `id`='$couponcode'")->row();
+                    $count=$couponquery->count;
+                    $count=$count+1;
+                    $updatecouponquery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$couponcode'");
+                    
+                    
                     $query1=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-             // DESTROY CART
+                    // DESTROY CART
                     $getuser=$this->db->query("SELECT `user` FROM `fynx_order` WHERE `id`='$orderid'")->row();
                     $user=$getuser->user;
                     $this->cart->destroy();
                     $deletecart=$this->db->query("DELETE FROM `fynx_cart` WHERE `user`='$user'");
-            redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
+
+                    // reduce quantity
+                    // get product from order items
+
+                    $totalorderitem=$this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order`='$orderid'")->result();
+                    foreach($totalorderitem as $item)
+                    {
+                        $quantity=$item->quantity;
+                        $product=$item->product;
+                        $getproduct=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+                        $originalquantity=$getproduct->quantity;
+                        $updatedquantity=$originalquantity-$quantity;
+                        $updateproductqty=$this->db->query("UPDATE `fynx_product` SET `quantity`='$updatedquantity' WHERE `id`='$product'");
+                        if($updateproductqty < 10){
+                            $this->load->library('email');
+                            $this->email->from('vigwohlig@gmail.com', 'MyFynx');
+                            $this->email->to("jagruti@wohlig.com");
+                            $this->email->subject('Inventory');
+                            $message = "Product Id : ". $product. "Quantity is ".$updatedquantity;
+                            $this->email->message($message);
+                            $this->email->send();
+                        }
+                    }
+                    redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
                 }
-                else{
-                      $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-            redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+                else
+                {
+                    $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+                    redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
                 }
             }
 
@@ -209,6 +242,64 @@ class restapi_model extends CI_Model
 		public function getOneCart($orderitemid){
     $query=$this->db->query("SELECT `id`, `discount`, `order`, `product`, `quantity`, `price`, `finalprice`, `design`, `checkcustom` as `custom` FROM `fynx_orderitem` WHERE `fynx_orderitem`.`id`='$orderitemid' AND `checkcustom` !=''")->row();
         return $query;
+    }
+    public function checkCoupon($couponname)
+    {
+//      check if old or new user
+        $user = $this->session->userdata('id');
+        $totalamount=$this->restapi_model->totalcart($user);
+        $query=$this->db->query("SELECT `id`, `type`, `min`, `status`, `max`, `discount`, `name` FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
+        $min=$query->min;
+        $id=$query->id;
+        $max=$query->max;
+        $discount=$query->discount;
+        $count=$query->count;
+        $type=$query->type;
+        $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
+        $countrows=$orderquery->num_rows();
+        if($countrows > 0 AND $type==1)
+        {
+
+//       he is old user
+            if($totalamount > $min && $totalamount < $max)
+            {
+                $substracteddiscountamout=($discount *$totalamount)/100;
+                $calculatedamount=$totalamount-$substracteddiscountamout;
+                $query->calculatedamount=$calculatedamount;
+                // increment count
+                $count=$count+1;
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                return $query;
+
+            }
+            if($totalamount > $max){
+                return false;
+            }
+
+        }
+        else if($countrows == 0 AND $type==2)
+        {
+//            he is new user
+            if($totalamount > $min && $totalamount < $max)
+            {
+                $substracteddiscountamout=($discount *$totalamount)/100;
+                $calculatedamount=$totalamount-$substracteddiscountamout;
+                $query->calculatedamount=$calculatedamount;
+                // in crement count
+                $count=$count+1;
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                return $query;
+
+            }
+            if($totalamount > $max){
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+
+
     }
 }
 ?>

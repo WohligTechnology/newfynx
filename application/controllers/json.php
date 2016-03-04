@@ -1617,12 +1617,19 @@ public function getsinglesize()
     }
     public function addToCart()
     {
-        $product = $this->input->get_post('product');
-        $quantity = $this->input->get_post('quantity');
-        $design = $this->input->get_post('design');
-        $json = $this->input->get_post('json');
-        $backprice = $this->input->get_post('backprice');
-        $size = $this->input->get_post('size');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $product = $data['product'];
+        $quantity = $data['quantity'];
+        $design = $data['design'];
+        $json = $data['json'];
+        $backprice = $data['backprice'];
+        $size = $data['size'];
+//        $product = $this->input->get_post('product');
+//        $quantity = $this->input->get_post('quantity');
+//        $design = $this->input->get_post('design');
+//        $json = $this->input->get_post('json');
+//        $backprice = $this->input->get_post('backprice');
+//        $size = $this->input->get_post('size');
         $data['message'] = $this->user_model->addToCart($product, $quantity, $design,$json,$backprice,$size);
         $this->load->view('json', $data);
     }
@@ -1648,11 +1655,10 @@ public function getsinglesize()
     public function totalitemcart()
     {
         $user = $this->session->userdata('id');
-        if($user==''){
-
+        if($user == ''){
              $data['message'] = $this->cart->total_items();
         }
-        else if($user!=''){
+        else if($user != ''){
              $data['message'] = $this->restapi_model->totalitemsincart($user);
         }
 
@@ -2346,6 +2352,12 @@ public function getsinglesize()
         $elements[5]->header = 'orderstatusname';
         $elements[5]->alias = 'orderstatusname';
 
+        $elements[6] = new stdClass();
+        $elements[6]->field = '`fynx_order`.`trackingcode`';
+        $elements[6]->sort = '1';
+        $elements[6]->header = 'trackingcode';
+        $elements[6]->alias = 'trackingcode';
+
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
         $orderby = $this->input->get_post('orderby');
@@ -2482,7 +2494,7 @@ public function getsinglesize()
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
-INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", 'GROUP BY `productdesignimage`.`product`,`productdesignimage`.`design`');
+INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
@@ -2666,7 +2678,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
           $orderstatus = 5;
         }
         $orderid = $this->input->post("orderNo");
-        $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount);
+        $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount,$couponcode);
         $this->load->view('json',$data);
     }
 
@@ -2755,6 +2767,12 @@ imagesavealpha($rotate, true);
         $data['message'] = $this->restapi_model->getOneCart($orderitemid);
         $this->load->view('json', $data);
     }
+    public function checkCoupon()
+    {
+        $couponname = $this->input->get_post('couponname');
+        $data['message'] = $this->restapi_model->checkCoupon($couponname);
+        $this->load->view('json', $data);
+    }
 
 
 
@@ -2762,5 +2780,8 @@ imagesavealpha($rotate, true);
 //    function resizeImage($image) {
 //    imagecopyresized ( $thumbfront , $dbfrontimg , 0 , 0 , 0 , 0 , jagz width size * 5 ,  jagz height size * 5 , $frontwidth , $frontheight );
 //    }
-
+//  $query=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
+//  $count=$query->count;
+//  $count=$count+1;
+//    $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `name` LIKE '$couponname'");
 }

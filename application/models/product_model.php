@@ -142,30 +142,34 @@ return $query;
 	{
         $where=" ";
         if($size && $color){
-            $where .=" `fynx_product`.`id`='$product' AND `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
+            $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
         }
         else{
               $where .="`fynx_product`.`id`='$product'";
         }
-        $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
-        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user'
+        $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_product`.`baseproduct` FROM `fynx_product`
         LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
         INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
-        WHERE  $where")->row();
+        WHERE  $where  GROUP BY `fynx_product`.`id`")->row();
+//        echo "SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_wishlist`.`user`,`fynx_product`.`baseproduct` FROM `fynx_product`
+//        LEFT OUTER JOIN `fynx_wishlist` ON `fynx_wishlist`.`product`=`fynx_product`.`id` AND `fynx_wishlist`.`user`='$user'
+//        LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
+//        INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
+//        WHERE  $where";
 
         $baseproduct=$query['product']->baseproduct;
+        if($baseproduct==''){
+            $baseproduct=$query['product']->productname;
+        }
         $product=$query['product']->id;
-          $query['relatedproduct'] = $this->db->query("SELECT  `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct`
-LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` 
-WHERE `relatedproduct`.`product`='$product'
-GROUP BY `relatedproduct`.`relatedproduct`")->result();
+          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` AND `productdesignimage`.`design` = `relatedproduct`.`design` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`relatedproduct` , `relatedproduct`.`design`")->result();
         $query['productdesignimage'] = $this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product' AND `design`='$design'")->result();
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
-        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct')")->result();
+        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
 
 
 		return $query;
@@ -207,75 +211,22 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
             $baseproduct=trim($row['baseproduct']);
             $designname=trim($row['designname']);
             $designs=$row['designimage'];
-            $relatedproduct=trim($row['relatedproduct']);
-            $relateddesign=trim($row['relateddesign']);
             $alldesignname=explode(",",$designname);
             $alldesigns=explode(",",$designs);
-            if($relatedproduct !=''){
-              $allrelatedproduct=explode(",",$relatedproduct);
-            }
-            if($relateddesign !=''){
-              $allrelateddesign=explode(",",$relateddesign);
-            }
-
-
-
-
-		$data  = array(
-            "quantity" => $quantity,
-            "name" => $name,
-            "description" => $description,
-            "visibility" => 1,
-            "price" => $price,
-            "status" => 2,
-            "sku" => $sku,
-            "image1" => $image1,
-            "image2" => $image2,
-            "baseproduct" => $baseproduct
-		);
-		$query=$this->db->insert( 'fynx_product', $data );
-		$productid=$this->db->insert_id();
-
-// related products upload
-
-  if($allrelatedproduct)
-{
-  foreach($allrelatedproduct as $key => $relatedproduct)
-{
-      $relatedproduct=trim($relatedproduct);
-      $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
-      if(empty($relatedproductquery))
-      {
-
-      }
-      else
-      {
-          $relatedproduct=$relatedproductquery->id;
-
-          //check design is there or not
-        $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
-        if(empty($checkdesignquery))
-        {
-            // create new design and get design id
-            $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
-            $designid=$this->db->insert_id();
-        }
-        else{
-          $designid=$checkdesignquery->id;
-        }
-
-        $data2  = array(
-        'product' => $productid,
-        'relatedproduct' => $relatedproduct,
-        'design' => $designid
-        );
-         $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
-       }
-}
-// related products end
-}
-
-
+            $data  = array(
+                "quantity" => $quantity,
+                "name" => $name,
+                "description" => $description,
+                "visibility" => 1,
+                "price" => $price,
+                "status" => 2,
+                "sku" => $sku,
+                "image1" => $image1,
+                "image2" => $image2,
+                "baseproduct" => $baseproduct
+            );
+            $query=$this->db->insert( 'fynx_product', $data );
+            $productid=$this->db->insert_id();
 
 
            foreach($alldesignname as $key => $designname)
@@ -302,7 +253,6 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                   $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
 
-
                 }
 
            }
@@ -314,7 +264,7 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
 
             if(empty($query1))
             {
-                $data=array("name" => $category,"status" => 1);
+                $data=array("name" => $category,"status" => 2);
                 $query=$this->db->insert( "fynx_category", $data );
                 $categoryid=$this->db->insert_id();
 
@@ -323,7 +273,7 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                   $querysubcat=$this->db->query("SELECT `id` FROM `fynx_subcategory` WHERE `name` = '$subcategory' AND `category`='$categoryid'")->row();
                 if(empty($querysubcat))
                 {
-                    $data=array("name" => $subcategory,"status" => 1,"category" => $categoryid);
+                    $data=array("name" => $subcategory,"status" => 2,"category" => $categoryid);
                     $query=$this->db->insert( "fynx_subcategory", $data );
                     $subcategoryid=$this->db->insert_id();
 
@@ -353,7 +303,7 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                   $querysubcat=$this->db->query("SELECT `id` FROM `fynx_subcategory` WHERE `name` = '$subcategory' AND `category`='$categoryid'")->row();
                 if(empty($querysubcat))
                 {
-                    $data=array("name" => $subcategory,"status" => 1,"category" => $categoryid);
+                    $data=array("name" => $subcategory,"status" => 2,"category" => $categoryid);
                     $query=$this->db->insert( "fynx_subcategory", $data );
                     $subcategoryid=$this->db->insert_id();
 
@@ -374,12 +324,14 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            //INSERT type
+            
+    //INSERT type
+            $type = trim($type);
              $query2=$this->db->query("SELECT `id` FROM `fynx_type` WHERE `name` = '$type'")->row();
 
             if(empty($query2))
             {
-                $data=array("name" => $type,"status" => 1);
+                $data=array("name" => $type,"status" => 2);
                 $query=$this->db->insert( "fynx_type", $data );
                 $typeid=$this->db->insert_id();
 
@@ -396,12 +348,13 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            //INSERT color
+            
+    //INSERT color
              $query3=$this->db->query("SELECT `id` FROM `fynx_color` WHERE `name` = '$color'")->row();
 
             if(empty($query3))
             {
-                $data=array("name" => $color,"status" => 1);
+                $data=array("name" => $color,"status" => 2);
                 $query=$this->db->insert( "fynx_color", $data );
                 $colorid=$this->db->insert_id();
 
@@ -424,7 +377,7 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
 
             if(empty($query4))
             {
-                $data=array("name" => $size,"status" => 1);
+                $data=array("name" => $size,"status" => 2);
                 $query=$this->db->insert( "fynx_size", $data );
                 $sizeid=$this->db->insert_id();
 
@@ -464,11 +417,72 @@ GROUP BY `relatedproduct`.`relatedproduct`")->result();
                 $query=$this->db->update( "fynx_product", $data );
             }
 
-
-
-
-
         }
+        // for related products only
+        foreach($file as $row1)
+        {
+            
+            $relatedproduct=trim($row1['relatedproduct']);
+            $name=trim($row1['name']);
+            $relateddesign=trim($row1['relateddesign']);
+            
+            if($relatedproduct !=''){
+              $allrelatedproduct=explode(",",$relatedproduct);
+            }
+            if($relateddesign !=''){
+              $allrelateddesign=explode(",",$relateddesign);
+            }
+            
+            $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
+            if(empty($checkproduct))
+            {
+                
+            }
+            else
+            {
+                $productid=$checkproduct->id;
+                 // related products upload
+
+                  if($allrelatedproduct)
+                {
+                      foreach($allrelatedproduct as $key => $relatedproduct)
+                    {
+                          $relatedproduct=trim($relatedproduct);
+                          $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
+                          if(empty($relatedproductquery))
+                          {
+                          }
+                          else
+                          {
+                              $relatedproduct=$relatedproductquery->id;
+
+                              //check design is there or not
+                            $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
+                            if(empty($checkdesignquery))
+                            {
+                                // create new design and get design id
+                                $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
+                                $designid=$this->db->insert_id();
+                            }
+                            else{
+                              $designid=$checkdesignquery->id;
+                            }
+
+                            $data2  = array(
+                            'product' => $productid,
+                            'relatedproduct' => $relatedproduct,
+                            'design' => $designid
+                            );
+                             $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
+                           }
+                    }
+                // related products end
+                }
+            }
+          
+            
+        }
+         
 			return  1;
 	}
 

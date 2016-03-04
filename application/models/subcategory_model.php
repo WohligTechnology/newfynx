@@ -44,7 +44,9 @@ return $query;
 		);
 		foreach($query as $row)
 		{
-			$return[$row->id]=$row->name;
+            $query=$this->db->query("SELECT * FROM `fynx_category` WHERE `id`='$row->category'")->row();
+            $catname=$query->name;
+			$return[$row->id]=$catname." - ".$row->name;
 		}
 		
 		return $return;

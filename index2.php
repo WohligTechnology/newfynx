@@ -10,8 +10,8 @@
     <title ng-bind="'Project Name - '+template.title">Project Name</title>
     <link rel="shortcut icon" href="img/favicon.ico" />
 
-    <base href="FynxPreview/" target="_blank">
-    <link rel="stylesheet" type="text" href="css/main.css" />
+    <base href="/newfynx/FynxPreview/" target="_blank">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
     <script>
       var isproduction=false;
     </script>

@@ -7,7 +7,7 @@ console.log($state);
   $scope.custom = []
   $scope.doIt = function() {
     NavigationService.getOneCart($stateParams.id, $stateParams.user, function(data) {
-      $scope.custom = JSON.parse(data.json);
+      $scope.custom = JSON.parse(data.custom);
 
       // $scope.$on('$viewContentLoaded', function(event) {
       console.log("sdfasdfasdfa");
