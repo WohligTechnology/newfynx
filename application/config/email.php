@@ -3,7 +3,7 @@
  * Configuration file for Email library
  */
 $config['protocol'] = 'smtp';
-$config['charset'] = 'utf-8';
+$config['charset'] = 'iso-8859-1';
 $config['mailtype'] = 'html';
 $config['smtp_timeout'] = 5;
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
