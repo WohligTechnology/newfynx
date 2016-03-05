@@ -3,10 +3,10 @@
  * Configuration file for Email library
  */
 $config['protocol'] = 'smtp';
-$config['charset'] = 'iso-8859-1';
+$config['charset'] = 'utf-8';
 $config['mailtype'] = 'html';
 $config['smtp_timeout'] = 5;
-$config['smtp_host'] = 'ssl://smtp.googlemail.com';
-$config['smtp_port'] = 465;
+$config['smtp_host'] = 'smtp.mandrillapp.com';
+$config['smtp_port'] = 587;
 $config['smtp_user'] = 'info@myfynx.com';
 $config['smtp_pass'] = 'RFvI2aykFD8b74slgl8fuQ';
