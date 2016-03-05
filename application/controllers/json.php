@@ -2328,8 +2328,6 @@ public function getsinglesize()
         $this->email->message($message);
         $this->email->send();
             
-            
-            print_r($this->email->print_debugger());
             // email ends
             
             $data['message'] = new stdClass();
