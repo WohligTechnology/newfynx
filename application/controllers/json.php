@@ -2329,7 +2329,7 @@ public function getsinglesize()
         $this->email->send();
             
             // email ends
-            $data['message'] = $this->email->print_debugger();
+           echo $this->email->print_debugger();
             $data['message'] = new stdClass();
             $data['message']->value = true;
             $this->load->view('json', $data);
