@@ -1001,9 +1001,9 @@ WHERE `fynx_product`.`id`='$productid'")->row();
         $name=$getemailbyid->name;
 
 	 if(!$query)
-		 return  0;
+		 return  false;
 	 else
-		 return  1;
+		 return  true;
 		}
      function getidbyemail($email)
  {
