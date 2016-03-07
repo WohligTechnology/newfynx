@@ -262,6 +262,7 @@ class restapi_model extends CI_Model
         $count=$query->count;
         $type=$query->type;
         $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
+        // old or new user
         $countrows=$orderquery->num_rows();
         if($totalamount < $min){
             $object = new stdClass();
