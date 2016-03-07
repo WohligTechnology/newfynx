@@ -257,9 +257,11 @@ class restapi_model extends CI_Model
         $type=$query->type;
         $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
         $countrows=$orderquery->num_rows();
-        if($countrows > 0 AND $type==1)
+        if($totalamount < $min){
+            return false;
+        } 
+        else if($countrows > 0 AND $type==1)
         {
-
 //       he is old user
             if($totalamount > $min && $totalamount < $max)
             {
@@ -295,6 +297,7 @@ class restapi_model extends CI_Model
                 return false;
             }
         }
+        
         else{
             return false;
         }

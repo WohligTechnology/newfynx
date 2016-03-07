@@ -2513,16 +2513,14 @@ public function getsinglesize()
         $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
         $this->chintantable->createelement('`productdesignimage`.`design`', '1', 'design', 'design');
         $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'image', 'image');
+        $this->chintantable->createelement('`productdesignimage`.`id`', '1', 'orderingid', 'orderingid');
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-//        $orderby = 'id';
-//        if ($price == '2') {
-//            $orderorder = 'DESC';
-//        }
-//        else if($price == '1') {
-//            $orderorder = 'ASC';
-//        }
+        if ($orderby == '') {
+            $orderby = 'id';
+            $orderorder = 'DESC';
+        }
 
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
