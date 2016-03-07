@@ -2056,6 +2056,12 @@ $elements[9]->field="`fynx_homeslide`.`centeralign`";
 $elements[9]->sort="1";
 $elements[9]->header="Center Align";
 $elements[9]->alias="centeralign";
+    
+$elements[10]=new stdClass();
+$elements[10]->field="`fynx_homeslide`.`order`";
+$elements[10]->sort="1";
+$elements[10]->header="Order";
+$elements[10]->alias="order";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -2116,6 +2122,7 @@ $template=$this->input->get_post("template");
 $class=$this->input->get_post("class");
 $text=$this->input->get_post("text");
 $centeralign=$this->input->get_post("centeralign");
+$order=$this->input->get_post("order");
 $image=$this->user_model->uploadImage();
 
 //  $config['upload_path'] = './uploads/';
@@ -2151,7 +2158,7 @@ $image=$this->user_model->uploadImage();
 //                    // return false;
 //                }
 //            }
-if($this->homeslide_model->create($name,$link,$target,$status,$image,$template,$class,$text,$centeralign)==0)
+if($this->homeslide_model->create($name,$link,$target,$status,$image,$template,$class,$text,$centeralign,$order)==0)
 $data["alerterror"]="New homeslide could not be created.";
 else
 $data["alertsuccess"]="homeslide created Successfully.";
@@ -2204,6 +2211,7 @@ $template=$this->input->get_post("template");
 $class=$this->input->get_post("class");
 $text=$this->input->get_post("text");
 $centeralign=$this->input->get_post("centeralign");
+$order=$this->input->get_post("order");
     $image=$this->user_model->uploadImage();
 // $config['upload_path'] = './uploads/';
 //						$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -2222,7 +2230,7 @@ $centeralign=$this->input->get_post("centeralign");
 //						   // print_r($image);
 //							$image=$image->image;
 //						}
-if($this->homeslide_model->edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign)==0)
+if($this->homeslide_model->edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign,$order)==0)
 $data["alerterror"]="New homeslide could not be Updated.";
 else
 $data["alertsuccess"]="homeslide Updated Successfully.";

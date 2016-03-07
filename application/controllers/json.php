@@ -1912,7 +1912,7 @@ public function getsinglesize()
 
     public function getallslider()
     {
-        $data['message'] = $this->db->query('SELECT `id`, `name`, `link`, `target`, `status`, `image`, `template`, `class`, `text`, `centeralign` FROM `fynx_homeslide` WHERE 1')->result();
+        $data['message'] = $this->db->query('SELECT `id`, `name`, `link`, `target`, `status`, `image`, `template`, `class`, `text`, `centeralign`,`order` FROM `fynx_homeslide` WHERE `status`=2 ORDER BY `order` ASC')->result();
         $this->load->view('json', $data);
     }
     public function getdiscountcoupon()
@@ -2516,17 +2516,17 @@ public function getsinglesize()
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-        $orderby = 'price';
-        if ($price == '2') {
-            $orderorder = 'DESC';
-        }
-        else if($price == '1') {
-            $orderorder = 'ASC';
-        }
+//        $orderby = 'id';
+//        if ($price == '2') {
+//            $orderorder = 'DESC';
+//        }
+//        else if($price == '1') {
+//            $orderorder = 'ASC';
+//        }
 
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
-        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, '`productdesignimage`.`design` DESC, `fynx_designs`.`name` ASC', '', $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');

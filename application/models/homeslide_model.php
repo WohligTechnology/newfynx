@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class homeslide_model extends CI_Model
 {
-public function create($name,$link,$target,$status,$image,$template,$class,$text,$centeralign)
+public function create($name,$link,$target,$status,$image,$template,$class,$text,$centeralign,$order)
 {
-$data=array("name" => $name,"link" => $link,"target" => $target,"status" => $status,"image" => $image,"template" => $template,"class" => $class,"text" => $text,"centeralign" => $centeralign);
+$data=array("name" => $name,"link" => $link,"target" => $target,"status" => $status,"image" => $image,"template" => $template,"class" => $class,"text" => $text,"centeralign" => $centeralign,"order" => $order);
 $query=$this->db->insert( "fynx_homeslide", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,7 +24,7 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_homeslide")->row();
 return $query;
 }
-public function edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign)
+public function edit($id,$name,$link,$target,$status,$image,$template,$class,$text,$centeralign,$order)
 {
                     if($image=="")
 						{
@@ -32,7 +32,7 @@ public function edit($id,$name,$link,$target,$status,$image,$template,$class,$te
 						   // print_r($image);
 							$image=$image->image;
 						}
-$data=array("name" => $name,"link" => $link,"target" => $target,"status" => $status,"image" => $image,"template" => $template,"class" => $class,"text" => $text,"centeralign" => $centeralign);
+$data=array("name" => $name,"link" => $link,"target" => $target,"status" => $status,"image" => $image,"template" => $template,"class" => $class,"text" => $text,"centeralign" => $centeralign,"order" => $order);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_homeslide", $data );
 return 1;
