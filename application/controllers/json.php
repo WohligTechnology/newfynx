@@ -2286,7 +2286,7 @@ public function getsinglesize()
                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'>$username</span>,</p>
                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Kindly click on the link below to reset your Myfynx password.</p>";
 
-   
+
         $message.="
 
 
@@ -2327,7 +2327,7 @@ public function getsinglesize()
 
         $this->email->message($message);
         $this->email->send();
-            
+
             // email ends
 //           echo $this->email->print_debugger();
             $data['message'] = new stdClass();
@@ -2698,7 +2698,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
 //       $orderid = $this->input->get_post('MerchantRefNo');
 //       $transactionid = $this->input->get_post('TransactionID');
 //       $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode,$amount);
-        $workingKey='D0DEE833B66E09521E980B82028E3119';
+        $workingKey='8A245B413FC7A433C2D98DF4A9C87723';
         $encResponse=$this->input->post("encResp");
         $rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
         $decryptValues=explode('&', $rcvdString);
