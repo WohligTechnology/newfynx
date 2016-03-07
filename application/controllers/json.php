@@ -2254,7 +2254,7 @@ public function getsinglesize()
         }
     }
 
-  public function forgotpassword()
+  public function forgotpasswordold()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $email = $data['email'];
@@ -2344,7 +2344,7 @@ public function getsinglesize()
         $data['message'] = $this->user_model->forgotpasswordsubmit($hashcode, $password);
         $this->load->view('json', $data);
     }
-    public function newforgotpassword()
+    public function forgotpassword()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $email = $data['email'];
@@ -2363,6 +2363,9 @@ public function getsinglesize()
             $data['username']=$username;
             $viewcontent = $this->load->view('emailers/forgotpassword', $data, true);
             $this->menu_model->emailer($viewcontent,'Forgot Password','info@myfynx.com',$email,'Team MyFynx',$username);
+            $data['message'] = new stdClass();
+            $data['message']->value = true;
+            $this->load->view('json', $data);
     }
     }
 
