@@ -2344,6 +2344,27 @@ public function getsinglesize()
         $data['message'] = $this->user_model->forgotpasswordsubmit($hashcode, $password);
         $this->load->view('json', $data);
     }
+    public function newforgotpassword()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email = $data['email'];
+        $userdetail = $this->user_model->getidbyemail($email);
+        $userid = $userdetail->id;
+        $username = $userdetail->firstname.' '.$userdetail->lastname;
+
+        if ($userid == '') {
+            $data['message'] = new stdClass();
+            $data['message']->value = 'noemail';
+            $this->load->view('json', $data);
+        } else {
+            $hashvalue = base64_encode($userid.'&access');
+            $link = "<a href='http://myfynx.com/#/forgotpassword/$hashvalue'>Click here </a> To Reset Your Password.";
+            $data['link']=$link;
+            $data['username']=$username;
+            $viewcontent = $this->load->view('emailers/forgotpassword', $data, true);
+            $this->menu_model->emailer($viewcontent,'Forgot Password','info@myfynx.com',$email,'Team MyFynx',$username);
+    }
+    }
 
     public function getuserorders()
     {

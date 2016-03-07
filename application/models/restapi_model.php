@@ -247,81 +247,73 @@ class restapi_model extends CI_Model
     {
 //      check if old or new user
         $user = $this->session->userdata('id');
+        $checkuser=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'")->row();
         $totalamount=$this->restapi_model->totalcart($user);
         $query=$this->db->query("SELECT `id`, `type`, `min`, `status`, `max`, `discount`, `name` FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
-        if(empty($query)){
+        $min=$query->min;
+        $max=$query->max;
+        $count=$query->count;
+        $id=$query->id;
+        $type=$query->type;
+        $discount=$query->discount;
+        if(empty($query))
+        {
+            // coupon name is not correct
             $object = new stdClass();
             $object->value = false;
             $object->comment = "Invalid Coupon Code!!";
             return $object;
         }
-        $min=$query->min;
-        $id=$query->id;
-        $max=$query->max;
-        $discount=$query->discount;
-        $count=$query->count;
-        $type=$query->type;
-        $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
-        // old or new user
-        $countrows=$orderquery->num_rows();
-        if($totalamount < $min){
+        else if($totalamount < $min)
+        {
             $object = new stdClass();
             $object->value = false;
             $object->comment = "Sorry Amount Value Too Low For Coupon!!";
             return $object;
         } 
-        else if($countrows > 0 AND $type==1)
+        else
         {
-//       he is old user
-            if($totalamount > $min && $totalamount < $max)
+            if(empty($checkuser) && $type==2)
             {
+                    //new user
+                     // check amount as per discount
                 $substracteddiscountamout=($discount *$totalamount)/100;
+                if($substracteddiscountamout > $max )
+                {
+                    $substracteddiscountamout = $max;
+                }
                 $calculatedamount=$totalamount-$substracteddiscountamout;
                 $query->calculatedamount=$calculatedamount;
-                // increment count
-                $count=$count+1;
-                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                    // increment count
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`=`count`+1 WHERE `id`='$id'");
                 return $query;
-
             }
-            if($totalamount > $max){
-                $object = new stdClass();
-                $object->value = false;
-                $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
-                return $object;
-            }
-
-        }
-        else if($countrows == 0 AND $type==2)
-        {
-//            he is new user
-            if($totalamount > $min && $totalamount < $max)
+            else if((!empty($checkuser)) && $type==1)
             {
+//                old user
+                      // check amount as per discount
                 $substracteddiscountamout=($discount *$totalamount)/100;
+                if($substracteddiscountamout > $max )
+                {
+                    $substracteddiscountamout = $max;
+                }
                 $calculatedamount=$totalamount-$substracteddiscountamout;
                 $query->calculatedamount=$calculatedamount;
-                // in crement count
-                $count=$count+1;
-                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `id`='$id'");
+                    // increment count
+                $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`=`count`+1 WHERE `id`='$id'");
                 return $query;
-
+                
             }
-            if($totalamount > $max){
-                $object = new stdClass();
-                $object->value = false;
-                $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
-                return $object;
+            else 
+            {
+                    $object = new stdClass();
+                    $object->value = false;
+                    $object->comment = "Invalid Coupon For This User";
+                    return $object;
             }
+           
         }
-        
-        else{
-                $object = new stdClass();
-                $object->value = false;
-                $object->comment = "This Coupon Is Not Valid!!";
-                return $object;
-        }
-
-
+      
     }
 }
 ?>

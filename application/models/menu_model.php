@@ -151,5 +151,81 @@ class Menu_model extends CI_Model
 		//print_r($url);
 		return $url;
 	}
+    
+    public function emailer($htmltext,$subject,$fromemail,$toemail,$fromname,$toname){
+        try {
+    $mandrill = new Mandrill();
+    $message = array(
+        'html' => $htmltext,
+        'text' => 'MyFynx',
+        'subject' => $subject,
+        'from_email' => "info@myfynx.com",
+        'from_name' => "My Fynx",
+        'to' => array(
+            array(
+                'email' => $toemail,
+                'name' => $toname,
+                'type' => 'to'
+            )
+        ),
+        'headers' => array('Reply-To' => 'info@myfynx.com'),
+        'important' => false,
+        'track_opens' => null,
+        'track_clicks' => null,
+        'auto_text' => null,
+        'auto_html' => null,
+        'inline_css' => null,
+        'url_strip_qs' => null,
+        'preserve_recipients' => null,
+        'view_content_link' => null,
+        'tracking_domain' => null,
+        'signing_domain' => null,
+        'return_path_domain' => null,
+        'merge' => true,
+        'merge_language' => 'mailchimp',
+        'global_merge_vars' => array(
+            array(
+                'name' => 'merge1',
+                'content' => 'merge1 content'
+            )
+        ),
+        'merge_vars' => array(
+            array(
+                'rcpt' => 'recipient.email@example.com',
+                'vars' => array(
+                    array(
+                        'name' => 'merge2',
+                        'content' => 'merge2 content'
+                    )
+                )
+            )
+        )
+    );
+    $async = false;
+    $ip_pool = 'Main Pool';
+    $send_at = 'example send_at';
+    $result = $mandrill->messages->send($message, $async, $ip_pool);
+            echo "print result";
+    print_r($result);
+    /*
+    Array
+    (
+        [0] => Array
+            (
+                [email] => recipient.email@example.com
+                [status] => sent
+                [reject_reason] => hard-bounce
+                [_id] => abc123abc123abc123abc123abc123
+            )
+    
+    )
+    */
+} catch(Mandrill_Error $e) {
+    // Mandrill errors are thrown as exceptions
+    echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+    // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+    throw $e;
+}
+    }
 }
 ?>
