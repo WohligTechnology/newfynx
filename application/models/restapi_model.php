@@ -258,7 +258,9 @@ class restapi_model extends CI_Model
         $orderquery=$this->db->query("SELECT * FROM `fynx_order` WHERE `user`='$user'");
         $countrows=$orderquery->num_rows();
         if($totalamount < $min){
-            return false;
+            $object = new stdClass();
+            $object->value = false;
+            $object->comment = "Sorry Amount Value Too Low For Coupon!!";
         } 
         else if($countrows > 0 AND $type==1)
         {
@@ -275,7 +277,9 @@ class restapi_model extends CI_Model
 
             }
             if($totalamount > $max){
-                return false;
+                $object = new stdClass();
+                $object->value = false;
+                $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
             }
 
         }
@@ -294,12 +298,16 @@ class restapi_model extends CI_Model
 
             }
             if($totalamount > $max){
-                return false;
+                $object = new stdClass();
+                $object->value = false;
+                $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
             }
         }
         
         else{
-            return false;
+                $object = new stdClass();
+                $object->value = false;
+                $object->comment = "Sorry Something Went Wrong!!";
         }
 
 
