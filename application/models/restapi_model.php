@@ -249,6 +249,12 @@ class restapi_model extends CI_Model
         $user = $this->session->userdata('id');
         $totalamount=$this->restapi_model->totalcart($user);
         $query=$this->db->query("SELECT `id`, `type`, `min`, `status`, `max`, `discount`, `name` FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
+        if(empty($query)){
+            $object = new stdClass();
+            $object->value = false;
+            $object->comment = "Invalid Coupon Code!!";
+            return $object;
+        }
         $min=$query->min;
         $id=$query->id;
         $max=$query->max;
