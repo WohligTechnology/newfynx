@@ -316,7 +316,7 @@ class restapi_model extends CI_Model
         else{
                 $object = new stdClass();
                 $object->value = false;
-                $object->comment = "Sorry Something Went Wrong!!";
+                $object->comment = "This Coupon Is Not Valid!!";
                 return $object;
         }
 
