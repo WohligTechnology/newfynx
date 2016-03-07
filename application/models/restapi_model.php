@@ -261,6 +261,7 @@ class restapi_model extends CI_Model
             $object = new stdClass();
             $object->value = false;
             $object->comment = "Sorry Amount Value Too Low For Coupon!!";
+            return $object;
         } 
         else if($countrows > 0 AND $type==1)
         {
@@ -280,6 +281,7 @@ class restapi_model extends CI_Model
                 $object = new stdClass();
                 $object->value = false;
                 $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
+                return $object;
             }
 
         }
@@ -301,6 +303,7 @@ class restapi_model extends CI_Model
                 $object = new stdClass();
                 $object->value = false;
                 $object->comment = "Sorry Amount Value Exceeds For Coupon!!";
+                return $object;
             }
         }
         
@@ -308,6 +311,7 @@ class restapi_model extends CI_Model
                 $object = new stdClass();
                 $object->value = false;
                 $object->comment = "Sorry Something Went Wrong!!";
+                return $object;
         }
 
 
