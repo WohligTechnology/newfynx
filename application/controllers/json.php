@@ -2518,8 +2518,8 @@ public function getsinglesize()
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
         if ($orderby == '') {
-            $orderby = 'id';
-            $orderorder = 'DESC';
+            $orderby = 'name';
+            $orderorder = 'ASC';
         }
 
         $maxrow = $this->input->get_post('maxrow');
