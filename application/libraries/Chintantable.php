@@ -84,7 +84,17 @@ class Chintantable
         } else {
             $wherequery .= " 1 ) AND ($searchquery)";
         }
-        $orderquery .= ' 1 ';
+        $orderbySub = substr($orderby,0,8);
+        if($orderby != '' && $orderbySub == "OVERRIDE")
+        {
+            $orderby = substr($orderby,8,strlen($orderby));
+            $orderquery .= $orderby.' '.$orderorder;
+        }
+        else
+        {
+            $orderquery .= ' 1 ';
+        }
+        
         $return = new stdClass();
         $return->query = $selectquery.$fromquery.$wherequery.$groupquery.$havingquery.$orderquery.$limitquery;
         $return->queryresult = $this->CI->db->query($return->query)->result();

@@ -2517,11 +2517,9 @@ public function getsinglesize()
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-        if ($orderby == '') {
-            $orderby = 'orderingid';
-            $orderorder = 'ASC';
-        }
-
+      
+        $orderby = 'OVERRIDE`orderingid` DESC , `name` ';
+        $orderorder = 'ASC';
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
