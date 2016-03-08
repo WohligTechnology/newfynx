@@ -1000,10 +1000,18 @@ WHERE `fynx_product`.`id`='$productid'")->row();
         $email=$getemailbyid->email;
         $name=$getemailbyid->name;
 
-	 if(!$query)
-		 return  false;
+	 if(!$query){
+        $object = new stdClass();
+        $object->value = false;
+        return $object;
+     }
+        
 	 else
-		 return  true;
+     {
+        $object = new stdClass();
+        $object->value = true;
+        return $object;
+     }
 		}
      function getidbyemail($email)
  {
