@@ -111,7 +111,7 @@ class restapi_model extends CI_Model
 
     }
 
-		public function getFiltersLater ($query) {
+		public function getFiltersLaterOld ($query) {
 			$return = new stdClass();
 
 			$query2 = " SELECT `id` FROM ($query) as `tab1` ";
@@ -119,6 +119,25 @@ class restapi_model extends CI_Model
 			$return->color = $this->db->query(" SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_product`.`color` = `fynx_color`.`id` WHERE `fynx_product`.`id` IN ($query2) ")->result();
 			$return->size = $this->db->query(" SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_product`.`size` = `fynx_size`.`id` WHERE `fynx_product`.`id` IN ($query2) ")->result();
 			$return->subcategory = $this->db->query(" SELECT DISTINCT `fynx_subcategory`.`name`,`fynx_subcategory`.`id`,`fynx_subcategory`.`image1` FROM `fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory` = `fynx_subcategory`.`id` WHERE `fynx_subcategory`.`status`=2 AND `fynx_product`.`id` IN ($query2) " )->result();
+
+			foreach($return->subcategory  as $sub)
+			{
+				$sub->types = $this->db->query(" SELECT DISTINCT `fynx_type`.`name`,`fynx_type`.`id` FROM `fynx_product` INNER JOIN `fynx_type` ON `fynx_product`.`type` = `fynx_type`.`id` WHERE `fynx_product`.`id` IN ($query2) AND `fynx_type`.`subcategory`= '$sub->id' AND `fynx_type`.`status`=2 ")->result();
+			}
+			return $return;
+		}	
+    
+    public function getFiltersLater ($query) {
+			$return = new stdClass();
+
+			$query2 = " SELECT `id` FROM ($query) as `tab1` ";
+			$query3 = " SELECT `category` FROM ($query) as `tab1` ";
+//echo " SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_product`.`color` = `fynx_color`.`id` WHERE `fynx_product`.`id` = '$query2' ";
+			$return->color = $this->db->query(" SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_product`.`color` = `fynx_color`.`id` WHERE `fynx_product`.`id` IN ($query2) ")->result();
+			$return->size = $this->db->query(" SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_product`.`size` = `fynx_size`.`id` WHERE `fynx_product`.`id` IN ($query2) ")->result();
+			$return->subcategory = $this->db->query("SELECT DISTINCT `fynx_subcategory`.`name`,`fynx_subcategory`.`id`,`fynx_subcategory`.`image1` FROM `fynx_product` INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory` = `fynx_subcategory`.`id` WHERE `fynx_subcategory`.`status`=2 AND `fynx_subcategory`.`category` IN ($query3)" )->result();
+        
+
 			foreach($return->subcategory  as $sub)
 			{
 				$sub->types = $this->db->query(" SELECT DISTINCT `fynx_type`.`name`,`fynx_type`.`id` FROM `fynx_product` INNER JOIN `fynx_type` ON `fynx_product`.`type` = `fynx_type`.`id` WHERE `fynx_product`.`id` IN ($query2) AND `fynx_type`.`subcategory`= '$sub->id' AND `fynx_type`.`status`=2 ")->result();
