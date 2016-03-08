@@ -222,7 +222,7 @@ class Menu_model extends CI_Model
     */
 } catch(Mandrill_Error $e) {
     // Mandrill errors are thrown as exceptions
-    echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+//    echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
     // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
     throw $e;
 }
