@@ -140,7 +140,7 @@ class restapi_model extends CI_Model
 
 			foreach($return->subcategory  as $sub)
 			{
-				$sub->types = $this->db->query(" SELECT DISTINCT `fynx_type`.`name`,`fynx_type`.`id` FROM `fynx_product` INNER JOIN `fynx_type` ON `fynx_product`.`type` = `fynx_type`.`id` WHERE `fynx_product`.`id` IN ($query2) AND `fynx_type`.`subcategory`= '$sub->id' AND `fynx_type`.`status`=2 ")->result();
+				$sub->types = $this->db->query(" SELECT DISTINCT `fynx_type`.`name`,`fynx_type`.`id` FROM `fynx_product` INNER JOIN `fynx_type` ON `fynx_product`.`type` = `fynx_type`.`id` WHERE `fynx_type`.`subcategory`= '$sub->id' AND `fynx_type`.`status`=2 ")->result();
 			}
 			return $return;
 		}
