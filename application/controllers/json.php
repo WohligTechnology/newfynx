@@ -2346,15 +2346,12 @@ public function getsinglesize()
     }
     public function forgotpassword()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        if(empty($data)){
-            $data['message']->value = 0;
-        }
-        else{
-            $email = $data['email'];
-            $userdetail = $this->user_model->getidbyemail($email);
-            $userid = $userdetail->id;
-            $username = $userdetail->firstname.' '.$userdetail->lastname;
+//        $data = json_decode(file_get_contents('php://input'), true);
+//        $email = $data['email'];
+        $email=$this->input->get('email');
+        $userdetail = $this->user_model->getidbyemail($email);
+        $userid = $userdetail->id;
+        $username = $userdetail->firstname.' '.$userdetail->lastname;
 
         if ($userid == '') {
             $data['message'] = new stdClass();
@@ -2371,8 +2368,6 @@ public function getsinglesize()
             $data['message']->value = true;
             $this->load->view('json', $data);
     }
-        }
-        
     }
 
     public function getuserorders()
