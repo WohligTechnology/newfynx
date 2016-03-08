@@ -2511,7 +2511,7 @@ public function getsinglesize()
         $data['message'] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
         $this->load->view('json', $data);
     }
-    public function getproductbycategory()
+    public function getproductbycategorylatest()
     {
         $category = $this->input->get_post('category');
         $name = $this->input->get_post('name');
@@ -2561,7 +2561,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
 
         $this->load->view('json', $data);
     }
-    public function getproductbycategorytrail()
+    public function getproductbycategory()
     {
         $category = $this->input->get_post('category');
         $name = $this->input->get_post('name');
@@ -2575,7 +2575,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $where .= " AND `fynx_product`.`type` IN ($type) ";
         }
         if($type == ''){
-            $where .= " AND `fynx_type`.`name` LIKE '%$typename%' ";
+            $where .= " AND upper(`fynx_type`.`name`) LIKE '%$typename%' ";
         }
         if ($color != '') {
             $where .= " AND `fynx_product`.`color` IN ($color) ";
