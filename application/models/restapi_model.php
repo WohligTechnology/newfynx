@@ -288,7 +288,7 @@ class restapi_model extends CI_Model
                 $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`=`count`+1 WHERE `id`='$id'");
                 return $query;
             }
-            else if((!empty($checkuser)) && $type==1)
+            else if($type==1)
             {
 //                old user
                       // check amount as per discount
