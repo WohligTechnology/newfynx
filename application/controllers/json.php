@@ -2519,9 +2519,13 @@ public function getsinglesize()
         $color = $this->input->get_post('color');
         $size = $this->input->get_post('size');
         $price = $this->input->get_post('price');
+        $typename = $this->input->get_post('typename');
         $where = ' ';
         if ($type != '') {
             $where .= " AND `fynx_product`.`type` IN ($type) ";
+        }
+        if ($type == '') {
+            $where .= " AND `fynx_type`.`name` LIKE '%$typename%' ";
         }
         if ($color != '') {
             $where .= " AND `fynx_product`.`color` IN ($color) ";
@@ -2550,6 +2554,7 @@ public function getsinglesize()
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `productdesignimage` INNER JOIN `fynx_product` ON `fynx_product`.`id`=`productdesignimage`.`product`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
+INNER JOIN `fynx_type` ON `fynx_type`.`id`  = `fynx_product`.`type`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
         //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
