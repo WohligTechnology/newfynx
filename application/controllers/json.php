@@ -2362,7 +2362,7 @@ public function getsinglesize()
             $data['link']=$link;
             $data['username']=$username;
             $viewcontent = $this->load->view('emailers/forgotpassword', $data, true);
-            $this->menu_model->emailer($viewcontent,'Forgot Password','info@myfynx.com',$email,'Team MyFynx',$username);
+            $this->menu_model->emailer($viewcontent,'Forgot Password',$email,$username);
             $data['message'] = new stdClass();
             $data['message']->value = true;
             $this->load->view('json', $data);

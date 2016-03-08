@@ -152,7 +152,7 @@ class Menu_model extends CI_Model
 		return $url;
 	}
     
-    public function emailer($htmltext,$subject,$fromemail,$toemail,$fromname,$toname){
+    public function emailer($htmltext,$subject,$toemail,$toname){
         try {
     $mandrill = new Mandrill();
     $message = array(
@@ -160,7 +160,7 @@ class Menu_model extends CI_Model
         'text' => 'MyFynx',
         'subject' => $subject,
         'from_email' => "info@myfynx.com",
-        'from_name' => "My Fynx",
+        'from_name' => "Team My Fynx",
         'to' => array(
             array(
                 'email' => $toemail,
