@@ -111,7 +111,7 @@ class restapi_model extends CI_Model
 
     }
 
-		public function getFiltersLaterOld ($query) {
+		public function getFiltersLater ($query) {
 			$return = new stdClass();
 
 			$query2 = " SELECT `id` FROM ($query) as `tab1` ";
@@ -127,7 +127,7 @@ class restapi_model extends CI_Model
 			return $return;
 		}	
     
-    public function getFiltersLater ($query) {
+    public function getFiltersLatertrail ($query) {
 			$return = new stdClass();
 
 			$query2 = " SELECT `id` FROM ($query) as `tab1` ";
