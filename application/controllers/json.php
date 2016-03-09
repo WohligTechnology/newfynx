@@ -1606,19 +1606,19 @@ public function getsinglesize()
 
 public function testplaceorder()
 {
-  $oid = 42;
+  $oid = 294;
 //  $data['productquery'] = $this->order_model->demo($oid));
 //   print_r($data['productquery']);
 //        $viewcontent = $this->load->view('emailers/forgotpassword', $data, true);
 //      $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$username);
 //        $this->load->view('json', $data);
-    
-    
-    
+
+
+
             $data['productquery']=$this->order_model->demo($oid);
             $viewcontent = $this->load->view('emailers/placeorder', $data, true);
 //    echo $viewcontent;
-            $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','pooja.wohlig@gmail.com','Pooja');
+            $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','vinodwohlig@gmail.com','Pooja');
 //            $data['message'] = new stdClass();
 //            $data['message']->value = true;
 //            $this->load->view('json', $data);

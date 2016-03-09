@@ -7,52 +7,53 @@
                <div class=''>
                  <div class='section-login' style='margin: 0 20px;'>
 <!--                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $username; ?></span>,</p>-->
-                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You for shopping at My Fynx. Your order details are listed below:</p>";
-        
-       <?php print_r($productquery);?>
-        
-<!--
-         $count=1;
-         $finalpricetotal=0;
-         foreach($productquery as $cart)
-         {
-         $id=$cart['id'];
-         $image=$cart['image'];
-         $quantity=$cart['qty'];
-         $color=$cart['options']['colorname'];
-         $size=$cart['options']['sizename'];
-         $price=$cart['price'];
-         $subtotal=$cart['subtotal'];
-        
-         <table style='width: 100%;'>
-           <thead style=' background-color: #fc483f; color: #fff;'>
-             <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Item</th>
-             <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Color</th>
-             <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Size</th>
-             <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Quantity</th>
-            <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>SubTotal</th>
-          </thead>
-           <tbody>
+                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You for shopping at My Fynx. Your order details are listed below:</p>
+
+                   <table style='width: 100%;'>
+                     <thead style=' background-color: #fc483f; color: #fff;'>
+                       <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Item</th>
+                       <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Price</th>
+                       <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Quantity</th>
+                      <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>SubTotal</th>
+                    </thead>
+                    <tbody>
+       <?php
+
+       foreach($productquery as $cart)
+       {
+         $id = $cart->order;
+         $name = $cart->name;
+         $image=$cart->image;
+         $quantity=$cart->quantity;
+         $price=$cart->price;
+         $subtotal=$cart->finalprice;
+       ?>
+
+
+
+
+
             <tr>
                <td style='text-align:center;'>
-                <img src='http://www.myfynx.com/newfynx/uploads/$image' alt='' width='70' class='img-responsive'>
+                <img src='http://www.myfynx.com/newfynx/uploads<?php echo $image; ?>' alt='' width='70' class='img-responsive'>
+                <?php echo $name; ?>
               </td>
-              <td style='text-align:center;'>$color</td>
-                <td style='text-align:center;'>$size</td>
-                <td style='text-align:center;'>$quantity</td>
-                <td style='text-align:center;'>$subtotal</td>
+                <td style='text-align:center;'><?php echo $price; ?></td>
+                <td style='text-align:center;'><?php echo $quantity; ?></td>
+                <td style='text-align:center;'><?php echo $subtotal; ?></td>
             </tr>
-          </tbody>
-         </table>
-         ";
+
+         <?php
          $finalpricetotal=$finalpricetotal+$subtotal;
                 $counter++;
          }
--->
-       
-        
+
+?>
+</tbody>
+</table>
+
          <p style='font-family: Roboto;font-size: 20px;color: #000;'>If you have any queries about your order, please email us on info@myfynx.com and we’ll be happy
-        
+
          to assist you. In order to help you server better, please mention the order number in your email.</p>
          <p style='color: #fc483f;font-family: Roboto;font-size: 20px;'>Happy Shopping !</p>
          <span style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You,</span>
