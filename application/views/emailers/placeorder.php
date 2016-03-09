@@ -6,7 +6,7 @@
     <main>
       <div class=''>
         <div class='section-login' style='margin: 0 20px;'>
-          <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $firstname $lastname ?></span>,</p>
+          <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $firstname." ".$lastname ?></span>,</p>
           <p style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You for shopping at My Fynx. Your order details are listed below:</p>
 
 
