@@ -153,6 +153,7 @@ class Menu_model extends CI_Model
 	}
 
     public function emailer($htmltext,$subject,$toemail,$toname){
+        echo " in emailer ";
         try {
     $mandrill = new Mandrill();
     $message = array(
@@ -205,8 +206,8 @@ class Menu_model extends CI_Model
     $ip_pool = 'Main Pool';
     $send_at = 'example send_at';
     $result = $mandrill->messages->send($message, $async, $ip_pool);
-//            echo "print result";
-//   print_r($result);
+            echo "print result";
+   print_r($result);
     /*
     Array
     (
