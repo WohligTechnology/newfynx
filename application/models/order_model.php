@@ -244,10 +244,10 @@ class order_model extends CI_Model
 public function demo($oid)
 {
 
-   $query = $this->db->query("SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`status`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+   $data['productquery'] = $this->db->query("SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`status`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
    INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
     INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` WHERE `fynx_orderitem`.`order`='$oid'")->result();
-    return $query;
+    return $data['productquery'];
 
 }
     //////////////////////////////////////////////////////////////////////////////////////////////

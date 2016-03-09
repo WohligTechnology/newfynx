@@ -14,7 +14,7 @@
 $count=1;
 $finalpricetotal=0;
 
-<!-- print_r($productquery); -->
+print_r($productquery);
 foreach($productquery as $cart)
 {
 $id=$cart['id'];
