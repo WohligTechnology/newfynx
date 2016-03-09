@@ -1600,10 +1600,16 @@ public function getsinglesize()
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
-        // $q="SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`status`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
-        // INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
-        // INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` WHERE `fynx_orderitem`.`order`='$order'";
-        // $productquery = $this->db->query($q)->result();
+
+
+    $oid = $data['message'];
+    echo $oid;
+    echo "before mail";
+    $data['productquery'] = $this->order_model->demo($oid);
+      print_r($data['productquery']);
+          $viewcontent = $this->load->view('emailers/placeorder', $data, true);
+        $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$username);
+echo "after mail";
         $this->load->view('json', $data);
     }
     public function getusercart()
@@ -1828,6 +1834,10 @@ public function getsinglesize()
 //        $email = $this->input->get_post('email');
 //        $password = $this->input->get_post('password');
         $data['message'] = $this->user_model->registeruser($firstname, $lastname, $email, $password);
+        $data['username'] = $firstname." ".$lastname;
+        $data['email'] = $email;
+        $viewcontent = $this->load->view('emailers/register', $data, true);
+        $this->menu_model->emailer($viewcontent,'Welcome to Myfynx',$email,$username);
         $this->load->view('json', $data);
     }
     public function registewholesaler()

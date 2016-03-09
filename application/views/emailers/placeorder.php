@@ -13,9 +13,12 @@
 <?php
 $count=1;
 $finalpricetotal=0;
+
+<!-- print_r($productquery); -->
 foreach($productquery as $cart)
 {
 $id=$cart['id'];
+$name=$cart['name'];
 $image=$cart['image1'];
 $quantity=$cart['quantity'];
 $color=$cart['colorname'];
@@ -36,7 +39,7 @@ $subtotal=$cart['subtotal'];
   <tbody>
     <tr>
       <td style='text-align:center;'>
-        <img src='http://www.myfynx.com/newfynx/uploads/$image' alt='' width='70' class='img-responsive'>
+        <img src='http://www.myfynx.com/newfynx/uploads/$image' alt='' width='70' class='img-responsive'>$name;
       </td>
       <td style='text-align:center;'>$color</td>
         <td style='text-align:center;'>$size</td>
