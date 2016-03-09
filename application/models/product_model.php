@@ -325,7 +325,7 @@ return $query;
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            
+
     //INSERT type
             $type = trim($type);
              $query2=$this->db->query("SELECT `id` FROM `fynx_type` WHERE `name` = '$type'")->row();
@@ -349,7 +349,7 @@ return $query;
                 $this->db->where( "id", $productid );
                 $query=$this->db->update( "fynx_product", $data );
             }
-            
+
     //INSERT color
              $query3=$this->db->query("SELECT `id` FROM `fynx_color` WHERE `name` = '$color'")->row();
 
@@ -422,22 +422,22 @@ return $query;
         // for related products only
         foreach($file as $row1)
         {
-            
+
             $relatedproduct=trim($row1['relatedproduct']);
             $name=trim($row1['name']);
             $relateddesign=trim($row1['relateddesign']);
-            
+
             if($relatedproduct !=''){
               $allrelatedproduct=explode(",",$relatedproduct);
             }
             if($relateddesign !=''){
               $allrelateddesign=explode(",",$relateddesign);
             }
-            
+
             $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
             if(empty($checkproduct))
             {
-                
+
             }
             else
             {
@@ -480,10 +480,10 @@ return $query;
                 // related products end
                 }
             }
-          
-            
+
+
         }
-         
+
 			return  1;
 	}
 
