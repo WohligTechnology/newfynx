@@ -1600,7 +1600,10 @@ public function getsinglesize()
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
-
+        // $q="SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`status`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+        // INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
+        // INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` WHERE `fynx_orderitem`.`order`='$order'";
+        // $productquery = $this->db->query($q)->result();
         $this->load->view('json', $data);
     }
     public function getusercart()
@@ -2547,7 +2550,7 @@ public function getsinglesize()
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-      
+
         $orderby = 'OVERRIDE`orderingid` DESC , `name` ';
         $orderorder = 'ASC';
         $maxrow = $this->input->get_post('maxrow');
@@ -2597,7 +2600,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
 
         $search = $this->input->get_post('search');
         $pageno = $this->input->get_post('pageno');
-      
+
         $orderby = 'OVERRIDE`orderingid` DESC , `name` ';
         $orderorder = 'ASC';
         $maxrow = $this->input->get_post('maxrow');
@@ -2821,7 +2824,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         }
         $query = new stdClass();
         $query->backprice = $this->db->query("SELECT `price` FROM `backprice` ORDER BY `id` DESC")->row();
-        $query->image = $this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`baseproduct`, `fynx_product`.`discountprice`,`fynx_sizechart`.`image` as `sizechartimage` FROM `fynx_product` 
+        $query->image = $this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`baseproduct`, `fynx_product`.`discountprice`,`fynx_sizechart`.`image` as `sizechartimage` FROM `fynx_product`
 LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart`
 WHERE `type`='$type' AND `color`='$color'")->row();
         $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` ,`fynx_product`.`price` as `price`  FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color' GROUP BY `fynx_size`.`id`")->result();
