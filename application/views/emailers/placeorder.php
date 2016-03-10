@@ -6,7 +6,7 @@
              <main>
                <div class=''>
                  <div class='section-login' style='margin: 0 20px;'>
-<!--                   <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $username; ?></span>,</p>-->
+                  <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $username; ?></span>,</p>
                    <p style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You for shopping at My Fynx. Your order details are listed below:</p>
 
                    <table style='width: 100%;'>
@@ -23,10 +23,11 @@
        {
          $id = $cart->order;
          $name = $cart->name;
-         $image=$cart->image;
+         $image=$cart->image1;
          $quantity=$cart->quantity;
          $price=$cart->price;
          $subtotal=$cart->finalprice;
+
        ?>
 
 
@@ -35,8 +36,11 @@
 
             <tr>
                <td style='text-align:center;'>
-                <img src='http://www.myfynx.com/newfynx/uploads<?php echo $image; ?>' alt='' width='70' class='img-responsive'>
-                <?php echo $name; ?>
+                <figure>
+                  <img src='http://admin.myfynx.com/uploads/<?php echo $image; ?>' alt='' width='70' class='img-responsive'>
+                  <figcaption><?php echo $name; ?></figcaption>
+                </figure>
+
               </td>
                 <td style='text-align:center;'><?php echo $price; ?></td>
                 <td style='text-align:center;'><?php echo $quantity; ?></td>
@@ -51,7 +55,9 @@
 ?>
 </tbody>
 </table>
-
+<div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold;">
+GRAND TOTAL : <?php echo $finalpricetotal; ?>
+</div>
          <p style='font-family: Roboto;font-size: 20px;color: #000;'>If you have any queries about your order, please email us on info@myfynx.com and we’ll be happy
 
          to assist you. In order to help you server better, please mention the order number in your email.</p>

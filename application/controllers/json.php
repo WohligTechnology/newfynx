@@ -1600,6 +1600,13 @@ public function getsinglesize()
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
+        $oid = $data['message'];
+        //echo $oid;
+        // $data['productquery']=$this->order_model->demo($oid);
+        // print_r($data['productquery']);
+        // $data['username'] = $firstname." ".$lastname;
+        // $viewcontent = $this->load->view('emailers/placeorder', $data, true);
+        // $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$firstname);
         $this->load->view('json', $data);
 
     }
