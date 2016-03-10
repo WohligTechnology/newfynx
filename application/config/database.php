@@ -75,8 +75,8 @@ else
     $db['default']['hostname'] = 'localhost';
     $db['default']['username'] = 'root';
     $db['default']['password'] = '';
-    $db['default']['database'] = 'wohligco_fynx';
-    $db['default']['dbdriver'] = 'mysqli';
+    $db['default']['database'] = 'fynx';
+    $db['default']['dbdriver'] = 'mysql';
     $db['default']['dbprefix'] = '';
     $db['default']['pconnect'] = TRUE;
     $db['default']['db_debug'] = TRUE;

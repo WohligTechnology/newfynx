@@ -2774,9 +2774,9 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $query->backprice = $this->db->query("SELECT `price` FROM `backprice` ORDER BY `id` DESC")->row();
         $query->image = $this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `fynx_product`.`image1`, `fynx_product`.`image2`, `fynx_product`.`baseproduct`, `fynx_product`.`discountprice`,`fynx_sizechart`.`image` as `sizechartimage` FROM `fynx_product`
 LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart`
-WHERE `type`='$type' AND `color`='$color'")->row();
-        $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` ,`fynx_product`.`price` as `price`  FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color' GROUP BY `fynx_size`.`id`")->result();
-        $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.*,`fynx_product`.`id` as `product`,`fynx_product`.`price` as `price` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' GROUP BY `fynx_color`.`id`")->result();
+WHERE `type`='$type' AND `color`='$color' AND `image1`<>'' AND `image2` <>''")->row();
+        $query->size = $this->db->query("SELECT DISTINCT `fynx_size`.*,`fynx_product`.`id` as `product` ,`fynx_product`.`price` as `price`  FROM `fynx_product` INNER JOIN `fynx_size` ON `fynx_size`.`id` = `fynx_product`.`size`  WHERE `type`='$type' AND `color`='$color' AND `fynx_product`.`image1`<>'' AND `fynx_product`.`image2`<>'' GROUP BY `fynx_size`.`id`")->result();
+        $query->color = $this->db->query("SELECT DISTINCT `fynx_color`.*,`fynx_product`.`id` as `product`,`fynx_product`.`price` as `price` FROM `fynx_product` INNER JOIN `fynx_color` ON `fynx_color`.`id` = `fynx_product`.`color`  WHERE `type`='$type' AND `fynx_product`.`image1`<>'' AND `fynx_product`.`image2`<>'' GROUP BY `fynx_color`.`id`")->result();
         $data['message'] = $query;
         $this->load->view('json', $data);
     }

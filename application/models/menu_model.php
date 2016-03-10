@@ -153,7 +153,6 @@ class Menu_model extends CI_Model
 	}
 
     public function emailer($htmltext,$subject,$toemail,$toname){
-        echo " in emailer ";
         try {
     $mandrill = new Mandrill();
     $message = array(
