@@ -233,14 +233,6 @@ class restapi_model extends CI_Model
                         $updateproductqty=$this->db->query("UPDATE `fynx_product` SET `quantity`='$updatedquantity' WHERE `id`='$product'");
                         if($updateproductqty < 10)
                         {
-                            
-                            //                            $this->load->library('email');
-//                            $this->email->from('vigwohlig@gmail.com', 'MyFynx');
-//                            $this->email->to("jagruti@wohlig.com");
-//                            $this->email->subject('Inventory');
-//                            $message = "Product Id : ". $product. "Quantity is ".$updatedquantity;
-//                            $this->email->message($message);
-//                            $this->email->send();
                              try {
                                 $mandrill = new Mandrill();
                                 $message = array(
