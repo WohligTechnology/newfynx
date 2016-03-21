@@ -401,4 +401,10 @@ public function demo($oid)
 //		return false;
 //        }
 //	}
+    public function getemailbyorder($orderid)
+    {
+        $query=$this->db->query("SELECT * FROM `user` WHERE `id`=(SELECT `user` FROM `fynx_order` WHERE `id`='$orderid')")->row();
+        $email=$query->email;
+        return $email;
+    }
 }

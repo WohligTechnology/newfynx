@@ -1578,7 +1578,7 @@ public function getsinglesize()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         if(!empty($data)){
-            $user = $data['user'];
+            $user = $this->session->userdata('id');
         $firstname = $data['firstname'];
         $lastname = $data['lastname'];
         $email = $data['email'];
@@ -1604,7 +1604,7 @@ public function getsinglesize()
         $oid = $data['message'];
         $data['productquery']=$this->order_model->demo($oid);
         $viewcontent = $this->load->view('emailers/placeorder', $data, true);
-        $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$firstname." ".$lastname);
+        $this->menu_model->emailer($viewcontent,'Thank you for shopping with us',$email,$firstname." ".$lastname);
         }
         else{
              $data['message'] =0;
@@ -2153,7 +2153,7 @@ public function testplaceorder()
         $this->email->send();
 
         $returnvalue = $this->order_model->updateorderstatusafterpayment($orderid);
-
+        
         return $returnvalue;
     }
     public function socialcheck()
@@ -2690,12 +2690,37 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $amount = explode('=',$decryptValues[10])[1];
         $couponcode = explode('=',$decryptValues[26])[1];
         $status = explode('=',$decryptValues[3])[1];
-        if ($status=='Success') {
-          $orderstatus = 2;
-        }else {
-          $orderstatus = 5;
-        }
         $orderid = $this->input->post("orderNo");
+        if ($status=='Success') 
+        {
+          $orderstatus = 2;
+            // send invoice as mail
+//            pending
+//            $data[ 'category' ] =$this->category_model->getcategorydropdown();
+//            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+//            $data['before']=$this->order_model->beforeedit($orderid);
+//            $data['id']=$orderid;
+//            $data['email']=$this->order_model->getemailbyorder($orderid);
+//            $viewcontent = $this->load->view('emailers/invoice', $data, true);
+//            $this->menu_model->emailer($viewcontent,'Invoice',$email,$username);
+            
+        }
+        else {
+          $orderstatus = 5;
+            $data[ 'category' ] =$this->category_model->getcategorydropdown();
+            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+            $data['before']=$this->order_model->beforeedit($orderid);
+            $data['transactionid']=$data['before']->transactionid;
+            $data['id']=$orderid;
+            $data['productquery']=$this->order_model->demo($orderid);
+            $data['email']=$this->order_model->getemailbyorder($orderid);
+            $email=$this->order_model->getemailbyorder($orderid);
+            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+            $username=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/paymentfailure', $data, true);
+            $this->menu_model->emailer($viewcontent,'Payment Failure',$email,$username);
+        }
+        
         $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$orderstatus,$amount,$couponcode);
         $this->load->view('json',$data);
     }
@@ -2797,11 +2822,30 @@ imagesavealpha($rotate, true);
 
 
 
-//    function resizeImage($image) {
-//    imagecopyresized ( $thumbfront , $dbfrontimg , 0 , 0 , 0 , 0 , jagz width size * 5 ,  jagz height size * 5 , $frontwidth , $frontheight );
-//    }
-//  $query=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `name` LIKE '$couponname'")->row();
-//  $count=$query->count;
-//  $count=$count+1;
-//    $updatequery=$this->db->query("UPDATE `fynx_coupon` SET `count`='$count' WHERE `name` LIKE '$couponname'");
+    function testinvoice() {
+        $orderid=318;
+            $data[ 'category' ] =$this->category_model->getcategorydropdown();
+            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+            $data['before']=$this->order_model->beforeedit($orderid);
+            $data['id']=$orderid;
+            $data['email']=$this->order_model->getemailbyorder($orderid);
+            $username=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/invoice', $data, true);
+            $this->menu_model->emailer($viewcontent,'Invoice',$data['email'],$username);
+    }
+    function failure() {
+        $orderid=318;
+           $data[ 'category' ] =$this->category_model->getcategorydropdown();
+            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+            $data['before']=$this->order_model->beforeedit($orderid);
+            $data['transactionid']=$data['before']->transactionid;
+            $data['id']=$orderid;
+            $data['productquery']=$this->order_model->demo($orderid);
+            $data['email']=$this->order_model->getemailbyorder($orderid);
+            $email=$this->order_model->getemailbyorder($orderid);
+            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+            $username=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/paymentfailure', $data, true);
+            $this->menu_model->emailer($viewcontent,'Payment Failure',$email,$username);
+    }
 }
