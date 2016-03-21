@@ -1577,7 +1577,8 @@ public function getsinglesize()
     public function placeOrder()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $user = $data['user'];
+        if(!empty($data)){
+            $user = $data['user'];
         $firstname = $data['firstname'];
         $lastname = $data['lastname'];
         $email = $data['email'];
@@ -1604,6 +1605,11 @@ public function getsinglesize()
         $data['productquery']=$this->order_model->demo($oid);
         $viewcontent = $this->load->view('emailers/placeorder', $data, true);
         $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$firstname." ".$lastname);
+        }
+        else{
+             $data['message'] =0;
+        }
+        
         $this->load->view('json', $data);
 
     }
