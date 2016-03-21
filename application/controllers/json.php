@@ -1826,15 +1826,21 @@ public function testplaceorder()
     public function registeruser()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $firstname = $data['firstname'];
-        $lastname = $data['lastname'];
-        $email = $data['email'];
-        $password = $data['password'];
-        $data['message'] = $this->user_model->registeruser($firstname, $lastname, $email, $password);
-        $data['username'] = $firstname." ".$lastname;
-        $data['email'] = $email;
-        $viewcontent = $this->load->view('emailers/register', $data, true);
-        $this->menu_model->emailer($viewcontent,'Welcome to Myfynx',$email,$username);
+        if(!empty($data)){
+            $firstname = $data['firstname'];
+            $lastname = $data['lastname'];
+            $email = $data['email'];
+            $password = $data['password'];
+            $data['message'] = $this->user_model->registeruser($firstname, $lastname, $email, $password);
+            $data['username'] = $firstname." ".$lastname;
+            $data['email'] = $email;
+            $viewcontent = $this->load->view('emailers/register', $data, true);
+            $this->menu_model->emailer($viewcontent,'Welcome to Myfynx',$email,$username);
+        }
+        else{
+            $data['message'] = 0;
+        }
+        
         $this->load->view('json', $data);
     }
     public function registewholesaler()
