@@ -296,7 +296,7 @@ class restapi_model extends CI_Model
                             $ip_pool = 'Main Pool';
                             $send_at = 'example send_at';
                             $result = $mandrill->messages->send($message, $async, $ip_pool);
-                           print_r($result);
+//                           print_r($result);
                         } catch(Mandrill_Error $e) 
                         {
                             throw $e;
