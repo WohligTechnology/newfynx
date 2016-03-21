@@ -1601,12 +1601,6 @@ public function getsinglesize()
         $paymentmode = $data['paymentmode'];
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
         $oid = $data['message'];
-        //echo $oid;
-        // $data['productquery']=$this->order_model->demo($oid);
-        // print_r($data['productquery']);
-        // $data['username'] = $firstname." ".$lastname;
-        // $viewcontent = $this->load->view('emailers/placeorder', $data, true);
-        // $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$firstname);
         $this->load->view('json', $data);
 
     }
@@ -1614,21 +1608,9 @@ public function getsinglesize()
 public function testplaceorder()
 {
   $oid = 294;
-//  $data['productquery'] = $this->order_model->demo($oid));
-//   print_r($data['productquery']);
-//        $viewcontent = $this->load->view('emailers/forgotpassword', $data, true);
-//      $this->menu_model->emailer($viewcontent,'Thank you for shipping with us',$email,$username);
-//        $this->load->view('json', $data);
-
-
-
             $data['productquery']=$this->order_model->demo($oid);
             $viewcontent = $this->load->view('emailers/placeorder', $data, true);
-//    echo $viewcontent;
             $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','vinodwohlig@gmail.com','Pooja');
-//            $data['message'] = new stdClass();
-//            $data['message']->value = true;
-//            $this->load->view('json', $data);
 }
 
     public function getusercart()
@@ -1848,10 +1830,6 @@ public function testplaceorder()
         $lastname = $data['lastname'];
         $email = $data['email'];
         $password = $data['password'];
-//        $firstname = $this->input->get_post('firstname');
-//        $lastname = $this->input->get_post('lastname');
-//        $email = $this->input->get_post('email');
-//        $password = $this->input->get_post('password');
         $data['message'] = $this->user_model->registeruser($firstname, $lastname, $email, $password);
         $data['username'] = $firstname." ".$lastname;
         $data['email'] = $email;
@@ -1920,13 +1898,7 @@ public function testplaceorder()
         $data['message'] = $this->product_model->savequantity($product, $quantity);
         $this->load->view('json', $data);
     }
-//    public function getSubscribe()
-//    {
-//        echo "in subscribe";
-////         $email = $this->input->get_post('email');
-////        $data['message'] = $this->restapi_model->getSubscribe($email);
-////        $this->load->view('json', $data);
-//    }
+
     public function getnavigation()
     {
         $data['message'] = $this->navigation_model->getnavigation();
@@ -1980,17 +1952,12 @@ public function testplaceorder()
         $message->image = $image;
         $message->image = $image;
         $message->order = $order;
-//        $data["message"]=$message;
-//        $this->load->view("json", $data);
-//        echo 'Done';
     }
     public function addproductcsv()
     {
         $filepath = $this->input->get_post('filepath');
-//        echo $filepath;
         $file = $this->csvreader->parse_file($filepath);
         $id1 = $this->product_model->createbycsv($file);
-//        echo "<br>".$id1;
         if ($id1 == 0) {
             $data['alerterror'] = 'New products could not be Uploaded.';
         } else {
@@ -1999,24 +1966,6 @@ public function testplaceorder()
         $data['redirect'] = 'site/viewproduct';
         $this->load->view('redirect', $data);
 
-//        $image = $this->input->get_post("image");
-//        $order = $this->input->get_post("order");
-//        if ($order == "1") {
-//            $default = 1;
-//        } else {
-//            $default = 0;
-//        }
-//        $filepath="http://magicmirror.in/servepublicother?name=$filename";
-//echo $filepath;
-//        $file = $this->csvreader->parse_file($filepath);
-//        $id1=$this->product_model->createbycsv($file);
-//        echo "<br>".$id1."<br>";
-//        if($id1==0)
-//        $data['alerterror']="New Products could not be Uploaded.";
-//		else
-//		$data['alertsuccess']="Products Uploaded Successfully.";
-//        $data['redirect']="site/uploadproductcsv";
-//        $this->load->view("redirect",$data);
     }
     public function getfile()
     {
@@ -2050,7 +1999,6 @@ public function testplaceorder()
     }
     public function getconversionrates()
     {
-        //$continent->name=geoip_continent_code_by_name($ip);
         $data['message'] = $this->currency_model->viewcurrency();
         $this->load->view('json', $data);
     }
@@ -2187,10 +2135,7 @@ public function testplaceorder()
 
 </html>";
         $this->email->message($message);
-        // $this->email->html('<b>hello</b>');
         $this->email->send();
-//        $data['message'] = $this->email->print_debugger();
-//        $this->load->view('json', $data);
 
         $returnvalue = $this->order_model->updateorderstatusafterpayment($orderid);
 
@@ -2228,11 +2173,9 @@ public function testplaceorder()
             }
             $query2 = $this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$displayName', '', '$email', '3', CURRENT_TIMESTAMP, '1', '$photoURL', '', '$identifier', '$provider', '', '$birthYear-$birthMonth-$birthDay', '', '$address,$region', '$city', '', '$country', '', '$facebookid', '$googleid', '$twitterid')");
             $id = $this->db->insert_id();
-//            echo $id;
         } else {
             $query = $query->row();
             $id = $query->id;
-//            echo $id;
         }
     }
     public function reminderemail()
@@ -2278,7 +2221,6 @@ public function testplaceorder()
 </body>
 
 </html>";
-//            echo $message;
             $this->email->message($message);
             $this->email->send();
             $data['message'] = $this->email->print_debugger();
@@ -2507,7 +2449,6 @@ public function testplaceorder()
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
-        //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
         $this->load->view('json', $data);
@@ -2558,7 +2499,6 @@ INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcatego
 INNER JOIN `fynx_type` ON `fynx_type`.`id`  = `fynx_product`.`type`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
-        //echo "";
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
         $this->load->view('json', $data);

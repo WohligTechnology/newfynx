@@ -17,7 +17,6 @@ class Menu_model extends CI_Model
 			'order' => $order,
 			'icon' => $icon,
 		);
-		//print_r($data);
 
 		$query=$this->db->insert( 'menu', $data );
 		$menuid=$this->db->insert_id();
