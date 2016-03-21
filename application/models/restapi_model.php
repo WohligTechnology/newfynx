@@ -300,12 +300,12 @@ class restapi_model extends CI_Model
                     }
                         
                     }
-                    redirect("http://www.myfynx.com/testing/#/thankyou/".$orderid);
+                    redirect("http://myfynx.com/#/thankyou/".$orderid);
                 }
                 else
                 {
                     $query=$this->db->query("UPDATE `fynx_order` SET `orderstatus`=5,`transactionid`='$transactionid' WHERE `id`='$orderid'");
-                    redirect("http://www.myfynx.com/testing/#/sorry/".$orderid);
+                    redirect("http://myfynx.com/#/sorry/".$orderid);
                 }
                 
         }
