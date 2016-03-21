@@ -163,6 +163,11 @@
 <div style="clear:both;display:table;">&nbsp;</div>
     <p style="text-align: center">Thank you for shopping with myFynx.</p>
   </div>
+  <script>
+        $(window).load(function () {
+            window.print();
+        });
+    </script>
 </body>
 
 </html>
