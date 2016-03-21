@@ -2682,7 +2682,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
 //       $transactionid = $this->input->get_post('TransactionID');
 //       $data['message'] = $this->restapi_model->updateorderstatusafterpayment($orderid, $transactionid, $responsecode,$amount);
         $workingKey='8A245B413FC7A433C2D98DF4A9C87723';
-        $encResponse=$this->input->post("encResp");
+        $encResponse=$this->input->get_post("encResp");
         $rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
         $decryptValues=explode('&', $rcvdString);
         $json = json_encode($decryptValues);
@@ -2690,19 +2690,23 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $amount = explode('=',$decryptValues[10])[1];
         $couponcode = explode('=',$decryptValues[26])[1];
         $status = explode('=',$decryptValues[3])[1];
-        $orderid = $this->input->post("orderNo");
+        $orderid = $this->input->get_post("orderNo");
         if ($status=='Success') 
         {
-          $orderstatus = 2;
+            
+            $orderstatus = 2;
             // send invoice as mail
             $data[ 'category' ] =$this->category_model->getcategorydropdown();
             $data[ 'table' ] =$this->order_model->getorderitem($orderid);
             $data['before']=$this->order_model->beforeedit($orderid);
+            $data['transactionid']=$data['before']->transactionid;
             $data['id']=$orderid;
-            $data['email']=$this->order_model->getemailbyorder($orderid);
+            $data['email']=$data['before']->email;
+            $email=$data['before']->email;
+            
             $username=$data['before']->firstname." ".$data['before']->lastname;
             $viewcontent = $this->load->view('emailers/invoice', $data, true);
-            $this->menu_model->emailer($viewcontent,'Invoice',$data['email'],$username);
+            $this->menu_model->emailer($viewcontent,'Invoice',$email,$username);
             
         }
         else {
@@ -2713,8 +2717,8 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $data['transactionid']=$data['before']->transactionid;
             $data['id']=$orderid;
             $data['productquery']=$this->order_model->demo($orderid);
-            $data['email']=$this->order_model->getemailbyorder($orderid);
-            $email=$this->order_model->getemailbyorder($orderid);
+            $data['email']=$data['before']->email;
+            $email=$data['before']->email;
             $data['username']=$data['before']->firstname." ".$data['before']->lastname;
             $username=$data['before']->firstname." ".$data['before']->lastname;
             $viewcontent = $this->load->view('emailers/paymentfailure', $data, true);
