@@ -2706,7 +2706,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             
         }
         else {
-          $orderstatus = 5;
+            $orderstatus = 5;
             $data[ 'category' ] =$this->category_model->getcategorydropdown();
             $data[ 'table' ] =$this->order_model->getorderitem($orderid);
             $data['before']=$this->order_model->beforeedit($orderid);
