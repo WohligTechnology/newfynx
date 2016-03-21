@@ -2695,14 +2695,14 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         {
           $orderstatus = 2;
             // send invoice as mail
-//            pending
-//            $data[ 'category' ] =$this->category_model->getcategorydropdown();
-//            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
-//            $data['before']=$this->order_model->beforeedit($orderid);
-//            $data['id']=$orderid;
-//            $data['email']=$this->order_model->getemailbyorder($orderid);
-//            $viewcontent = $this->load->view('emailers/invoice', $data, true);
-//            $this->menu_model->emailer($viewcontent,'Invoice',$email,$username);
+            $data[ 'category' ] =$this->category_model->getcategorydropdown();
+            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+            $data['before']=$this->order_model->beforeedit($orderid);
+            $data['id']=$orderid;
+            $data['email']=$this->order_model->getemailbyorder($orderid);
+            $username=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/invoice', $data, true);
+            $this->menu_model->emailer($viewcontent,'Invoice',$data['email'],$username);
             
         }
         else {

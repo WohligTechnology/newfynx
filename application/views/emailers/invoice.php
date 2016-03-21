@@ -9,11 +9,12 @@
   <link rel="shortcut icon" href="">
   <title>Invoice for MyFynx</title>
 </head>
-<style>
+<!-- <style>
   .container {
     width: 900px;
     margin: 0 auto;
   }
+
   .left {
     float: left;
   }
@@ -38,35 +39,31 @@
     padding: 10px;
   }
 
-  /*.clearfix-main:after {
-    content: ".";
-    display: table;
-    clear: both;
-  }*/
-
   .add {
     border: 1px solid #ddd;
     padding: 20px 30px;
   }
-</style>
+</style> -->
 
 <body>
-  <div class="container">
+  <div style="width: 900px; margin: 0 auto;">
     <div>
-      <div class="logo left">
-        <h1><a href=""><img src="" alt="" class="img"></a></h1>
+      <div class="logo left" style="float: left;">
+        <h1><a href=""><img src="" alt="" class="img">
+           <img src="<?php echo base_url('uploads/logo.png'); ?>"> 
+        </a></h1>
       </div>
-      <div class="right">
-        <table class="table">
+      <div class="right" style="float: right;">
+        <table class="table" style="width: 100%;max-width: 100%;margin-bottom: 20px;border-collapse: collapse;border: 1px solid #ddd;">
           <tr>
-            <td><b>Date</b></td>
-            <td>23-03-2016
+            <td style="border: 1px solid #ddd;padding: 10px;"><b>Date</b></td>
+            <td style="border: 1px solid #ddd;padding: 10px;">
               <?php  echo date("Y-m-d");?>
             </td>
           </tr>
           <tr>
-            <td><b>Invoice No.</b></td>
-            <td>hello
+            <td style="border: 1px solid #ddd;padding: 10px;"><b>Invoice No.</b></td>
+<!--            <td style="border: 1px solid #ddd;padding: 10px;">-->
               <?php echo $id;?>
             </td>
           </tr>
@@ -75,105 +72,135 @@
     </div>
     <div style="clear:both;display:table;">&nbsp;</div>
     <div>
-      <div class="billing add left">
-        <b>Billing Address</b>
-        <p>Pooja Thakre</p>
-        <p class="">Navi Mumbai, Maharashtra - 400708</p>
+      <div class="billing add left" style="float:left;border: 1px solid #ddd;padding: 20px 30px;"><b>Billing Address</b><br>
+        <?php
+                        if($before->billingaddress=="")
+                        {
+                             echo $before->firstname." ".$before->lastname;
+                            echo "<br>";
+                             echo $before->shippingaddress;
+                            echo "<br>";
+                             echo $before->shippingcity.", ".$before->shippingstate." - ".$before->shippingpincode;
+
+                        }
+                        else
+                        {
+                             echo $before->firstname." ".$before->lastname;
+                            echo "<br>";
+                             echo $before->billingaddress;
+                            echo "<br>";
+                             echo $before->billingcity.", ".$before->billingstate." - ".$before->billingpincode;
+
+                        }
+                        ?>
       </div>
-      <div class="shipping add right">
-        <b>Shipping Address</b>
-        <p>Pooja Thakre</p>
-        <p class="">Navi Mumbai, Maharashtra - 400708</p>
+      <div class="shipping add right" style="float:right;border: 1px solid #ddd;padding: 20px 30px;"><b>Shipping Address</b><br>
+         <?php
+                        if($before->shippingaddress=="")
+                        {
+
+                             echo $before->firstname." ".$before->lastname;
+                            echo "<br>";
+                            echo $before->billingaddress;
+                            echo "<br>";
+                             echo $before->billingcity.", ".$before->billingstate." - ".$before->billingpincode;
+                        }
+                        else
+                        {
+                             echo $before->firstname." ".$before->lastname;
+                            echo "<br>";
+                             echo $before->shippingaddress;
+                            echo "<br>";
+                            $before->billingcity.", ".$before->billingstate." - ".$before->billingpincode;
+
+                        }
+                        ?>
       </div>
     </div>
     <div style="clear:both;display:table;">&nbsp;</div>
-    <table class="table" style="margin: 20px 0">
+    <table class="table" style="margin: 20px 0;width: 100%;max-width: 100%;margin-bottom: 20px;border-collapse: collapse;border: 1px solid #ddd;">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Vat(5%)</th>
-          <th>Total Amount</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">ID</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">Product</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">Quantity</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">Price</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">Vat(5%)</th>
+          <th style="border: 1px solid #ddd;padding: 10px;">Total Amount</th>
         </tr>
       </thead>
       <tbody>
-         <?php
+       <?php
+                        $counter=1;
+                        $finalpricetotal=0;
+                        foreach($table as $value)
+                        {
+                          $oprice = $value->price / 1.05;
+                          $ovat = $value->price - $oprice;
 
-                    $counter=1;
-                    $finalpricetotal=0;
-                    foreach($table as $value)
-                    {
-                      $oprice = $value->price / 1.05;
-                      $ovat = $value->price - $oprice;
-
-                ?> 
+                    ?>
         <tr>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $counter;?>
           </td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $value->name;?>
           </td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $value->quantity;?>
           </td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo round($oprice,2);?>
           </td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo round(($ovat*$value->quantity),2);?>
           </td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $value->finalprice;?>
           </td>
         </tr>
-         <?php
+        <?php
                         $finalpricetotal=$finalpricetotal+$value->finalprice;
                         $counter++;
                     }
-                    ?> 
+                    ?>        
       </tbody>
     </table>
     <div style="clear:both;display:table;">&nbsp;</div>
     <div>
-      <table class="table right" style="width: 350px">
+      <table class="table" style="width: 350px;margin-bottom: 20px;border-collapse: collapse;border: 1px solid #ddd;float: right;">
         <tr>
-          <td><b>Total:</b></td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;"><b>Total:</b></td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php $vat = $finalpricetotal * 0.05;
                         echo $finalpricetotal - $vat ;?>
           </td>
         </tr>
         <tr>
-          <td><b>Total Vat:</b></td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;"><b>Total Vat:</b></td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $vat;?>
           </td>
         </tr>
         <tr>
-          <td><b>Final Total:</b></td>
-          <td>
+          <td style="border: 1px solid #ddd;padding: 10px;"><b>Final Total:</b></td>
+          <td style="border: 1px solid #ddd;padding: 10px;">
             <?php echo $finalpricetotal;?>
           </td>
         </tr>
       </table>
     </div>
-<div style="clear:both;display:table;">&nbsp;</div>
+    <div style="clear:both;display:table;">&nbsp;</div>
     <p style="text-align: center">Thank you for shopping with myFynx.</p>
   </div>
   <script>
-        $(window).load(function () {
-            window.print();
-        });
-    </script>
+      $(window).load(function () {
+          window.print();
+      });
+  </script>
 </body>
 
 </html>
-
-
-
 
 
 <!--
