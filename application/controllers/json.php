@@ -1841,10 +1841,13 @@ public function testplaceorder()
             $email = $data['email'];
             $password = $data['password'];
             $data['message'] = $this->user_model->registeruser($firstname, $lastname, $email, $password);
-            $data['username'] = $firstname." ".$lastname;
-            $data['email'] = $email;
-            $viewcontent = $this->load->view('emailers/register', $data, true);
-            $this->menu_model->emailer($viewcontent,'Welcome to Myfynx',$email,$username);
+            if($data['message'] != false){
+                $data['username'] = $firstname." ".$lastname;
+                $data['email'] = $email;
+                $viewcontent = $this->load->view('emailers/register', $data, true);
+                $this->menu_model->emailer($viewcontent,'Welcome to Myfynx',$email,$username);
+            }
+            
         }
         else{
             $data['message'] = 0;
