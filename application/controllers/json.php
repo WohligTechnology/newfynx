@@ -2341,7 +2341,7 @@ public function testplaceorder()
             $orderby = 'id';
             $orderorder = 'ASC';
         }
-        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_orderitem` INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`', "WHERE `fynx_order`.`user`='$userid'");
+        $data['message'] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, 'FROM `fynx_orderitem` INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order` LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`', "WHERE `fynx_order`.`user`='$userid' AND `fynx_order`.`orderstatus` NOT IN(1,5)");
 
         foreach ($data['message']->queryresult as $row) {
             $orderid = $row->id;
