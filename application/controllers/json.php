@@ -1601,12 +1601,12 @@ public function getsinglesize()
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
         $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
-        $oid = $data['message'];
-        $data['before']=$this->order_model->beforeedit($oid);
-        $data['username']=$data['before']->firstname." ".$data['before']->lastname;
-        $data['productquery']=$this->order_model->demo($oid);
-        $viewcontent = $this->load->view('emailers/placeorder', $data, true);
-        $this->menu_model->emailer($viewcontent,'Thank you for shopping with us',$data['before']->email,$data['before']->firstname." ".$data['before']->lastname);
+//        $oid = $data['message'];
+//        $data['before']=$this->order_model->beforeedit($oid);
+//        $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+//        $data['productquery']=$this->order_model->demo($oid);
+//        $viewcontent = $this->load->view('emailers/placeorder', $data, true);
+//        $this->menu_model->emailer($viewcontent,'Thank you for shopping with us',$data['before']->email,$data['before']->firstname." ".$data['before']->lastname);
         }
         else{
              $data['message'] =0;
@@ -2708,7 +2708,10 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $data['id']=$orderid;
             $data['email']=$data['before']->email;
             $email=$data['before']->email;
-            
+            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+            $data['productquery']=$this->order_model->demo($orderid);
+            $viewcontent = $this->load->view('emailers/placeorder', $data, true);
+            $this->menu_model->emailer($viewcontent,'Thank you for shopping with us',$data['before']->email,$data['before']->firstname." ".$data['before']->lastname);
             $username=$data['before']->firstname." ".$data['before']->lastname;
             $viewcontent = $this->load->view('emailers/invoice', $data, true);
             $this->menu_model->emailer($viewcontent,'Invoice',$email,$username);
