@@ -2705,6 +2705,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $data[ 'table' ] =$this->order_model->getorderitem($orderid);
             $data['before']=$this->order_model->beforeedit($orderid);
             $data['transactionid']=$data['before']->transactionid;
+            $data['trackingcode']=$data['before']->trackingcode;
             $data['id']=$orderid;
             $data['email']=$data['before']->email;
             $email=$data['before']->email;
