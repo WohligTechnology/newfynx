@@ -3384,11 +3384,12 @@ $queryarray = $data["message"]->queryresult;
 
     foreach($queryarray as $row)
     {
-//        $row->orderproduct = $this->db->query("SELECT * FROM `fynx_orderitem` WHERE `order` = '$row->id'")->result();
-        $row->orderproduct = $this->db->query("SELECT `fynx_orderitem`.`id`, `fynx_orderitem`.`discount`, `fynx_orderitem`.`order`, `fynx_orderitem`.`product`,`fynx_product`.`name` as `productname`, `fynx_orderitem`.`quantity`, `fynx_orderitem`.`price`, `fynx_orderitem`.`finalprice`,`fynx_orderitem`.`checkcustom`,`fynx_order`.`user` FROM `fynx_orderitem`
+        $row->orderproduct = $this->db->query("SELECT `fynx_orderitem`.`id` as `orderitemid`, `fynx_orderitem`.`discount`, `fynx_orderitem`.`order`, `fynx_orderitem`.`product`,`fynx_product`.`name` as `productname`, `fynx_orderitem`.`quantity`, `fynx_orderitem`.`price`, `fynx_orderitem`.`finalprice`,`fynx_orderitem`.`checkcustom`,IF(`fynx_designs`.`name`='undefined',0,`fynx_designs`.`name`) as `designname`,`fynx_order`.`user`,`productdesignimage`.`image` FROM `fynx_orderitem`
 LEFT OUTER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product`
+LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_orderitem`.`design`
+INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
 INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
-WHERE `fynx_orderitem`.`order`=$row->id")->result();
+WHERE `fynx_orderitem`.`order`='$row->id' GROUP BY `fynx_orderitem`.`product`,`fynx_designs`.`id`")->result();
     }
 
 $this->load->view("json",$data);
