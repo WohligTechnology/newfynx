@@ -3563,10 +3563,31 @@ $orderstatus=$this->input->get_post("orderstatus");
             $shippingline3=$this->input->post('shippingline3');
     $transactionid=$this->input->post('transactionid');
      $paymentmode=$this->input->post('paymentmode');
-if($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode)==0)
-$data["alerterror"]="New order could not be Updated.";
+  $orderdata=$this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcontact,$billingcity,$billingstate,$billingpincode,$billingcountry,$shippingcity,$shippingaddress,$shippingname,$shippingcountry,$shippingcontact,$shippingstate,$shippingpincode,$trackingcode,$defaultcurrency,$shippingmethod,$orderstatus,$billingline1,$billingline2,$billingline3,$shippingline1,$shippingline2,$shippingline3,$transactionid,$paymentmode);
+if($orderdata==0)
+{
+    $data["alerterror"]="New order could not be Updated.";
+}
+
 else
-$data["alertsuccess"]="order Updated Successfully.";
+{
+    if($orderdata->trackingcode !='')
+    {
+        $orderid=$orderdata->id;
+        $data['trackingcode']=$orderdata->trackingcode;
+        $trackingcode=$orderdata->trackingcode;
+        $email=$orderdata->email;
+        $data['username']=$orderdata->firstname." ".$orderdata->lastname;
+        $username=$orderdata->firstname." ".$orderdata->lastname;
+        $data['productquery']=$this->order_model->demo($orderid);
+        $data['link']="https://www.fedex.com/apps/fedextrack/?action=track";
+        $viewcontent = $this->load->view('emailers/orderdispatch', $data, true);
+        $this->menu_model->emailer($viewcontent,'Order Dispatch',$email,$username);
+    }
+    
+    $data["alertsuccess"]="order Updated Successfully.";
+}
+
 $data["redirect"]="site/vieworder";
 $this->load->view("redirect",$data);
 }
