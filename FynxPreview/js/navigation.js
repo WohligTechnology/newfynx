@@ -6,11 +6,11 @@
 // else {
 //   adminURL = "http://localhost/demo/index.php";
 // }
-var mainurl = "http://www.myfynx.com/newfynx/";
+var mainurl = "http://admin.myfynx.com/";
 
-var websiteurl = "http://www.myfynx.com/testing/";
+var websiteurl = "http://www.myfynx.com/";
 
-var mainurlpaymentgateway = "http://www.myfynx.com/newfynx/";
+var mainurlpaymentgateway = "http://admin.myfynx.com/";
 
 var adminurl = mainurl + "index.php/json/";
 
