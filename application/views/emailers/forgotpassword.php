@@ -8,9 +8,9 @@
             <div class=''>
                 <div class='section-login' style='margin: 0 20px;'>
                     <p style='font-family: Roboto;font-size: 20px;color: #000;'>Dear <span style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $username;?></span>,</p>
-                    <p style='font-family: Roboto;font-size: 20px;color: #000;'>Kindly click on the link below to reset your Myfynx password.</p>
+                    <p style='font-family: Roboto;font-size: 20px;color: #000;'>Resetting your My Fynx account password couldn’t get easier. Just click on the link below and follow the instructions.</p>
                     <p style='font-family: Roboto;font-size: 20px;color: #000;'><?php echo $link;?></p>
-                    <p style='font-family: Roboto;font-size: 20px;color: #000;'>If you have any queries, please email us on info@myfynx.com and we’ll be happy to assist you.</p>
+<!--                    <p style='font-family: Roboto;font-size: 20px;color: #000;'>If you have any queries, please email us on info@myfynx.com and we’ll be happy to assist you.</p>-->
                     <p style='color: #fc483f;font-family: Roboto;font-size: 20px;'>Happy Shopping !</p>
                     <span style='font-family: Roboto;font-size: 20px;color: #000;'>Thank You,</span>
                     <span class='block' style='font-family: Roboto;font-size: 20px;color: #000;display: block;'>Team My Fynx!</span>
