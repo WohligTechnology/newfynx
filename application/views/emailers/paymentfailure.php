@@ -18,7 +18,7 @@
         <div class="section-login" style="margin: 0 20px;">
           <p style="font-family: Roboto;font-size: 20px;color: #000;">Dear <span style="font-family: Roboto;font-size: 20px;color: #000;"><?php echo $username;?></span>,</p>
           <p style="font-family: Roboto;font-size: 20px;color: #000;">Due to a transaction failure, we’re unable to process your order at present. Please try again later so we can ship your order to you soon.!</p>
-          <p style="font-family: Roboto;font-size: 20px;color: #000;">In case you still face problems, do send us a mail at info@myfynx.com or call us at +91 22 6620 5555 and our team will be there to help you out.</p>
+          <p style="font-family: Roboto;font-size: 20px;color: #000;">In case you still face problems, do send us a mail at info@myfynx.com or call us at +91 22 2685 2820 and our team will be there to help you out.</p>
           <!-- show if table is needed -->
 <!--
            <table style='width: 100%;'>

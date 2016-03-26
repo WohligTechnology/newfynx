@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6">
-                <label for="discount">Discount</label>
-                <input type="text" id="discount" name="discount" value='<?php echo set_value('discount');?>'>
+            <div class="input-field col s1">
+                <label for="discount">Discount in %</label>
+                <input type="number" min="1" max="100" id="discount" name="discount" value='<?php echo set_value('discount');?>'>
             </div>
         </div>  
            <div class="row">
