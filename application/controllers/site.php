@@ -3584,6 +3584,8 @@ else
         $viewcontent = $this->load->view('emailers/orderdispatch', $data, true);
         $this->menu_model->emailer($viewcontent,'Order Dispatch',$email,$username);
     }
+    else{
+    }
     
     $data["alertsuccess"]="order Updated Successfully.";
 }
