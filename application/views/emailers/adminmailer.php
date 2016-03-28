@@ -41,6 +41,8 @@
                        <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Apparel</th>
                        <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Design</th>
                       <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Size</th>
+                      <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Quantity</th>
+                      <th style='padding: 10px; text-transform:uppercase; font-size: 14px'>Price</th>
                     </thead>
                     <tbody>
        <?php
@@ -53,6 +55,9 @@
          $designname=$cart->designname;
          $typename=$cart->typename;
          $size=$cart->sizename;
+         $quantity=$cart->quantity;
+         $price=$cart->price;
+         $subtotal=$cart->finalprice;
 
        ?>
 
@@ -71,6 +76,8 @@
                 <td style='text-align:center;'><?php echo $typename; ?></td>
                 <td style='text-align:center;'><?php echo $designname; ?></td>
                 <td style='text-align:center;'><?php echo $size; ?></td>
+                <td style='text-align:center;'><?php echo $quantity; ?></td>
+                <td style='text-align:center;'><?php echo $price; ?></td>
             </tr>
 
          <?php
@@ -81,11 +88,9 @@
 ?>
 </tbody>
 </table>
-<!--
 <div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold;">
 GRAND TOTAL : <?php echo $finalpricetotal; ?>
 </div>
--->
          <span class='block' style='font-family: Roboto;font-size: 20px;color: #000;display: block;'>They Got FYNED !!!</span>
          </div>
          </div>
