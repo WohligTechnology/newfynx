@@ -11,7 +11,7 @@ class User_model extends CI_Model
         $password = md5($password);
         $query = "SELECT `user`.`id`,`user`.`name` as `name`,`email`,`user`.`accesslevel`,`accesslevel`.`name` as `access` FROM `user`
 		INNER JOIN `accesslevel` ON `user`.`accesslevel` = `accesslevel`.`id`
-		WHERE `email` LIKE '$username' AND `password` LIKE '$password' AND `status`=1 AND `accesslevel` IN (1,2) ";
+		WHERE `email` LIKE '$username' AND `password` LIKE '$password' AND `status`=2 AND `accesslevel` IN (1,2) ";
         $row = $this->db->query($query);
         if ($row->num_rows() > 0) {
             $row = $row->row();
@@ -578,7 +578,7 @@ class User_model extends CI_Model
 
         if ($num == 0) {
             $name = $firstname.' '.$lastname;
-            $this->db->query("INSERT INTO `user`(`name`,`firstname`, `lastname`, `email`, `password`,`accesslevel`) VALUE('$name','$firstname','$lastname','$email','$password','3')");
+            $this->db->query("INSERT INTO `user`(`name`,`firstname`, `lastname`, `email`, `password`,`accesslevel`,`status`) VALUE('$name','$firstname','$lastname','$email','$password','3','2')");
             $user = $this->db->insert_id();
             $newdata = array(
                     'id' => $user,
