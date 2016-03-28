@@ -288,12 +288,7 @@ class restapi_model extends CI_Model
                         } catch(Mandrill_Error $e) 
                         {
                             throw $e;
-                        }
-                            
-                            
-                           
-                            
-                            
+                        }   
                     }
                         
                     }

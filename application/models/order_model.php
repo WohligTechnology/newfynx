@@ -248,9 +248,19 @@ class order_model extends CI_Model
 public function demo($oid)
 {
 
-   $data['productquery'] = $this->db->query("SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+   $data['productquery'] = $this->db->query("SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`sku`,`fynx_product`.`type`,`fynx_type`.`name` as `typename`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice`,`fynx_orderitem`.`design` as `designid`,`fynx_designs`.`name` as `designname`,`productdesignimage`.`image` as `image1`,`fynx_product`.`size` as `sizeid`,`fynx_size`.`name` as `sizename` FROM `fynx_orderitem`
    INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
-    INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` WHERE `fynx_orderitem`.`order`='$oid'")->result();
+    INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` 
+INNER JOIN `fynx_type` ON `fynx_product`.`type`=`fynx_type`.`id`
+INNER JOIN `fynx_size` ON `fynx_product`.`size`=`fynx_size`.`id`
+LEFT OUTER JOIN `fynx_designs` ON `fynx_designs`.`id`=`fynx_orderitem`.`design`
+INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_orderitem`.`product` 
+WHERE `fynx_orderitem`.`order`='$oid'
+GROUP BY `fynx_orderitem`.`product`,`fynx_designs`.`id`")->result();
+    
+//    $data['productquery'] = $this->db->query("SELECT `fynx_orderitem`.`order`,`fynx_orderitem`.`product`,`fynx_product`.`name`,`fynx_product`.`image1`,`fynx_product`.`sku`, `fynx_orderitem`.`quantity`,`fynx_orderitem`.`price`,`fynx_orderitem`.`discount`,`fynx_orderitem`.`finalprice` FROM `fynx_orderitem`
+//   INNER JOIN `fynx_order` ON `fynx_order`.`id`=`fynx_orderitem`.`order`
+//    INNER JOIN `fynx_product` ON `fynx_product`.`id`=`fynx_orderitem`.`product` WHERE `fynx_orderitem`.`order`='$oid'")->result();
     return $data['productquery'];
 
 }

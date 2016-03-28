@@ -78,7 +78,7 @@
                         {
                              echo $before->firstname." ".$before->lastname;
                             echo "<br>";
-                             echo $before->shippingaddress;
+                            echo $before->shippingline1.", ".$before->shippingline2." - ".$before->shippingline3;
                             echo "<br>";
                              echo $before->shippingcity.", ".$before->shippingstate." - ".$before->shippingpincode;
 
@@ -87,7 +87,7 @@
                         {
                              echo $before->firstname." ".$before->lastname;
                             echo "<br>";
-                             echo $before->billingaddress;
+                           echo $before->billingline1.", ".$before->billingline2." - ".$before->billingline3;
                             echo "<br>";
                              echo $before->billingcity.", ".$before->billingstate." - ".$before->billingpincode;
 
