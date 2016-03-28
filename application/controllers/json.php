@@ -2706,6 +2706,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $data['before']=$this->order_model->beforeedit($orderid);
             $data['transactionid']=$data['before']->transactionid;
             $data['trackingcode']=$data['before']->trackingcode;
+            $data['orderdate'] = date("d F Y", $data['before']->timestamp);
             $data['id']=$orderid;
             $data['email']=$data['before']->email;
             $email=$data['before']->email;
@@ -2716,6 +2717,17 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $username=$data['before']->firstname." ".$data['before']->lastname;
             $viewcontent = $this->load->view('emailers/invoice', $data, true);
             $this->menu_model->emailer($viewcontent,'Invoice',$email,$username);
+            // send mail to admin
+            $email='info@myfynx.com';
+            $username='My Fynx Team';
+            $data['productquery']=$this->order_model->demo($orderid);
+            $data['before']=$this->order_model->beforeedit($orderid);
+            $arr=explode(" ",$data['before']->timestamp);
+            $date=$arr[0];
+            $data['orderdate'] = date("d F y", strtotime($date));
+            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/adminmailer', $data, true);
+            $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
             
         }
         else {
@@ -2836,15 +2848,17 @@ imagesavealpha($rotate, true);
 
 
     function testinvoice() {
-        $orderid=318;
-            $data[ 'category' ] =$this->category_model->getcategorydropdown();
-            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+            $orderid=328;
+            $email='info@myfynx.com';
+            $username='My Fynx Team';
+            $data['productquery']=$this->order_model->demo($orderid);
             $data['before']=$this->order_model->beforeedit($orderid);
-            $data['id']=$orderid;
-            $data['email']=$this->order_model->getemailbyorder($orderid);
-            $username=$data['before']->firstname." ".$data['before']->lastname;
-            $viewcontent = $this->load->view('emailers/invoice', $data, true);
-            $this->menu_model->emailer($viewcontent,'Invoice',$data['email'],$username);
+            $arr=explode(" ",$data['before']->timestamp);
+            $date=$arr[0];
+            $data['orderdate'] = date("d F y", strtotime($date));
+            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+            $viewcontent = $this->load->view('emailers/adminmailer', $data, true);
+            $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
     }
     function failure() {
         $orderid=318;
