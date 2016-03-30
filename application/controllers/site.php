@@ -4073,7 +4073,7 @@ $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 $elements[1]=new stdClass();
-$elements[1]->field="`fynx_size`.`status`";
+$elements[1]->field="`statuses`.`name`";
 $elements[1]->sort="1";
 $elements[1]->header="status";
 $elements[1]->alias="status";
@@ -4096,7 +4096,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_size`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_size` INNER JOIN `statuses` ON `statuses`.`id`=`fynx_size`.`status`");
 $this->load->view("json",$data);
 }
 
