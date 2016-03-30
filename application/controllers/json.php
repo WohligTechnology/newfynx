@@ -2518,7 +2518,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
 INNER JOIN `fynx_subcategory` ON `fynx_product`.`subcategory`  = `fynx_subcategory`.`id`
 INNER JOIN `fynx_type` ON `fynx_type`.`id`  = `fynx_product`.`type`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
-INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_product`.`quantity` >0 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
+INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
 
         $this->load->view('json', $data);
