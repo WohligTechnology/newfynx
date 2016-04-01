@@ -2483,6 +2483,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $color = $this->input->get_post('color');
             $size = $this->input->get_post('size');
             $price = $this->input->get_post('price');
+            $type = $this->input->get_post('type');
             $where = ' ';
      
         if ($color != '') {
@@ -2493,6 +2494,9 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         }
         if ($name != '') {
             $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
+        }
+             if($type == ''){
+            $where .= " AND upper(`fynx_type`.`name`) LIKE '%$typename%' ";
         }
             $this->chintantable->createelement('`productdesignimage`.`product`', '1', 'ID', 'id');
         $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
@@ -2661,6 +2665,11 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     {
         $category=$this->input->get('name');
         $data['message'] = $this->restapi_model->getAllSize($category);
+        $this->load->view('json', $data);
+    } 
+    public function getShoesForHome()
+    {
+        $data['message'] = $this->restapi_model->getShoesForHome();
         $this->load->view('json', $data);
     }
 //    public function getUserDetails()

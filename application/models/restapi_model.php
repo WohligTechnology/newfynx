@@ -202,7 +202,18 @@ class restapi_model extends CI_Model
         }
     }
      public function checkstatus($orderid){
-      $query=$this->db->query("SELECT * FROM `fynx_order` WHERE `id`='$orderid'")->row();
+      $query=$this->db->query("SELECT `fynx_product`.*,`productdesignimage`.`image` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id` WHERE `fynx_product`.`category`='3' GROUP BY `fynx_product`.`id` ORDER BY `fynx_product`.`id` DESC")->row();
+        $orderstatus=$query->orderstatus;
+        if($orderstatus==1){
+        return 1;
+        }
+        else
+        {
+        return 0;
+        }
+    }
+    public function getShoesForHome(){
+      $query=$this->db->query("")->row();
         $orderstatus=$query->orderstatus;
         if($orderstatus==1){
         return 1;
