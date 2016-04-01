@@ -140,6 +140,44 @@ return $query;
 	}
     function getProductDetails($product,$user,$size,$color,$design)
 	{
+        
+        
+        // check if shoe
+        $checkshoe=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
+        $category=$checkshoe->category;
+    if($category==3)
+    {
+            // IT IS A SHOE
+            $where=" ";
+        if($size && $color){
+            $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
+        }
+        else{
+              $where .="`fynx_product`.`id`='$product'";
+        }
+        $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_product`.`baseproduct`,`fynx_sizechart`.`image` as `sizechartimage`,`fynx_sizechart`.`name` as `sizechartname` FROM `fynx_product`
+        LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
+        LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart` WHERE $where AND `productdesignimage`.`design`=0")->row();
+       
+
+        $baseproduct=$query['product']->baseproduct;
+        if($baseproduct==''){
+            $baseproduct=$query['product']->productname;
+        }
+        $product=$query['product']->id;
+          $query['relatedproduct'] = $this->db->query("SELECT `relatedproduct`.`relatedproduct` as `id`, `relatedproduct`.`design`,`productdesignimage`.`image` as `image1` FROM `relatedproduct` LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`relatedproduct`.`relatedproduct` AND `productdesignimage`.`design` = `relatedproduct`.`design` WHERE `relatedproduct`.`product`='$product' GROUP BY `relatedproduct`.`relatedproduct` , `relatedproduct`.`design`")->result();
+        $query['productdesignimage'] = $this->db->query("SELECT `id`, `product`, `design`, `image` FROM `productdesignimage` WHERE `product`='$product' AND `design`='$design'")->result();
+
+
+           $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
+        WHERE `fynx_size`.`category`='2' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+          $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
+        WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+    }
+    else{
+            // THESE ARE APPARELS
+            
+            
         $where=" ";
         if($size && $color){
             $where .=" `fynx_product`.`size`='$size' AND `fynx_product`.`color`='$color' ";
@@ -152,11 +190,6 @@ return $query;
         LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart`
         INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
         WHERE  $where  GROUP BY `fynx_product`.`id`")->row();
-//        echo "SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_designs`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_product`.`baseproduct`,`fynx_sizechart`.`image` as `sizechartimage`,`fynx_sizechart`.`name` as `sizechartname` FROM `fynx_product`
-//        LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
-//        LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart`
-//        INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design` AND `fynx_designs`.`id`='$design'
-//        WHERE  $where  GROUP BY `fynx_product`.`id`";
 
         $baseproduct=$query['product']->baseproduct;
         if($baseproduct==''){
@@ -168,9 +201,10 @@ return $query;
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`category`='2' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
         WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+        }
 
 
 		return $query;
@@ -443,6 +477,9 @@ return $query;
             if($relateddesign !=''){
               $allrelateddesign=explode(",",$relateddesign);
             }
+            else{
+                $allrelateddesign=0;
+            }
 
             $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
             if(empty($checkproduct))
@@ -473,8 +510,11 @@ return $query;
                           else
                           {
                               $relatedproduct=$relatedproductquery->id;
-
-                              //check design is there or not
+                               if($allrelateddesign=0){
+                                   
+                               }
+                              else{
+                                     //check design is there or not
                             $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
                             if(empty($checkdesignquery))
                             {
@@ -485,6 +525,8 @@ return $query;
                             else{
                               $designid=$checkdesignquery->id;
                             }
+                              }
+                           
                             
                               // check related products
                               

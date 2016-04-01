@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class size_model extends CI_Model
 {
-public function create($status,$name)
+public function create($status,$name,$category)
 {
-$data=array("status" => $status,"name" => $name);
+$data=array("status" => $status,"name" => $name,"category" => $category);
 $query=$this->db->insert( "fynx_size", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("fynx_size")->row();
 return $query;
 }
-public function edit($id,$status,$name)
+public function edit($id,$status,$name,$category)
 {
-$data=array("status" => $status,"name" => $name);
+$data=array("status" => $status,"name" => $name,"category" => $category);
 $this->db->where( "id", $id );
 $query=$this->db->update( "fynx_size", $data );
 return 1;
@@ -45,6 +45,16 @@ return $query;
         foreach ($query as $row) {
             $return[$row->id] = $row->name;
         }
+
+        return $return;
+    }
+    public function getshoecategorydropdown()
+    {
+        $return=array(
+		"" => "Choose Category",
+		"1" => "Non-Shoes",
+		"2" => "Shoes"
+		);
 
         return $return;
     }

@@ -97,6 +97,9 @@ class restapi_model extends CI_Model
       return $query;
     }
     public function removeFromWishlist($user, $product,$design){
+        if($design==null){
+            $query=$this->db->query("DELETE FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product'");
+        }
         $query=$this->db->query("DELETE FROM `fynx_wishlist` WHERE `user`='$user' AND `product`='$product' AND `design`='$design'");
         if($query){
         return 1;
@@ -105,8 +108,15 @@ class restapi_model extends CI_Model
         return false;
         }
     }
-    public function getAllSize(){
-        $query=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE 1")->result();
+    public function getAllSize($category){
+        if($category=='Shoes'){
+            // they are shoes
+            $category=2;
+        }
+        else{
+            $category=1;
+        }
+        $query=$this->db->query("SELECT `id`, `status`, `name` FROM `fynx_size` WHERE `category`='$category'")->result();
         return $query;
 
     }
@@ -127,6 +137,8 @@ class restapi_model extends CI_Model
 		}	
     
     public function getFiltersLater ($query) {
+
+        
 			$return = new stdClass();
 
 			$query2 = " SELECT `id` FROM ($query) as `tab1` ";

@@ -10,6 +10,12 @@
 <input type="text" id="Name" name="name" value='<?php echo set_value('name');?>'>
 </div>
 </div>
+  <div class="row">
+            <div class="input-field col s12 m8">
+                <?php echo form_dropdown('category', $category, set_value('category',$before->category)); ?>
+                 <label>Category</label>
+            </div>
+        </div>
  <div class="row">
             <div class="input-field col s12 m8">
                 <?php echo form_dropdown('status', $status, set_value('status',$before->status)); ?>

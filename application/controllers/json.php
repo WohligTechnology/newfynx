@@ -1897,6 +1897,7 @@ public function testplaceorder()
         {
           $design = "";
         }
+      
         $user = $this->session->userdata('id');
         $this->user_model->deletecartfromdb($id, $user, $design);
         $cart = $this->cart->contents();
@@ -2476,6 +2477,45 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     public function getproductbycategory()
     {
         $category = $this->input->get_post('category');
+        if($category=="Shoes")
+        {
+            $name = $this->input->get_post('name');
+            $color = $this->input->get_post('color');
+            $size = $this->input->get_post('size');
+            $price = $this->input->get_post('price');
+            $where = ' ';
+     
+        if ($color != '') {
+            $where .= " AND `fynx_product`.`color` IN ($color) ";
+        }
+        if ($size != '') {
+            $where .= " AND `fynx_product`.`size` IN ($size) ";
+        }
+        if ($name != '') {
+            $where .= " AND `fynx_product`.`name` LIKE '%$name%' ";
+        }
+            $this->chintantable->createelement('`productdesignimage`.`product`', '1', 'ID', 'id');
+        $this->chintantable->createelement('`fynx_product`.`name`', '1', 'name', 'name');
+        $this->chintantable->createelement('`fynx_product`.`price`', '1', 'price', 'price');
+        $this->chintantable->createelement('`productdesignimage`.`design`', '1', 'design', 'design');
+        $this->chintantable->createelement('`productdesignimage`.`image`', '1', 'image', 'image');
+        $this->chintantable->createelement('`productdesignimage`.`id`', '1', 'orderingid', 'orderingid');
+        $this->chintantable->createelement('`fynx_product`.`category`', '1', 'category', 'category');
+
+        $search = $this->input->get_post('search');
+        $pageno = $this->input->get_post('pageno');
+
+        $orderby = 'OVERRIDE`orderingid` DESC , `name` ';
+        $orderorder = 'ASC';
+        $maxrow = $this->input->get_post('maxrow');
+        $data['message'] = new stdClass();
+        $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
+ INNER JOIN `fynx_category` ON `fynx_category`.`id`=`fynx_product`.`category` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`product`');
+        $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
+            //shoe ends
+        }
+        else
+        { 
         $name = $this->input->get_post('name');
         $type = $this->input->get_post('type');
         $color = $this->input->get_post('color');
@@ -2520,7 +2560,8 @@ INNER JOIN `fynx_type` ON `fynx_type`.`id`  = `fynx_product`.`type`
 INNER JOIN `fynx_designs` ON `fynx_designs`.`id`  = `productdesignimage`.`design`
 INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`id` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`design`, `fynx_designs`.`id`');
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
-
+}
+       
         $this->load->view('json', $data);
     }
     public function getFilters()
@@ -2618,7 +2659,8 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
     }
     public function getAllSize()
     {
-        $data['message'] = $this->restapi_model->getAllSize();
+        $category=$this->input->get('name');
+        $data['message'] = $this->restapi_model->getAllSize($category);
         $this->load->view('json', $data);
     }
 //    public function getUserDetails()

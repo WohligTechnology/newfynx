@@ -4106,6 +4106,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createsize";
  $data['status']=$this->user_model->getstatusdropdown();
+ $data['category']=$this->size_model->getshoecategorydropdown();
 $data["title"]="Create size";
 $this->load->view("template",$data);
 }
@@ -4120,6 +4121,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="createsize";
  $data['status']=$this->user_model->getstatusdropdown();
+     $data['category']=$this->size_model->getshoecategorydropdown();
 $data["title"]="Create size";
 $this->load->view("template",$data);
 }
@@ -4127,7 +4129,8 @@ else
 {
 $status=$this->input->get_post("status");
 $name=$this->input->get_post("name");
-if($this->size_model->create($status,$name)==0)
+$category=$this->input->get_post("category");
+if($this->size_model->create($status,$name,$category)==0)
 $data["alerterror"]="New size could not be created.";
 else
 $data["alertsuccess"]="size created Successfully.";
@@ -4142,6 +4145,7 @@ $this->checkaccess($access);
 $data["page"]="editsize";
 $data["title"]="Edit size";
  $data['status']=$this->user_model->getstatusdropdown();
+ $data['category']=$this->size_model->getshoecategorydropdown();
 $data["before"]=$this->size_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -4157,6 +4161,7 @@ if($this->form_validation->run()==FALSE)
 $data["alerterror"]=validation_errors();
 $data["page"]="editsize";
  $data['status']=$this->user_model->getstatusdropdown();
+ $data['category']=$this->size_model->getshoecategorydropdown();
 $data["title"]="Edit size";
 $data["before"]=$this->size_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -4166,7 +4171,8 @@ else
 $id=$this->input->get_post("id");
 $status=$this->input->get_post("status");
 $name=$this->input->get_post("name");
-if($this->size_model->edit($id,$status,$name)==0)
+$category=$this->input->get_post("category");
+if($this->size_model->edit($id,$status,$name,$category)==0)
 $data["alerterror"]="New size could not be Updated.";
 else
 $data["alertsuccess"]="size Updated Successfully.";

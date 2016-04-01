@@ -912,7 +912,13 @@ WHERE `fynx_product`.`id`='$productid'")->row();
     }
     public function deletecartfromdb($id, $user, $design)
     {
-        $query = $this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
+        if($design==''){
+            $query = $this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user'");
+        }
+        else{
+            $query = $this->db->query("DELETE FROM `fynx_cart` WHERE `product`='$id' AND `user`='$user' AND `design`='$design'");
+        }
+        
     }
     public function uploadImage()
     {
