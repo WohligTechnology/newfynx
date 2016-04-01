@@ -2514,6 +2514,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
         $maxrow = $this->input->get_post('maxrow');
         $data['message'] = new stdClass();
         $data['message']->product = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, '', 'FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
+        INNER JOIN `fynx_type` ON `fynx_type`.`id`  = `fynx_product`.`type`
  INNER JOIN `fynx_category` ON `fynx_category`.`id`=`fynx_product`.`category` ', "WHERE `fynx_product`.`visibility`=1 AND `fynx_category`.`name` LIKE '$category' $where ", ' GROUP BY `productdesignimage`.`product`');
         $data['message']->filter = $this->restapi_model->getFiltersLater($data['message']->product->querycomplete);
             //shoe ends
