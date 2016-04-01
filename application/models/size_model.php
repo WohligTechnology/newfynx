@@ -52,7 +52,7 @@ return $query;
     {
         $return=array(
 		"" => "Choose Category",
-		"1" => "Non-Shoes",
+		"1" => "Apparel",
 		"2" => "Shoes"
 		);
 
