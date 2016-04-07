@@ -246,7 +246,9 @@ return $query;
             $baseproduct=trim($row['baseproduct']);
             $designname=trim($row['designname']);
             $designs=$row['designimage'];
-            $alldesignname=explode(",",$designname);
+            if($designname!=''){
+                $alldesignname=explode(",",$designname);
+            }
             $alldesigns=explode(",",$designs);
             
             $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
@@ -266,7 +268,7 @@ return $query;
             $query=$this->db->insert( 'fynx_product', $data );
             $productid=$this->db->insert_id();
 
-
+if(!empty($alldesignname)){
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -294,6 +296,20 @@ return $query;
                 }
 
            }
+}
+                else{
+                    foreach($alldesigns as $key => $designimage){
+                        $designimage=trim($designimage);
+                        $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND  `image`= '$designimage' AND `design`=0")->row();
+                        if(empty($designimagequery))
+                        {
+                            $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','0','$designimage')");
+                              $productdesigndesignid=$this->db->insert_id();
+                        }
+                        
+                    }
+                    
+                }
 
             //            insert designs ends
 
