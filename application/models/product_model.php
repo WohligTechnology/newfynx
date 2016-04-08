@@ -249,6 +249,9 @@ return $query;
             if($designname!=''){
                 $alldesignname=explode(",",$designname);
             }
+            else{
+                 $alldesignname=0;
+            }
             $alldesigns=explode(",",$designs);
             
             $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
@@ -268,7 +271,8 @@ return $query;
             $query=$this->db->insert( 'fynx_product', $data );
             $productid=$this->db->insert_id();
 
-if(!empty($alldesignname)){
+if($alldesignname!=0)
+{
            foreach($alldesignname as $key => $designname)
 			{
                 $designname=trim($designname);
@@ -297,7 +301,7 @@ if(!empty($alldesignname)){
 
            }
 }
-                else{
+                else if($alldesignname==0){
                     foreach($alldesigns as $key => $designimage){
                         $designimage=trim($designimage);
                         $designimagequery=$this->db->query("SELECT * FROM `productdesignimage` where `product`='$productid' AND  `image`= '$designimage' AND `design`=0")->row();
