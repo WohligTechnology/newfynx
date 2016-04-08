@@ -145,6 +145,10 @@ return $query;
         // check if shoe
         $checkshoe=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$product'")->row();
         $category=$checkshoe->category;
+         $baseproduct=$checkshoe->baseproduct;
+        if($baseproduct==''){
+            $baseproduct=$checkshoe->productname;
+        }
     if($category==3)
     {
             // IT IS A SHOE
@@ -157,8 +161,9 @@ return $query;
         }
         $query['product']=$this->db->query("SELECT `fynx_product`.`id`, `fynx_product`.`subcategory`, `fynx_product`.`quantity`, `fynx_product`.`name` as `name`,`fynx_product`.`name` as `productname`, `fynx_product`.`type`, `fynx_product`.`description`, `fynx_product`.`visibility`, `fynx_product`.`price`, `fynx_product`.`relatedproduct`, `fynx_product`.`category`, `fynx_product`.`color`, `fynx_product`.`size`, `fynx_product`.`sizechart`, `fynx_product`.`status`, `fynx_product`.`sku`, `productdesignimage`.`image` as `image1`,`fynx_product`.`baseproduct`,`fynx_sizechart`.`image` as `sizechartimage`,`fynx_sizechart`.`name` as `sizechartname` FROM `fynx_product`
         LEFT OUTER JOIN `productdesignimage` ON `productdesignimage`.`product`=`fynx_product`.`id`
-        LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart` WHERE $where AND `productdesignimage`.`design`=0")->row();
+        LEFT OUTER JOIN `fynx_sizechart` ON `fynx_sizechart`.`id`=`fynx_product`.`sizechart` WHERE $where AND `productdesignimage`.`design`=0 AND `fynx_product`.`baseproduct`='$baseproduct'")->row();
        
+     
 
         $baseproduct=$query['product']->baseproduct;
         if($baseproduct==''){
