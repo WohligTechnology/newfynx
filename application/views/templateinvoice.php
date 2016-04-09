@@ -183,11 +183,19 @@
                             ?>
                         </td>
                     </tr>
+                       <tr>
+                        <td><b>Total Discount:</b></td>
+                        <td>
+                            <?php
+                              echo $before->discountamount;
+                            ?>
+                        </td>
+                    </tr>
                     <tr>
                         <td><b>Final Total:</b></td>
                         <td><?php
 
-                          echo $finalpricetotal;?></td>
+                          echo $before->finalamount;?></td>
                     </tr>
                 </table>
             </div>

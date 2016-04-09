@@ -21,15 +21,18 @@ function drawtable(resultrow) {
 
 
     var orderitems = "";
-
     for(var i=0;i<resultrow.orderproduct.length;i++) {
         var row= resultrow.orderproduct[i];
+//        if(row.designname==null){
+//            row.designname=0;
+//        }
         if(row.checkcustom != ''){
              orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+0+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad tooltipped' data-position='top' data-delay='50' data-tooltip='Front' href='http://admin.myfynx.com/index2.php/#/homefront/"+row.orderitemid+"'><i class='material-icons propericon'>print</i></a></td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad tooltipped'  data-position='top' data-delay='50' data-tooltip='Back' href='http://admin.myfynx.com/index2.php/#/homeback/"+row.orderitemid+"'><i class='material-icons propericon'>print</i></a></td><\/tr>";
         }
         else{
+         
 //             orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+row.designname+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>"; 
-            orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td><a href='<?php echo base_url('uploads').'/'; ?>" + row.image + "' target='_blank' > "+row.designname+" </a><\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
+            orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td><a href='<?php echo base_url('uploads').'/'; ?>" + row.image + "' target='_blank' > "+row.productname+" </a><\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
         }
 
     }

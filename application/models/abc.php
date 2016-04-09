@@ -119,16 +119,15 @@ class order_model extends CI_Model
         $order = $this->db->insert_id();
         $mysession['orderid'] = $order;
         $this->session->set_userdata($mysession);
-        
-        
-          //APPLY COUPON HERE
+       
+        //APPLY COUPON HERE
         
             $cartcount=count($carts);
             $sumqty=0;
             $sumsubtotal=0;
             foreach ($carts as $cart) {
               $sumqty=$sumqty+$cart['qty'];
-              $sumsubtotal=$sumsubtotal+$cart['subtotal'];
+              $sumsubtotal=$sumqty+$cart['subtotal'];
             }
         
         
@@ -141,7 +140,6 @@ class order_model extends CI_Model
             $discount=$coupondetail->discount;
 
             $substracteddiscountamout=($discount *$sumsubtotal)/100;
-               
             if($substracteddiscountamout > $max )
             {
                 $substracteddiscountamout = $max;
@@ -150,18 +148,16 @@ class order_model extends CI_Model
             $sumsubtotal=$calculatedamount;
         }
         
-        $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='$substracteddiscountamout',`finalamount`='$calculatedamount' WHERE `id`='$order'");
+        $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='$substracteddiscountamout',`finalamount`='$sumsubtotal' = WHERE `id`='$order'");
         
-//        print_r($carts);
-//        $cartcount=count($carts);
-//        echo "    cart count    ".$cartcount."      "."end";
+        
         foreach ($carts as $cart) {
-              $querycart = $this->db->query("INSERT INTO `fynx_orderitem`(`order`, `product`, `quantity`, `price`, `finalprice`,`design`,`checkcustom`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."','".$cart['design']."','".$cart['options']['json']."')");
+            
+              $querycart = $this->db->query("INSERT INTO `fynx_orderitem`(`discount`,`order`, `product`, `quantity`, `price`, `finalprice`,`design`,`checkcustom`) VALUES ('".$cart['qty']."' * '$unitprice','$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."','".$cart['design']."','".$cart['options']['json']."')");
             $quantity = intval($cart['qty']);
-            $productid = $cart['id'];
-           
+         
         }
-      
+
 
         $userquery = $this->db->query("UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`phone`='$phone',`status`='2',`billingline1`='$billingline1',`billingline2`='$billingline2',`billingline3`='$billingline3',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`billingpincode`='$billingpincode',`shippingline1`='$shippingline1',`shippingline2`='$shippingline2',`shippingline3`='$shippingline3',`shippingcity`='$shippingcity',`shippingcountry`='$shippingcountry',`shippingstate`='$shippingstate',`shippingpincode`='$shippingpincode' WHERE `id`='$user'");
         if ($query) {

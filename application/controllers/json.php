@@ -1600,7 +1600,8 @@ public function getsinglesize()
         $shippingpincode = $data['shippingpincode'];
         $carts = $data['cart'];
         $paymentmode = $data['paymentmode'];
-        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode);
+        $coupon = $data['coupon'];
+        $data['message'] = $this->order_model->placeOrder($user, $firstname, $lastname, $email, $phone, $billingline1, $billingline2, $billingline3, $billingcity, $billingstate, $billingcountry, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $carts, $shippingline1, $shippingline2, $shippingline3, $paymentmode,$coupon);
 //        $oid = $data['message'];
 //        $data['before']=$this->order_model->beforeedit($oid);
 //        $data['username']=$data['before']->firstname." ".$data['before']->lastname;
