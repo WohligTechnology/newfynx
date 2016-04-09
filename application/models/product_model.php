@@ -234,6 +234,7 @@ return $query;
 	{
         foreach ($file as $row)
         {
+//            print_r($row);
             $subcategory=trim($row['subcategory']);
             $quantity=trim($row['quantity']);
             $name=trim($row['name']);
@@ -284,6 +285,7 @@ if($alldesignname!=0)
                 $designnamequery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$designname'")->row();
                 if(empty($designnamequery))
                 {
+                    if($designname!=''){
                     // create new design and get design id
                     $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$designname','2')");
                     $designid=$this->db->insert_id();
@@ -291,6 +293,7 @@ if($alldesignname!=0)
 
                               $this->db->query("INSERT INTO `productdesignimage`(`product`,`design`,`image`) VALUES ('$productid','$designid','$alldesigns[$key]')");
                               $productdesigndesignid=$this->db->insert_id();
+                    }
                 }
                 else
                 {
@@ -502,9 +505,7 @@ if($alldesignname!=0)
             if($relateddesign !=''){
               $allrelateddesign=explode(",",$relateddesign);
             }
-            else{
-                $allrelateddesign=0;
-            }
+          
 
             $checkproduct=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$name'")->row();
             if(empty($checkproduct))
@@ -531,43 +532,36 @@ if($alldesignname!=0)
                           $relatedproductquery=$this->db->query("SELECT * FROM `fynx_product` where `name` LIKE '$relatedproduct'")->row();
                           if(empty($relatedproductquery))
                           {
+                              //  no such product
                           }
                           else
                           {
                               $relatedproduct=$relatedproductquery->id;
-                               if($allrelateddesign=0){
-                                   
-                               }
-                              else{
-                                     //check design is there or not
-                            $checkdesignquery=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
-                            if(empty($checkdesignquery))
-                            {
-                                // create new design and get design id
-                                $this->db->query("INSERT INTO `fynx_designs`(`name`,`status`) VALUES ('$allrelateddesign[$key]','2')");
-                                $designid=$this->db->insert_id();
-                            }
-                            else{
-                              $designid=$checkdesignquery->id;
-                            }
+                         
+                               
+                              $getdesignid=$this->db->query("SELECT * FROM `fynx_designs` where `name` LIKE '$allrelateddesign[$key]'")->row();
+                              $designid=$getdesignid->id;
+//                                              check related products
+                              
+                              
+//                              CHECK PRODUCT IS SHOE
+                              $catquery=$this->db->query("SELECT * FROM `fynx_product` WHERE `id`='$productid'")->row();
+                              $categoryid=$catquery->category;
+                              if($categoryid==3){
+                                  $designid=0;
                               }
-                           
+                                    $checkrelatedproduct=$this->db->query("SELECT * FROM `relatedproduct` where `product`='$productid' AND `relatedproduct`='$relatedproduct' AND `design`='$designid'")->row();
+
+                                    if(empty($checkrelatedproduct))
+                                    {
+                                        $data2  = array(
+                                        'product' => $productid,
+                                        'relatedproduct' => $relatedproduct,
+                                        'design' => $designid
+                                        );
+                                         $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
+                                    }  
                             
-                              // check related products
-                              
-                            $checkrelatedproduct=$this->db->query("SELECT * FROM `relatedproduct` where `product`='$productid' AND `relatedproduct`='$relatedproduct' AND `design`='$designid'")->row();
-                              
-                            if(empty($checkrelatedproduct))
-                            {
-                                $data2  = array(
-                                'product' => $productid,
-                                'relatedproduct' => $relatedproduct,
-                                'design' => $designid
-                                );
-                                 $queryproductrelatedproduct=$this->db->insert( 'relatedproduct', $data2 );
-                            }  
-                              
-                           
                            }
                     }
                 // related products end
