@@ -1,7 +1,7 @@
 <html><body style='margin: 0;'>
            <div class='fynxmailer' style='width: 600px; max-width:600px; margin: 0 auto;'>
              <header>
-               <img src='http://admin.myfynx.com/assets/img/logo.png' alt='' class='img-responsive'>
+               <img src='http://admin.myfynx.com/assets/img/2.png' alt='' class='img-responsive'>
              </header>
              <main>
                <div class=''>
