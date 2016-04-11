@@ -1619,7 +1619,7 @@ public function getsinglesize()
 
 public function testplaceorder()
 {
-            $oid = 2;
+            $oid = 399;
             $data['productquery']=$this->order_model->demo($oid);
             $data['before']=$this->order_model->beforeedit($oid);
             print_r($data['productquery']);
