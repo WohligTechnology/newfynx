@@ -31,25 +31,45 @@
        ?>
 
             <tr>
+<!--
                <td style='text-align:center;'>
-                <figure>
-                  <?php if($cart->text1 !='' || $cart->text2 !='' || $cart->imagefront !=''|| $cart->text3 !=''|| $cart->text4 !='' || $cart->imageback !='') { ?>
-                           <img src='http://admin.myfynx.com/uploads/<?php echo $cart->designimage; ?>' alt='' width='70' class='img-responsive'>
-                     <?php } else if ($cart->text1 =='' || $cart->text2 =='' || $cart->imagefront ==''|| $cart->text3 ==''|| $cart->text4 =='' || $cart->imageback =='') {?>
-                         <img src='http://admin.myfynx.com/uploads/<?php echo $image; ?>' alt='' width='70' class='img-responsive'>
-                     <?php } ?>
+                  <figure>
+                  <img src='http://admin.myfynx.com/uploads/<?php echo $image; ?>' alt='' width='70' class='img-responsive'>
+                  <figcaption><?php echo $name; ?></figcaption>
+                </figure>
                 
-                   <figcaption><?php echo $name; ?></figcaption>
-                      </figure>
-                    <?php if($cart->text1 !='' || $cart->text2 !='' || $cart->imagefront !='') { ?>
-                       <a href="http://admin.myfynx.com/index2.php/#/homefront/<?php echo $cart->id;?>"><figcaption>Front Design</figcaption></a>
-                     <?php }?>
-                    <?php if($cart->text3 !='' || $cart->text4 !='' || $cart->imageback !='') { ?>
-                    <a href="http://admin.myfynx.com/index2.php/#/homeback/<?php echo $cart->id;?>"><figcaption>Back Design</figcaption></a>
-             
-                    <?php }?>
-              
+                &nbsp; + &nbsp;
+               <?php if($cart->text1!=''){ ?>
+               <?php echo $cart->text1; ?>
+               <?php}?>
+               &nbsp; + &nbsp;
+               <?php if($cart->text2!=''){ ?>
+               <?php echo $cart->text2; ?>
+               <?php}?> 
+              &nbsp; + &nbsp;
+                 
+                   <?php if($cart->imagefront!=''){ ?>
+              <figure>
+                  <img src='http://admin.myfynx.com/uploads/<?php echo $cart->imagefront; ?>' alt='' width='70' class='img-responsive'>
+                </figure>
+               <?php}?>
+
+              &nbsp; + &nbsp;
+               <?php if($cart->text3!=''){ ?>
+               <?php echo $cart->text3; ?>
+               <?php}?> 
+               &nbsp; + &nbsp;
+               <?php if($cart->text4!=''){ ?>
+               <?php echo $cart->text4; ?>
+               <?php}?>
+               
+                       <?php if($cart->imageback!=''){ ?>
+              <figure>
+                  <img src='http://admin.myfynx.com/uploads/<?php echo $cart->imageback; ?>' alt='' width='70' class='img-responsive'>
+                </figure>
+               <?php}?>
               </td>
+-->
                 <td style='text-align:center;'><?php echo $price; ?></td>
                 <td style='text-align:center;'><?php echo $quantity; ?></td>
                 <td style='text-align:center;'><?php echo $subtotal; ?></td>
@@ -63,14 +83,14 @@
 ?>
 </tbody>
 </table>
-<div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold; border-bottom:1px solid #fff">
+<div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold;">
 TOTAL AMOUNT : <?php echo $before->totalamount; ?>
 </div>
-<div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold; border-bottom:1px solid #fff">
+<div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold;">
 TOTAL DISCOUNT : <?php echo $before->discountamount; ?>
 </div>
 <div style="background-color:#fc483f;color:#fff;text-align:right;padding:10px;text-transform:uppercase;font-size:14px;font-weight:bold;">
-GRAND TOTAL : <?php echo $before->finalamount; ?>
+GRAND TOTAL : <?php echo $before->finalamount;; ?>
 </div>
          <p style='font-family: Roboto;font-size: 20px;color: #000;'>If you have any queries about your order, please email us on info@myfynx.com and we’ll be happy
 

@@ -1619,10 +1619,12 @@ public function getsinglesize()
 
 public function testplaceorder()
 {
-  $oid = 294;
+            $oid = 2;
             $data['productquery']=$this->order_model->demo($oid);
+            $data['before']=$this->order_model->beforeedit($oid);
+            print_r($data['productquery']);
             $viewcontent = $this->load->view('emailers/placeorder', $data, true);
-            $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','vinodwohlig@gmail.com','Pooja');
+            $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','pooja.wohlig@gmail.com','Pooja');
 }
 
     public function getusercart()
@@ -2900,32 +2902,38 @@ imagesavealpha($rotate, true);
 
 
 
-    function testinvoice() {
-            $orderid=328;
-            $email='info@myfynx.com';
-            $username='My Fynx Team';
-            $data['productquery']=$this->order_model->demo($orderid);
-            $data['before']=$this->order_model->beforeedit($orderid);
-            $arr=explode(" ",$data['before']->timestamp);
-            $date=$arr[0];
-            $data['orderdate'] = date("d F y", strtotime($date));
-            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
-            $viewcontent = $this->load->view('emailers/adminmailer', $data, true);
-            $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
-    }
-    function failure() {
-        $orderid=318;
-           $data[ 'category' ] =$this->category_model->getcategorydropdown();
-            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
-            $data['before']=$this->order_model->beforeedit($orderid);
-            $data['transactionid']=$data['before']->transactionid;
-            $data['id']=$orderid;
-            $data['productquery']=$this->order_model->demo($orderid);
-            $data['email']=$this->order_model->getemailbyorder($orderid);
-            $email=$this->order_model->getemailbyorder($orderid);
-            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
-            $username=$data['before']->firstname." ".$data['before']->lastname;
-            $viewcontent = $this->load->view('emailers/paymentfailure', $data, true);
-            $this->menu_model->emailer($viewcontent,'Payment Failure',$email,$username);
-    }
+//    function testinvoice() {
+//            $orderid=328;
+//            $email='info@myfynx.com';
+//            $username='My Fynx Team';
+//            $data['productquery']=$this->order_model->demo($orderid);
+//            $data['before']=$this->order_model->beforeedit($orderid);
+//            $arr=explode(" ",$data['before']->timestamp);
+//            $date=$arr[0];
+//            $data['orderdate'] = date("d F y", strtotime($date));
+//            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+//            $viewcontent = $this->load->view('emailers/adminmailer', $data, true);
+//            $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
+//    }
+//    function failure() {
+//        $orderid=318;
+//           $data[ 'category' ] =$this->category_model->getcategorydropdown();
+//            $data[ 'table' ] =$this->order_model->getorderitem($orderid);
+//            $data['before']=$this->order_model->beforeedit($orderid);
+//            $data['transactionid']=$data['before']->transactionid;
+//            $data['id']=$orderid;
+//            $data['productquery']=$this->order_model->demo($orderid);
+//            $data['email']=$this->order_model->getemailbyorder($orderid);
+//            $email=$this->order_model->getemailbyorder($orderid);
+//            $data['username']=$data['before']->firstname." ".$data['before']->lastname;
+//            $username=$data['before']->firstname." ".$data['before']->lastname;
+//            $viewcontent = $this->load->view('emailers/paymentfailure', $data, true);
+//            $this->menu_model->emailer($viewcontent,'Payment Failure',$email,$username);
+//    }
+     public function demoprodid()
+    {
+        $data['message'] = $this->order_model->demo(2);
+        $this->load->view('json', $data);
+    }   
+  
 }
