@@ -131,7 +131,7 @@ class order_model extends CI_Model
               $sumsubtotal=$sumsubtotal+$cart['subtotal'];
             }
         
-        
+        $totalamount=$sumsubtotal;
            if($coupon && $coupon!=''){
             $coupondetail=$this->db->query("SELECT * FROM `fynx_coupon` WHERE `id`='$coupon'")->row();
             $min=$coupondetail->min;
@@ -148,10 +148,10 @@ class order_model extends CI_Model
             }
             $calculatedamount=$sumsubtotal-$substracteddiscountamout;
             $sumsubtotal=$calculatedamount;
-                 $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='$substracteddiscountamout',`finalamount`='$calculatedamount',`totalamount`='$sumsubtotal' WHERE `id`='$order'");
+                 $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='$substracteddiscountamout',`finalamount`='$calculatedamount',`totalamount`='$totalamount' WHERE `id`='$order'");
         }
         else{
-             $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='0',`finalamount`='$sumsubtotal',`totalamount`='$sumsubtotal' WHERE `id`='$order'");
+             $updatediscountamt=$this->db->query("UPDATE `fynx_order` SET `discountamount`='0',`finalamount`='$sumsubtotal',`totalamount`='$totalamount' WHERE `id`='$order'");
         }
         
       

@@ -1622,7 +1622,7 @@ public function testplaceorder()
             $oid = 399;
             $data['productquery']=$this->order_model->demo($oid);
             $data['before']=$this->order_model->beforeedit($oid);
-            print_r($data['productquery']);
+//            print_r($data['productquery']);
             $viewcontent = $this->load->view('emailers/placeorder', $data, true);
             $this->menu_model->emailer($viewcontent,'Thank you for shipping with us','pooja.wohlig@gmail.com','Pooja');
 }
