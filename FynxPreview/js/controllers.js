@@ -90,7 +90,7 @@ console.log($state);
   $scope.doIt();
 
   $scope.template = TemplateService.changecontent("home");
-  $scope.menutitle = NavigationService.makeactive("Home");
+  $scope.menutitle = NavigationService.makeactive("Your Design");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
 

@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title ng-bind="'Project Name - '+template.title">Project Name</title>
-    <link rel="shortcut icon" href="img/favicon.ico" />
+    <title ng-bind="'MyFynx - '+template.title">MyFynx</title>
+    <link rel="shortcut icon" href="http://myfynx.com/img/favicon.ico" />
 
     <base href="/FynxPreview/" target="_blank">
     <link rel="stylesheet" type="text/css" href="css/main.css" />
