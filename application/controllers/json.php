@@ -2781,7 +2781,7 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $date=$arr[0];
             $data['orderdate'] = date("d F y", strtotime($date));
             $data['username']=$data['before']->firstname." ".$data['before']->lastname;
-            $viewcontent = $this->load->view('emailers/adminmailer', $data, true);
+            $viewcontent = $this->load->view('emailers/placeorder', $data, true);
             $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
             
         }

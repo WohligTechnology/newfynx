@@ -36,12 +36,12 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-xs-2">
+            <div class="col-xs-7">
                 <div class="logo">
-                  <img src="<?php echo base_url('uploads/logo.png'); ?>">
+                  <img src="<?php echo base_url('uploads/logo.png'); ?>" width="80px">
                 </div>
+                  <div class="col-xs-12"> <b>D Manak Designer Kraft LLP<b></div>
             </div>
-            <div class="col-xs-5"></div>
             <div class="col-xs-5">
                 <table class="table table-bordered">
                     <tr>
@@ -52,10 +52,19 @@
                         <td><b>Invoice No.:</b></td>
                         <td><?php echo $id;?></td>
                     </tr>
+                         <tr>
+                        <td><b>VAT TIN:</b></td>
+                        <td>27591147570V</td>
+                    </tr> 
+                        <tr>
+                        <td><b>CST TIN:</b></td>
+                        <td>27591147570C</td>
+                    </tr>
                 </table>
 
             </div>
         </div>
+      
         <div class="row">
             <div class="col-xs-5">
             <div style="border:1px solid #ccc; padding:10px;"><b>Billing Address</b>
