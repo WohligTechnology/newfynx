@@ -2783,6 +2783,8 @@ INNER JOIN `fynx_category` ON `fynx_subcategory`.`category`  = `fynx_category`.`
             $data['username']=$data['before']->firstname." ".$data['before']->lastname;
             $viewcontent = $this->load->view('emailers/placeorder', $data, true);
             $this->menu_model->emailer($viewcontent,'Successful Payment',$email,$username);
+            $viewcontent1 = $this->load->view('emailers/placeorder', $data, true);
+            $this->menu_model->emailer($viewcontent1,'Successful Payment','info@myfynx.com','Team MyFynx');
             
         }
         else {

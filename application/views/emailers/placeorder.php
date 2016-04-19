@@ -42,10 +42,10 @@
                    <figcaption><?php echo $name; ?></figcaption>
                       </figure>
                     <?php if($cart->text1 !='' || $cart->text2 !='' || $cart->imagefront !='') { ?>
-                       <a href="http://admin.myfynx.com/index2.php/#/homefront/<?php echo $cart->id;?>"><figcaption>Front Design</figcaption></a>
+                       <a href="http://104.197.40.132:81/Image/myFynx?url=homefront/<?php echo $cart->id;?>"><figcaption>Front Design</figcaption></a>
                      <?php }?>
                     <?php if($cart->text3 !='' || $cart->text4 !='' || $cart->imageback !='') { ?>
-                    <a href="http://admin.myfynx.com/index2.php/#/homeback/<?php echo $cart->id;?>"><figcaption>Back Design</figcaption></a>
+                    <a href="http://104.197.40.132:81/Image/myFynx?url=homeback/<?php echo $cart->id;?>"><figcaption>Back Design</figcaption></a>
              
                     <?php }?>
               
