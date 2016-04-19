@@ -6,7 +6,7 @@
 
             </div>
             <div class="canvasitem movetext" ng-repeat="txt in custom.custom track by $index" ng-style="txt.containercss">
-              <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" ng-if="$index==0 || $index==1"></div>
+              <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" style="float:left;" ng-if="$index==0 || $index==1"></div>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
 
             </div>
             <div class="canvasitem movetext" ng-repeat="txt in custom.custom track by $index" ng-style="txt.containercss">
-              <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" ng-if="$index==2 || $index==3"></div>
+              <div id="example{{txt.id}}" name="distext" ng-style="txt.css" ng-bind="txt.text" style="float:left;" ng-if="$index==2 || $index==3"></div>
             </div>
           </div>
         </div>
