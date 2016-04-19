@@ -38,7 +38,7 @@ function generatejquery(url) {
                     if (appendval) {
                         appendtext = appendtext.replace("<tr>", "<tr><td><input type='checkbox' data-id='" + whatappend + "' name='chintansideselect' id='chintansideselect" + whatappend + "' /><label for='chintansideselect" + whatappend + "'></label></td>");
                     }
-                    console.log(appendtext);
+//                    console.log(appendtext);
                     $(".drawchintantable table tbody").append(appendtext);
                 }
 
@@ -197,7 +197,7 @@ function generateorder(url) {
 
                 for (var i = 0; i < result.length; i++) {
                     var appendtext = drawtable(result[i]);
-                    console.log(appendtext);
+//                    console.log(appendtext);
                     $(".drawchintantable").html($(".drawchintantable").html() + appendtext);
                 }
 

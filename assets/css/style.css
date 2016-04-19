@@ -1,7 +1,9 @@
 html {
     font-family: "Lato", sans-serif;
 }
-
+.invisible {
+    visibility: hidden;
+}
 .pad-left-30 {
     padding-left: 30px;
 }

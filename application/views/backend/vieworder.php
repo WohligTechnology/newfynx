@@ -12,26 +12,28 @@
 <script>
 function drawtable(resultrow) {
 
-//    var orderitems = "";
-//
-//    for(var i=0;i<resultrow.orderproduct.length;i++) {
-//        var row= resultrow.orderproduct[i];
-//        orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
-//    }
-
-
     var orderitems = "";
     for(var i=0;i<resultrow.orderproduct.length;i++) {
-        var row= resultrow.orderproduct[i];
-//        if(row.designname==null){
-//            row.designname=0;
-//        }
+        var row = resultrow.orderproduct[i];
         if(row.checkcustom != ''){
-             orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+0+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad tooltipped' data-position='top' data-delay='50' data-tooltip='Front' href='http://admin.myfynx.com/index2.php/#/homefront/"+row.orderitemid+"'><i class='material-icons propericon'>print</i></a></td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad tooltipped'  data-position='top' data-delay='50' data-tooltip='Back' href='http://admin.myfynx.com/index2.php/#/homeback/"+row.orderitemid+"'><i class='material-icons propericon'>print</i></a></td><\/tr>";
+            var custom=JSON.parse(row.checkcustom);
+            var class1 = "";
+            var class2 = "";
+            if(custom.custom[0].text == "" && custom.custom[1].text == "" && custom.image1.image == "")
+            {
+                    class1 = "invisible";
+                    console.log(custom);
+            }
+            if(custom.custom[2].text == "" && custom.custom[3].text == "" && custom.image1.image1 == "")
+            {
+                    class2 = "invisible";
+                    console.log(custom);
+            }
+            
+             orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+0+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 "+class1+" z-depth-0 less-pad tooltipped' data-position='top' data-delay='50' data-tooltip='Front' href='http://104.197.40.132:81/Image/myFynx?url=homefront/"+row.orderitemid+"'><i class='material-icons propericon'>print</i></a></td><td><a class='deep-orange "+class2+" btn btn-primary btn-xs waves-effect waves-light z-depth-0 less-pad tooltipped'  data-position='top' data-delay='50' data-tooltip='Back' href='http://104.197.40.132:81/Image/myFynx?url=homeback/"+row.orderitemid+"' ><i class='material-icons propericon'>print</i></a></td><\/tr>";
         }
         else{
          
-//             orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td>"+row.designname+" <\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>"; 
             orderitems += "<tr class=\"repeat\"> <td>"+row.productname+" <\/td><td><a href='<?php echo base_url('uploads').'/'; ?>" + row.image + "' target='_blank' > "+row.productname+" </a><\/td><td>"+row.price+" <\/td><td>"+row.quantity+" <\/td><td>"+row.finalprice+" <\/td><\/tr>";
         }
 
