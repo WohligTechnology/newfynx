@@ -175,7 +175,7 @@ return $query;
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`category`='2' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`category`='2' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE  `fynx_product`.`quantity` >0 AND (`fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct'))")->result();
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
         WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
     }
@@ -206,7 +206,8 @@ return $query;
 
 
            $query['size'] = $this->db->query("SELECT DISTINCT `fynx_size`.`id`,`fynx_size`.`name` FROM `fynx_size`
-        WHERE `fynx_size`.`category`='1' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
+        WHERE `fynx_size`.`category`='1' AND `fynx_size`.`id` IN (SELECT DISTINCT `fynx_product`.`size` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`quantity` >0 AND (`fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct'))")->result();
+     
           $query['color'] = $this->db->query("SELECT DISTINCT `fynx_color`.`id`,`fynx_color`.`name` FROM `fynx_color`
         WHERE `fynx_color`.`id` IN (SELECT DISTINCT `fynx_product`.`color` FROM `fynx_product` INNER JOIN `productdesignimage` ON `productdesignimage`.`product` = `fynx_product`.`id` AND `productdesignimage`.`design`='$design' WHERE `fynx_product`.`baseproduct` LIKE '$baseproduct' OR `fynx_product`.`name` LIKE '$baseproduct')")->result();
         }
