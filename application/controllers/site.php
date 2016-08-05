@@ -1482,7 +1482,7 @@ $elements[3]->field="`relatedproduct`.`product`";
 $elements[3]->sort="1";
 $elements[3]->header="productid";
 $elements[3]->alias="productid";
-    
+
 $elements[4]=new stdClass();
 $elements[4]->field="`fynx_designs`.`name`";
 $elements[4]->sort="1";
@@ -2056,7 +2056,7 @@ $elements[9]->field="`fynx_homeslide`.`centeralign`";
 $elements[9]->sort="1";
 $elements[9]->header="Center Align";
 $elements[9]->alias="centeralign";
-    
+
 $elements[10]=new stdClass();
 $elements[10]->field="`fynx_homeslide`.`order`";
 $elements[10]->sort="1";
@@ -3379,7 +3379,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="DESC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_order` LEFT OUTER JOIN `user` ON `user`.`id`=`fynx_order`.`user` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`","WHERE `fynx_order`.`orderstatus` NOT IN(1,5)");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `fynx_order` LEFT OUTER JOIN `user` ON `user`.`id`=`fynx_order`.`user` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`fynx_order`.`orderstatus`","WHERE `fynx_order`.`orderstatus` NOT IN(5)");
 $queryarray = $data["message"]->queryresult;
 
     foreach($queryarray as $row)
@@ -3587,7 +3587,7 @@ else
     }
     else{
     }
-    
+
     $data["alertsuccess"]="order Updated Successfully.";
 }
 
@@ -4729,11 +4729,11 @@ $this->productdesignimage_model->delete($this->input->get("id"));
 $data["redirect"]="site/viewproductdesignimage?id=".$product;
 $this->load->view("redirect2",$data);
 }
-    
-    
+
+
     // FOR COUPON CODE
-    
-    
+
+
     public function viewcoupon()
 {
 $access=array("1");
